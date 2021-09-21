@@ -1,11 +1,29 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import * as constants from './app-routing.constants';
+import { AdminComponent } from './modules/admin/admin.component';
+import { AdminModule } from './modules/admin/admin.module';
+import { ErrorPageComponent } from './pages/error-page/error-page.component';
 
-
-const routes: Routes = [];
+const routes: Routes = [
+    {
+        path: constants.PROFILE,
+        // component: AdminComponent,
+        loadChildren: () =>
+            import(constants.PROFILE_MODULE_PATH).then(m => m.AdminModule),
+    },
+    {
+        path: constants.ERROR_PAGE,
+        component: ErrorPageComponent,
+    },
+    {
+        path: '**',
+        redirectTo: constants.ERROR_PAGE,
+    },
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [AdminModule, RouterModule.forRoot(routes)],
+    exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -1,0 +1,63 @@
+<div class="profile-content">
+    <h3 class="profile-content__title">Profile</h3>
+    <div class="profile-content__form">
+        <div class="profile-content__form-wrap">
+            <form #profileForm="ngForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        ngModel
+                        #name
+                        id="name"
+                        class="form-control"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        ngModel
+                        #email
+                        id="email"
+                        class="form-control"
+                    />
+                </div>
+                <button class="form-btn">Update profile</button>
+            </form>
+        </div>
+        <div class="profile-content__form-logo">
+            <div class="change-logo">
+                <h4 class="title">Profile picture</h4>
+                <img
+                    src="https://i.inews.co.uk/content/uploads/2020/12/b7ad9650-3091-11eb-a277-011d25811a91_800_420-e1608301536843-624x360.jpeg"
+                    alt="change logo"
+                />
+                <div class="edit-toggle">
+                    <mat-accordion>
+                        <mat-expansion-panel hideToggle>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title class="edit-text">
+                                    <mat-icon class="edit-icon">
+                                        <span>edit</span>
+                                    </mat-icon>
+                                    Edit
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="edit-expansion">
+                                <span class="edit-upload edit-item">
+                                    Upload
+                                </span>
+                                <span class="edit-remove edit-item">
+                                    Remove img
+                                </span>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
