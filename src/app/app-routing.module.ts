@@ -8,9 +8,7 @@ import { ErrorPageComponent } from './pages/error-page/error-page.component';
 const routes: Routes = [
     {
         path: constants.PROFILE,
-        // component: AdminComponent,
-        loadChildren: () =>
-            import(constants.PROFILE_MODULE_PATH).then(m => m.AdminModule),
+        component: AdminComponent,
     },
     {
         path: constants.ERROR_PAGE,

@@ -1,13 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  list-style: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
 }
 
 :root {
-  --color-text: rgb(68, 68, 68);
-  --border-color: lightgray;
+    --color-text: rgb(68, 68, 68);
+    --color-text-light: #fff;
+    --btn-primary: rgb(255, 189, 65);
+    --btn-primary-hover: rgb(252, 164, 1);
+    --border-color: lightgray;
 }

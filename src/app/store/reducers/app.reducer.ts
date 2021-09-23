@@ -1,6 +1,6 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer } from '@ngrx/store';
 
-export const appFeatureKey = 'app';
+export const appFeatureKey = 'app-root';
 
 export interface State {}
 

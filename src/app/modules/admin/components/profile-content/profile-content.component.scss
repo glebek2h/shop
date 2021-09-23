@@ -31,27 +31,38 @@
                     border: 1px solid var(--border-color);
                     padding: 8px;
                     border-radius: 5px;
-                    margin-bottom: 15px;
                     outline: none;
                     transition: 0.2s ease;
                     &:focus {
                         box-shadow: 1px 1px 8px rgb(252, 204, 141);
                     }
                 }
+                &__label {
+                    margin-top: 15px;
+                }
+                &__validator {
+                    margin-bottom: 5px;
+                    color: red;
+                }
             }
             .form-btn {
                 padding: 10px;
                 font-size: 16px;
-                color: #fff;
-                background-color: rgb(255, 189, 65);
+                color: var(--color-text-light);
+                background-color: var(--btn-primary);
                 cursor: pointer;
                 outline: none;
                 border: none;
                 border-radius: 5px;
                 border: 1px solid orange;
                 transition: 0.3s ease;
+                margin-top: 20px;
                 &:hover {
-                    background-color: rgb(252, 164, 1);
+                    background-color: var(--btn-primary-hover);
+                }
+                &:disabled {
+                    background-color: rgba(252, 164, 1, 0.514);
+                    cursor: not-allowed;
                 }
             }
         }
@@ -64,7 +75,13 @@
                 font-weight: normal;
                 margin-bottom: 10px;
             }
-            img {
+            .remove-logo-img {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            .change-logo-img {
                 width: 200px;
                 height: 200px;
                 border-radius: 50%;

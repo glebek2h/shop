@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PROFILE } from 'src/app/app-routing.constants';
+import { ORDERS, PROFILE, ADMIN } from 'src/app/app-routing.constants';
 import { AdminComponent } from './admin.component';
 
 const routes: Routes = [
     {
-        path: PROFILE,
+        path: `${ADMIN}/${PROFILE}`,
         component: AdminComponent,
     },
 ];

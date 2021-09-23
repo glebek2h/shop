@@ -1,7 +1,19 @@
 <nav class="navigation">
     <span>Account Navigation</span>
     <ul>
-        <li class="navigation-item">Profile</li>
-        <li class="navigation-item">Account</li>
+        <li
+            routerLinkActive="active"
+            [routerLink]="['/admin/profile']"
+            class="navigation-item"
+        >
+            Profile
+        </li>
+        <li
+            routerLinkActive="active"
+            [routerLink]="['/orders']"
+            class="navigation-item"
+        >
+            Orders
+        </li>
     </ul>
 </nav>
