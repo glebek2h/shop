@@ -1,4 +1,4 @@
-<header class="profile-header">
+<header class="profile-header" *ngIf="isReadyToDisplay$ | async">
     <div class="profile-header__logo">
         <img
             class="profile-header__logo-img"

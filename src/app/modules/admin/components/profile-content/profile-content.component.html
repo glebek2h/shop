@@ -2,7 +2,7 @@
     <h3 class="profile-content__title">Profile</h3>
     <div class="profile-content__form">
         <div class="profile-content__form-wrap">
-            <form [formGroup]="form" (ngSubmit)="submitProfile()">
+            <form [formGroup]="form" (ngSubmit)="updateProfile()">
                 <div class="form-group">
                     <label for="name" class="form-group__label">Name</label>
                     <input
@@ -111,3 +111,7 @@
         </div>
     </div>
 </div>
+
+<ng-template #loading>
+    <h3>Loading...</h3>
+</ng-template>

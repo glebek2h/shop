@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { adminFeatureKey, AdminState } from './admin.reducer';
+import { adminFeatureKey } from './admin.reducer';
+import { AdminState } from './admin.state';
 
 export const selectAdminFeature =
     createFeatureSelector<AdminState>(adminFeatureKey);

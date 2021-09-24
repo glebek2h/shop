@@ -12,6 +12,7 @@ import { StoreModule } from '@ngrx/store';
 import * as fromAdmin from './state/admin.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AdminEffects } from './state/admin.effects';
+import { OrdersComponent } from './components/orders/orders.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { AdminEffects } from './state/admin.effects';
         ProfileHeaderComponent,
         ProfileNavigationComponent,
         ProfileContentComponent,
+        OrdersComponent,
     ],
     imports: [
         FormsModule,

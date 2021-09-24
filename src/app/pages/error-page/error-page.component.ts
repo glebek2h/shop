@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ADMIN, PROFILE, ROOT_PATH } from 'src/app/app-routing.constants';
+import { ADMIN } from 'src/app/app-routing.constants';
 
 @Component({
     selector: 'app-error-page',
@@ -13,6 +13,6 @@ export class ErrorPageComponent implements OnInit {
     ngOnInit(): void {}
 
     goToProfile() {
-        this.router.navigate([`${ADMIN}/${PROFILE}`]);
+        this.router.navigate([`/${ADMIN}`]);
     }
 }

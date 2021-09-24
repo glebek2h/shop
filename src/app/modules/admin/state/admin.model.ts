@@ -3,3 +3,16 @@ export interface Admin {
     email: string;
     avatar: string;
 }
+
+export interface UpdatedProfile {
+    name: string;
+    email: string;
+}
+
+export interface RemoveProfileAvatar {
+    avatar: null;
+}
+
+export interface UpdateProfileAvatar {
+    avatar: string;
+}

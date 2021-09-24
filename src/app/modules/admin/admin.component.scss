@@ -1,6 +1,6 @@
 .profile-wrap {
     max-width: 1400px;
-    padding: 0 100px;
+    margin: 0 auto;
     &__content {
         width: 100%;
         display: flex;
@@ -10,11 +10,8 @@
         &-nav {
             width: 20%;
         }
-        &-info {
-            display: flex;
-            justify-content: space-between;
-            width: 80%;
-            padding: 5px 20px 10px 20px;
+        &-outlet {
+            width: 78%;
         }
     }
 }
