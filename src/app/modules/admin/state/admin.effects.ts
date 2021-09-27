@@ -41,11 +41,14 @@ export class AdminEffects {
             ofType(AdminActions.removeProfileAvatar),
             switchMap(() =>
                 of({
-                    avatar: null,
+                    success: true,
+                    message: 'successfully',
                 }),
             ),
             map(removeDataResponse =>
-                AdminActions.removeProfileAvatarSuccess({ removeDataResponse }),
+                AdminActions.RemoveProfileAvatarResponse({
+                    removeDataResponse,
+                }),
             ),
         );
     });
@@ -55,11 +58,12 @@ export class AdminEffects {
             ofType(AdminActions.uploadProfileAvatar),
             switchMap(() =>
                 of({
-                    avatar: null,
+                    success: true,
+                    message: 'successfully',
                 }),
             ),
-            map(uploadAvatar =>
-                AdminActions.uploadProfileAvatarSuccess({ uploadAvatar }),
+            map(message =>
+                AdminActions.uploadProfileAvatarSuccess({ message }),
             ),
         );
     });

@@ -9,10 +9,11 @@ export interface UpdatedProfile {
     email: string;
 }
 
-export interface RemoveProfileAvatar {
-    avatar: null;
+export interface NoDataResponce  {
+    success: boolean;
+    message: string;
 }
 
-export interface UpdateProfileAvatar {
-    avatar: string;
-}
+
+export interface RemoveProfileAvatarResponse extends NoDataResponce {}
+export interface UploadProfileAvatarResponse extends NoDataResponce {}

@@ -15,7 +15,9 @@
                         required
                     />
                     <div
-                        *ngIf="form.get('name').touched && form.get('name').invalid"
+                        *ngIf="
+                            form.get('name').touched && form.get('name').invalid
+                        "
                         class="form-group__validator"
                     >
                         <small *ngIf="form.get('name').errors.required">
@@ -61,17 +63,18 @@
         <div class="profile-content__form-logo">
             <div class="change-logo">
                 <h4 class="title">Profile picture</h4>
-                <img
-                    src="{{ avatar$ | async }}"
-                    class="change-logo-img"
-                    alt="change-logo"
-                    *ngIf="!!profileAvatar"
-                />
-                <img
-                    src="../../../../../assets/img/avatar.png"
-                    class="change-logo-img"
-                    *ngIf="!profileAvatar"
-                />
+                    <img
+                        src="{{getAvatar$ | async}}"
+                        class="change-logo-img"
+                        alt="change-logo"
+                    />
+                    
+                    <img
+                        src="../../../../../assets/img/avatar.png"
+                        class="default-profile-image"
+                        alt="default-profile-image"
+                    />
+
                 <div class="edit-toggle">
                     <mat-accordion>
                         <mat-expansion-panel hideToggle>

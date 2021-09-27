@@ -2,14 +2,13 @@
     <div class="profile-header__logo">
         <img
             class="profile-header__logo-img"
-            src="{{ avatar$ | async }}"
-            alt="profile-logo"
-            *ngIf="!!profileAvatar"
+            src="{{ getAvatar$ | async }}"
+            alt="profile-img"
         />
         <img
             src="../../../../../assets/img/avatar.png"
-            class="profile-header__logo-img"
-            *ngIf="!profileAvatar"
+            class="profile-header__logo-default-img"
+            alt="default-profile-image"
         />
     </div>
     <div class="profile-header__info">

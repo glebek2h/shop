@@ -11,21 +11,22 @@ export const initialState: AdminState = {
     isLoad: null,
 };
 
-export const reducer = createReducer(
+export const reducer = createReducer<AdminState>(
     initialState,
     on(AdminActions.getProfileInfoSuccess, (state, action) => {
         return {
             ...state,
+            // data: action.data,
             name: action.data.name,
             email: action.data.email,
             avatar: action.data.avatar,
-            isLoad: true,
+            isLoad: false,
         };
     }),
     on(AdminActions.getAdminInfo, state => {
         return {
             ...state,
-            isLoad: false,
+            isLoad: true,
         };
     }),
     on(AdminActions.updateProfileInfoSuccess, (state, action) => {
@@ -35,29 +36,16 @@ export const reducer = createReducer(
             email: action.updatedData.email,
         };
     }),
-    on(AdminActions.updateProfileInfo, state => {
-        return { ...state };
-    }),
-    on(AdminActions.removeProfileAvatar, state => {
+    on(AdminActions.RemoveProfileAvatarResponse, (state) => {
         return {
             ...state,
-        };
-    }),
-    on(AdminActions.removeProfileAvatarSuccess, (state, action) => {
-        return {
-            ...state,
-            avatar: action.removeDataResponse.avatar,
+            avatar: null,
         };
     }),
     on(AdminActions.uploadProfileAvatar, (state, action) => {
         return {
             ...state,
-        };
-    }),
-    on(AdminActions.uploadProfileAvatarSuccess, (state, action) => {
-        return {
-            ...state,
-            avatar: action.uploadAvatar.avatar,
+            avatar: action.uploadAvatar,
         };
     }),
 );

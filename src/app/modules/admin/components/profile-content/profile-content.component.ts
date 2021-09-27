@@ -6,12 +6,12 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { select, Store } from '@ngrx/store';
-import { combineLatest, Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { combineLatest, Observable, Subject } from 'rxjs';
 import * as LoadAdminActions from '../../state/admin.actions';
 import { AdminState } from '../../state/admin.state';
 import * as AdminSelect from '../../state/admin.selectors';
-import { map } from 'rxjs/operators';
+import { map, take, takeUntil } from 'rxjs/operators';
 import { Admin } from '../../state/admin.model';
 
 @Component({
@@ -21,15 +21,17 @@ import { Admin } from '../../state/admin.model';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileContentComponent implements OnInit, OnDestroy {
+    private readonly unsubscribe$ = new Subject();
     panelOpenState: boolean;
     fileUrl: string;
     dataObj: Admin;
-    trustUrl: SafeUrl;
-    profileAvatar: string;
+    // Вот тут я пытаюсь задать типа SafeUrl, но он ругается. Поэтому я сделал any.
+    trustUrl: any;
     form: FormGroup;
-    avatar$ = this.store.pipe(select(AdminSelect.selectAvatar));
-    // isReadyToDisplay$ = combineLatest([this.avatar$]).pipe(map(data => data.every(el => !!el)))
-    private readonly unsubscribe$ = new Subject();
+    readonly getAvatar$ = this.store
+    .select(AdminSelect.selectAvatar)
+    .pipe(takeUntil(this.unsubscribe$));
+
 
     constructor(
         private store: Store<AdminState>,
@@ -37,9 +39,6 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.avatar$.subscribe(res => {
-            this.profileAvatar = res;
-        });
         this.form = new FormGroup({
             name: new FormControl(null, [Validators.required]),
             email: new FormControl(null, [
@@ -70,12 +69,13 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
                 this.trustUrl = this.sanitazer.bypassSecurityTrustUrl(
                     this.fileUrl,
                 );
+                this.store.dispatch(
+                    LoadAdminActions.uploadProfileAvatar({
+                        uploadAvatar:
+                            this.trustUrl.changingThisBreaksApplicationSecurity,
+                    }),
+                );
             };
-            this.store.dispatch(
-                LoadAdminActions.uploadProfileAvatar({
-                    uploadAvatar: this.trustUrl,
-                }),
-            );
         }
     }
 

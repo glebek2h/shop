@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import * as ActionConstants from 'src/app/store/store-action.constants';
-import { Admin, RemoveProfileAvatar, UpdatedProfile, UpdateProfileAvatar } from './admin.model';
+import * as AdminModels from './admin.model';
+import { AdminState } from './admin.state';
 
 // upload profile info from BE
 
@@ -8,19 +9,19 @@ export const getAdminInfo = createAction(ActionConstants.CHANGE_PROFILE_INFO);
 
 export const getProfileInfoSuccess = createAction(
     ActionConstants.CHANGE_PROFILE_INFO_SUCCESS,
-    props<{ data: Admin }>(),
+    props<{ data: AdminModels.Admin }>(),
 );
 
 // update profile info from form
 
 export const updateProfileInfo = createAction(
     ActionConstants.UPDATE_PROFILE_INFO,
-    props<{ updatedData: UpdatedProfile }>(),
+    props<{ updatedData: AdminModels.UpdatedProfile }>(),
 );
 
 export const updateProfileInfoSuccess = createAction(
     ActionConstants.UPDATE_PROFILE_INFO_SUCCESS,
-    props<{ updatedData: UpdatedProfile }>(),
+    props<{ updatedData: AdminModels.UpdatedProfile }>(),
 );
 
 // remove profile avatar
@@ -28,19 +29,19 @@ export const updateProfileInfoSuccess = createAction(
 export const removeProfileAvatar = createAction(
     ActionConstants.REMOVE_PROFILE_AVATAR,
 );
-export const removeProfileAvatarSuccess = createAction(
+export const RemoveProfileAvatarResponse = createAction(
     ActionConstants.REMOVE_PROFILE_AVATAR_SUCCESS,
-    props<{ removeDataResponse: RemoveProfileAvatar }>(),
+    props<{ removeDataResponse: AdminModels.RemoveProfileAvatarResponse }>(),
 );
 
 // upload profile avatar
 
 export const uploadProfileAvatar = createAction(
     ActionConstants.UPLOAD_PROFILE_AVATAR,
-    props<{uploadAvatar: any}>()
+    props<{ uploadAvatar: string }>(),
 );
 
 export const uploadProfileAvatarSuccess = createAction(
     ActionConstants.UPLOAD_PROFILE_AVATAR_SUCCESS,
-    props<{uploadAvatar: any}>()
-)
+    props<{ message: AdminModels.UploadProfileAvatarResponse }>(),
+);
