@@ -1,0 +1,19 @@
+<nav class="navigation">
+    <span>{{ 'NAVIGATION.TITLE' | translate }}</span>
+    <ul>
+        <li
+            routerLinkActive="active"
+            [routerLink]="['profile']"
+            class="navigation-item"
+        >
+            {{ 'NAVIGATION.PROFILE' | translate }}
+        </li>
+        <li
+            routerLinkActive="active"
+            [routerLink]="['orders']"
+            class="navigation-item"
+        >
+            {{ 'NAVIGATION.ORDERS' | translate }}
+        </li>
+    </ul>
+</nav>

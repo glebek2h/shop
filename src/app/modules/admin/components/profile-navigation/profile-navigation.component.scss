@@ -1,0 +1,27 @@
+.navigation {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    span {
+        display: block;
+        padding: 10px;
+    }
+    ul {
+        list-style: none;
+        .navigation-item {
+            border-top: 1px solid var(--border-color);
+            padding: 10px;
+            cursor: pointer;
+            color: var(--color-text);
+            position: relative;
+            &:nth-last-child(n + 1) {
+                border-bottom: none;
+            }
+            &:hover {
+                background-color: rgb(214, 214, 214);
+            }
+            &.active {
+                background-color: rgb(255, 227, 191);
+            }
+        }
+    }
+}

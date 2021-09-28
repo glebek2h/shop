@@ -1,0 +1,23 @@
+<header class="profile-header" *ngIf="isReadyToDisplay$ | async">
+    <div class="profile-header__logo">
+        <img
+            class="profile-header__logo-img"
+            src="{{ getAvatar$ | async }}"
+            alt="profile-img"
+            *ngIf="getAvatar$ | async; else defaultAvatar"
+        />
+    </div>
+    <div class="profile-header__info">
+        <h4 class="profile-header__info-name">{{ name$ | async }}</h4>
+        <span class="profile-header__info-subtitle">
+            {{ 'PROFILE_HEADER.SUB_TITLE' | translate }}
+        </span>
+    </div>
+</header>
+<ng-template #defaultAvatar>
+    <img
+        src="../../../../../assets/img/avatar.png"
+        class="profile-header__logo-default-img"
+        alt="default-profile-image"
+    />
+</ng-template>
