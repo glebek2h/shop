@@ -1,19 +1,16 @@
 import { ActionReducerMap, MetaReducer } from '@ngrx/store';
-import * as fromAdmin from '../state/admin.reducer';
+import * as AdminModels from './admin.model';
+import * as fromAdmin from './reducers/admin.reducer';
+import * as fromOrders from './reducers/orders.reducer';
 
 export interface AdminState {
-    name: string;
-    email: string;
-    avatar: string;
-    isLoad: boolean;
+    [fromAdmin.adminFeatureKey]: AdminModels.AdminInfoState;
+    [fromOrders.ordersFeatureKey]: AdminModels.OrdersState;
 }
 
-export interface AppState {
-    [fromAdmin.adminFeatureKey]: AdminState;
-}
-
-export const reducers: ActionReducerMap<AppState> = {
+export const reducers: ActionReducerMap<AdminState> = {
     [fromAdmin.adminFeatureKey]: fromAdmin.reducer,
+    [fromOrders.ordersFeatureKey]: fromOrders.reducer,
 };
 
 export const metaReducers: Array<MetaReducer> = [];

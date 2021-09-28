@@ -89,7 +89,6 @@
             }
         }
         &-list {
-
             &-items {
                 display: flex;
                 flex-direction: column;
@@ -100,12 +99,12 @@
                     &-img {
                         width: 80px;
                         height: 80px;
-                        margin-right: 10px;    
+                        margin-right: 10px;
                     }
                     &-info {
                         display: flex;
                         flex-direction: column;
-                        color: var(--color-text)
+                        color: var(--color-text);
                     }
                 }
             }

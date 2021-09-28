@@ -1,90 +1,78 @@
 <div class="orders-wrap">
     <div class="orders-wrap__search">
         <div class="orders-wrap__search-number">
-            <label class="search-number-label" for="search-number"
-                >Order number:</label
-            >
+            <label class="search-number-label" for="search-number">{{
+                'ORDERS.ORDER_NUMBER_SEARCH' | translate
+            }}</label>
             <input class="search-number-input" type="text" id="search-number" />
         </div>
         <div class="orders-wrap__search-word">
-            <label class="search-word-label" for="search-word"
-                >Product name:</label
-            >
+            <label class="search-word-label" for="search-word">{{
+                'ORDERS.PRODUCT_NAME_SEARCH' | translate
+            }}</label>
             <input class="search-word-input" type="text" id="search-word" />
         </div>
     </div>
-    <div class="orders-items-wrap">
-        <div class="orders-wrap__products">
+    <div class="orders-items-wrap" *ngIf="getOrders$ | async as orders">
+        <div class="orders-wrap__products" *ngFor="let order of orders">
             <div class="orders-wrap__products-header">
                 <div class="orders-wrap__products-header-order">
-                    <span>Order №: <b>303030</b></span>
-                    <span>Ordering time №: <b>7 february 2020 14:20</b></span>
+                    <span
+                        >{{ 'ORDERS.ORDER' | translate }}
+                        <b>{{ order.orderNumber }}</b></span
+                    >
+                    <span
+                        >{{ 'ORDERS.ORDERING_TIME' | translate }}
+                        <b>{{ order.orderingTime }}</b></span
+                    >
                 </div>
                 <div class="orders-wrap__products-header-shop">
-                    <span class="shop-label">Shop: <b>Shop Name</b></span>
+                    <span class="shop-label"
+                        >{{ 'ORDERS.SHOP' | translate }}
+                        <b>{{ order.shopName }}</b></span
+                    >
                     <div class="links-wrap">
-                        <a href="#">Go to the shop</a>
-                        <a href="#">
+                        <a href="{{ order.shopLink }}">{{
+                            'ORDERS.SHOP_LINK' | translate
+                        }}</a>
+                        <a href="{{ order.sellerLink }}">
                             <mat-icon>
                                 <span> email </span>
                             </mat-icon>
-                            Message to the seller
+                            {{ 'ORDERS.SELLER_LINK' | translate }}
                         </a>
                     </div>
                 </div>
                 <div class="orders-wrap__products-header-total">
-                    <span class="order-title">Total:</span>
-                    <span class="order-total"><b>$7.77</b></span>
+                    <span class="order-title">{{
+                        'ORDERS.TOTAL' | translate
+                    }}</span>
+                    <span class="order-total"
+                        ><b>${{ order.total }}</b></span
+                    >
                 </div>
                 <div class="orders-wrap__products-header-remove">
                     <mat-icon>delete</mat-icon>
                 </div>
             </div>
             <div class="orders-wrap__products-list">
-                <ul class="orders-wrap__products-list-items">
+                <ul
+                    class="orders-wrap__products-list-items"
+                    *ngFor="let item of order.orderItems"
+                >
                     <li class="item">
                         <img
-                            src="../../../../../assets/img/avatar.png"
+                            src="{{ item.imgUrl }}"
                             alt="item-img"
                             class="item-img"
                         />
                         <div class="item-info">
                             <p>
-                                Lorem, ipsum dolor sit amet consectetur
-                                adipisicing elit. Culpa incidunt debitis esse
-                                sed maiores.
+                                {{ item.description }}
                             </p>
-                            <span><b>$5.30</b></span>
-                        </div>
-                    </li>
-                    <li class="item">
-                        <img
-                            src="../../../../../assets/img/avatar.png"
-                            alt="item-img"
-                            class="item-img"
-                        />
-                        <div class="item-info">
-                            <p>
-                                Lorem, ipsum dolor sit amet consectetur
-                                adipisicing elit. Culpa incidunt debitis esse
-                                sed maiores.
-                            </p>
-                            <span><b>$5.30</b></span>
-                        </div>
-                    </li>
-                    <li class="item">
-                        <img
-                            src="../../../../../assets/img/avatar.png"
-                            alt="item-img"
-                            class="item-img"
-                        />
-                        <div class="item-info">
-                            <p>
-                                Lorem, ipsum dolor sit amet consectetur
-                                adipisicing elit. Culpa incidunt debitis esse
-                                sed maiores.
-                            </p>
-                            <span><b>$5.30</b></span>
+                            <span
+                                ><b>${{ item.price }}</b></span
+                            >
                         </div>
                     </li>
                 </ul>

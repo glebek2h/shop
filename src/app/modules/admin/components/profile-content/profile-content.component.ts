@@ -1,18 +1,19 @@
 import {
     ChangeDetectionStrategy,
     Component,
-    OnDestroy,
     OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { combineLatest, Observable, Subject } from 'rxjs';
-import * as LoadAdminActions from '../../state/admin.actions';
-import { AdminState } from '../../state/admin.state';
-import * as AdminSelect from '../../state/admin.selectors';
-import { map, take, takeUntil } from 'rxjs/operators';
+import * as LoadAdminActions from '../../state/actions/admin.actions';
+import * as AdminSelect from '../../state/selectors/admin.selectors';
 import { Admin } from '../../state/admin.model';
+import { AdminState } from '../../state/admin.state';
+
+export interface SafeUrlImpl extends SafeUrl {
+    changingThisBreaksApplicationSecurity: string;
+}
 
 @Component({
     selector: 'app-profile-content',
@@ -20,18 +21,13 @@ import { Admin } from '../../state/admin.model';
     styleUrls: ['./profile-content.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileContentComponent implements OnInit, OnDestroy {
-    private readonly unsubscribe$ = new Subject();
+export class ProfileContentComponent implements OnInit {
     panelOpenState: boolean;
-    fileUrl: string;
+    fileUrl: SafeUrlImpl;
     dataObj: Admin;
-    // Вот тут я пытаюсь задать типа SafeUrl, но он ругается. Поэтому я сделал any.
-    trustUrl: any;
+    trustUrl: SafeUrlImpl;
     form: FormGroup;
-    readonly getAvatar$ = this.store
-    .select(AdminSelect.selectAvatar)
-    .pipe(takeUntil(this.unsubscribe$));
-
+    readonly getAvatar$ = this.store.select(AdminSelect.selectAvatar);
 
     constructor(
         private store: Store<AdminState>,
@@ -66,13 +62,12 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
             reader.readAsDataURL(event.target.files[0]);
             reader.onload = (event: { target: { result } }) => {
                 this.fileUrl = event.target.result;
-                this.trustUrl = this.sanitazer.bypassSecurityTrustUrl(
-                    this.fileUrl,
-                );
+                this.trustUrl = this.sanitazer.bypassSecurityTrustResourceUrl(
+                    this.fileUrl.changingThisBreaksApplicationSecurity,
+                ) as SafeUrlImpl;
                 this.store.dispatch(
                     LoadAdminActions.uploadProfileAvatar({
-                        uploadAvatar:
-                            this.trustUrl.changingThisBreaksApplicationSecurity,
+                        uploadAvatar: this.trustUrl,
                     }),
                 );
             };
@@ -81,9 +76,5 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
 
     onRemoveFile() {
         this.store.dispatch(LoadAdminActions.removeProfileAvatar());
-    }
-    ngOnDestroy(): void {
-        this.unsubscribe$.next();
-        this.unsubscribe$.complete();
     }
 }

@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
     selector: 'app-profile-navigation',
     templateUrl: './profile-navigation.component.html',
     styleUrls: ['./profile-navigation.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileNavigationComponent implements OnInit {
     constructor() {}

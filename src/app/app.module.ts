@@ -12,6 +12,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/effects/app.effects';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { createTranslateLoader } from './shared/utils/utils';
 
 @NgModule({
     declarations: [AppComponent, ErrorPageComponent],
@@ -19,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         FormsModule,
         BrowserModule,
         AppRoutingModule,
+        HttpClientModule,
         StoreDevtoolsModule.instrument({
             maxAge: 25,
             logOnly: environment.production,
@@ -27,6 +31,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         EffectsModule.forRoot([AppEffects]),
         BrowserAnimationsModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: createTranslateLoader,
+                deps: [HttpClient],
+            },
+            useDefaultLang: false,
+        }),
     ],
     providers: [],
     bootstrap: [AppComponent],

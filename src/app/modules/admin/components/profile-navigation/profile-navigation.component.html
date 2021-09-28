@@ -1,19 +1,19 @@
 <nav class="navigation">
-    <span>Account Navigation</span>
+    <span>{{ 'NAVIGATION.TITLE' | translate }}</span>
     <ul>
         <li
             routerLinkActive="active"
             [routerLink]="['profile']"
             class="navigation-item"
         >
-            Profile
+            {{ 'NAVIGATION.PROFILE' | translate }}
         </li>
         <li
             routerLinkActive="active"
             [routerLink]="['orders']"
             class="navigation-item"
         >
-            Orders
+            {{ 'NAVIGATION.ORDERS' | translate }}
         </li>
     </ul>
 </nav>

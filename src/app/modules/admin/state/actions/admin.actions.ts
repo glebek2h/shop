@@ -1,7 +1,7 @@
+import { SafeUrl } from '@angular/platform-browser';
 import { createAction, props } from '@ngrx/store';
 import * as ActionConstants from 'src/app/store/store-action.constants';
-import * as AdminModels from './admin.model';
-import { AdminState } from './admin.state';
+import * as AdminModels from '../admin.model';
 
 // upload profile info from BE
 
@@ -38,7 +38,7 @@ export const RemoveProfileAvatarResponse = createAction(
 
 export const uploadProfileAvatar = createAction(
     ActionConstants.UPLOAD_PROFILE_AVATAR,
-    props<{ uploadAvatar: string }>(),
+    props<{ uploadAvatar: SafeUrl }>(),
 );
 
 export const uploadProfileAvatarSuccess = createAction(

@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { temporaryImgUrl } from 'src/app/shared/utils/utils';
-import * as AdminActions from './admin.actions';
+import * as AdminActions from '../actions/admin.actions';
 
 @Injectable()
 export class AdminEffects {

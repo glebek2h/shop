@@ -15,7 +15,7 @@ const routes: Routes = [
             {
                 path: '',
                 redirectTo: `${constants.PROFILE}`,
-                pathMatch: 'full'
+                pathMatch: 'full',
             },
             {
                 path: `${constants.PROFILE}`,
@@ -28,9 +28,9 @@ const routes: Routes = [
             {
                 path: '**',
                 redirectTo: `${constants.PROFILE}`,
-                pathMatch: 'full'
+                pathMatch: 'full',
             },
-        ]
+        ],
     },
     {
         path: constants.ERROR_PAGE,

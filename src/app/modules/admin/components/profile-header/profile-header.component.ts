@@ -5,10 +5,10 @@ import {
     OnInit,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatest, Observable, Subject } from 'rxjs';
+import { combineLatest, Subject } from 'rxjs';
+import * as AdminSelectors from '../../state/selectors/admin.selectors';
+import { map, takeUntil } from 'rxjs/operators';
 import { AdminState } from '../../state/admin.state';
-import * as AdminSelectors from '../../state/admin.selectors';
-import { map, take, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-profile-header',

@@ -19,6 +19,4 @@ export const reducers: ActionReducerMap<AppState> = {
     [fromApp.appFeatureKey]: fromApp.reducer,
 };
 
-export const metaReducers: Array<MetaReducer> = [
-    localStorageSyncReducer,
-];
+export const metaReducers: Array<MetaReducer> = [localStorageSyncReducer];

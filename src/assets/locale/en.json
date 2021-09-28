@@ -1,0 +1,37 @@
+{
+    "LANGUAGE": {
+        "ENG": "eng",
+        "RU": "ru"
+    },
+    "NAVIGATION": {
+        "TITLE": "Account Navigation",
+        "PROFILE": "Profile",
+        "ORDERS": "Orders"
+    },
+    "PROFILE_HEADER": {
+        "SUB_TITLE": "Your personal account"
+    },
+    "PROFILE_CONTENT": {
+        "TITLE": "Profile",
+        "NAME_LABEL": "Name",
+        "EMAIL_LABEL": "Email",
+        "NAME_VALIDATION": "Enter name",
+        "EMAIL_VALIDATION": "Enter email",
+        "EMAIL_VALIDATION_CHECK": "Enter valid email",
+        "UPDATE_PROFILE": "Update profile",
+        "PROFILE_PICTURE": "Profile picture",
+        "EDIT": "Edit",
+        "UPLOAD": "Upload",
+        "REMOVE_IMG": "Remove img"
+    },
+    "ORDERS": {
+        "ORDER_NUMBER_SEARCH": "Order number:",
+        "PRODUCT_NAME_SEARCH": "Product name:",
+        "ORDER": "Order №:",
+        "ORDERING_TIME": "Ordering time:",
+        "SHOP": "Shop:",
+        "SHOP_LINK": "Go to the shop",
+        "SELLER_LINK": "Message to the seller",
+        "TOTAL": "Total:"
+    }
+}
