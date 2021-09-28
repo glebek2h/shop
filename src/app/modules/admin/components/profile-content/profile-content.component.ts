@@ -1,15 +1,18 @@
 import {
     ChangeDetectionStrategy,
     Component,
+    OnDestroy,
     OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { SafeUrl } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import * as LoadAdminActions from '../../state/actions/admin.actions';
 import * as AdminSelect from '../../state/selectors/admin.selectors';
 import { Admin } from '../../state/admin.model';
 import { AdminState } from '../../state/admin.state';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 export interface SafeUrlImpl extends SafeUrl {
     changingThisBreaksApplicationSecurity: string;
@@ -21,18 +24,18 @@ export interface SafeUrlImpl extends SafeUrl {
     styleUrls: ['./profile-content.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileContentComponent implements OnInit {
+export class ProfileContentComponent implements OnInit, OnDestroy {
+    private unsubscribe$ = new Subject();
     panelOpenState: boolean;
     fileUrl: SafeUrlImpl;
     dataObj: Admin;
     trustUrl: SafeUrlImpl;
     form: FormGroup;
-    readonly getAvatar$ = this.store.select(AdminSelect.selectAvatar);
+    readonly getAvatar$ = this.store
+        .select(AdminSelect.selectAvatar)
+        .pipe(takeUntil(this.unsubscribe$));
 
-    constructor(
-        private store: Store<AdminState>,
-        private sanitazer: DomSanitizer,
-    ) {}
+    constructor(readonly store: Store<AdminState>) {}
 
     ngOnInit(): void {
         this.form = new FormGroup({
@@ -62,11 +65,10 @@ export class ProfileContentComponent implements OnInit {
             reader.readAsDataURL(event.target.files[0]);
             reader.onload = (event: { target: { result } }) => {
                 this.fileUrl = event.target.result;
-                this.trustUrl = this.sanitazer.bypassSecurityTrustResourceUrl(
-                    this.fileUrl.changingThisBreaksApplicationSecurity,
-                ) as SafeUrlImpl;
+                this.trustUrl = this.fileUrl;
+
                 this.store.dispatch(
-                    LoadAdminActions.uploadProfileAvatar({
+                    LoadAdminActions.uploadProfileAvatarSuccess({
                         uploadAvatar: this.trustUrl,
                     }),
                 );
@@ -76,5 +78,10 @@ export class ProfileContentComponent implements OnInit {
 
     onRemoveFile() {
         this.store.dispatch(LoadAdminActions.removeProfileAvatar());
+    }
+
+    ngOnDestroy(): void {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
     }
 }

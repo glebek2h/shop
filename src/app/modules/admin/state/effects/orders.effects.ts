@@ -62,7 +62,3 @@ export class OrdersEffects {
 
     constructor(private actions$: Actions) {}
 }
-
-/* 
-
-*/

@@ -33,5 +33,10 @@
         "SHOP_LINK": "Go to the shop",
         "SELLER_LINK": "Message to the seller",
         "TOTAL": "Total:"
+    },
+    "ERROR_PAGE": {
+        "TITLE": "Error 404.",
+        "TEXT": "Something went wrong. We will fix this problem as soon as possible.",
+        "BACK_BTN": "Home Page"
     }
 }

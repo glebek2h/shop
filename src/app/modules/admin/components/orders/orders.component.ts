@@ -1,5 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnDestroy,
+    OnInit,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import * as OrdersActions from '../../state/actions/orders.actions';
 import { AdminState } from '../../state/admin.state';
 import * as OrdersSelect from '../../state/selectors/orders.selectors';
@@ -10,12 +17,20 @@ import * as OrdersSelect from '../../state/selectors/orders.selectors';
     styleUrls: ['./orders.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrdersComponent implements OnInit {
-    readonly getOrders$ = this.store.select(OrdersSelect.selectState);
+export class OrdersComponent implements OnInit, OnDestroy {
+    private unsubscribe$ = new Subject();
+    readonly getOrders$ = this.store
+        .select(OrdersSelect.selectState)
+        .pipe(takeUntil(this.unsubscribe$));
 
-    constructor(private store: Store<AdminState>) {}
+    constructor(readonly store: Store<AdminState>) {}
 
     ngOnInit(): void {
         this.store.dispatch(OrdersActions.getOrders());
+    }
+
+    ngOnDestroy(): void {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
     }
 }

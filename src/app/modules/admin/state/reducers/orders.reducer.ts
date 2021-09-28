@@ -1,10 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 import * as OrdersActions from '../actions/orders.actions';
-import * as AdminModels from '../admin.model';
+import { OrdersState } from '../admin.state';
 
 export const ordersFeatureKey = 'orders-list';
 
-export const initialState: AdminModels.OrdersState = {
+export const initialState: OrdersState = {
     items: [],
 };
 

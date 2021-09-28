@@ -17,18 +17,20 @@ import { AdminState } from '../../state/admin.state';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileHeaderComponent implements OnInit, OnDestroy {
-    readonly unsubscribe$ = new Subject();
-    readonly name$ = this.store.select(AdminSelectors.selectName);
+    private unsubscribe$ = new Subject();
+    readonly name$ = this.store
+        .select(AdminSelectors.selectName)
+        .pipe(takeUntil(this.unsubscribe$));
     readonly getAvatar$ = this.store
         .select(AdminSelectors.selectAvatar)
         .pipe(takeUntil(this.unsubscribe$));
-    readonly isReadyToDisplay$ = combineLatest([this.name$]).pipe(
-        map(data => data.every(el => !!el)),
-    );
 
-    constructor(private store: Store<AdminState>) {}
+    readonly isReadyToDisplay$ = this.name$.pipe(map(el => !!el));
+
+    constructor(readonly store: Store<AdminState>) {}
 
     ngOnInit(): void {}
+
     ngOnDestroy(): void {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();

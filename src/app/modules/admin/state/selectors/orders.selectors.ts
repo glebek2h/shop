@@ -1,11 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ordersFeatureKey } from '../reducers/orders.reducer';
-import * as AdminModule from '../admin.model';
+import { OrdersState } from '../admin.state';
 
 export const selectOrdersFeature =
-    createFeatureSelector<AdminModule.OrdersState>(ordersFeatureKey);
+    createFeatureSelector<OrdersState>(ordersFeatureKey);
 
 export const selectState = createSelector(
     selectOrdersFeature,
-    (state: AdminModule.OrdersState) => state.items,
+    (state: OrdersState) => state.items,
 );

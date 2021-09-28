@@ -1,17 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
 import * as AdminActions from '../actions/admin.actions';
-import * as AdminModels from '../admin.model';
+import { AdminInfoState } from '../admin.state';
 
 export const adminFeatureKey = 'profile-info';
 
-export const initialState: AdminModels.AdminInfoState = {
+export const initialState: AdminInfoState = {
     name: null,
     email: null,
     avatar: null,
     isLoad: null,
 };
 
-export const reducer = createReducer(
+export const reducer = createReducer<AdminInfoState>(
     initialState,
     on(AdminActions.getProfileInfoSuccess, (state, action) => {
         return {
@@ -35,13 +35,13 @@ export const reducer = createReducer(
             email: action.updatedData.email,
         };
     }),
-    on(AdminActions.RemoveProfileAvatarResponse, state => {
+    on(AdminActions.removeProfileAvatarSuccess, state => {
         return {
             ...state,
             avatar: null,
         };
     }),
-    on(AdminActions.uploadProfileAvatar, (state, action) => {
+    on(AdminActions.uploadProfileAvatarSuccess, (state, action) => {
         return {
             ...state,
             avatar: action.uploadAvatar,

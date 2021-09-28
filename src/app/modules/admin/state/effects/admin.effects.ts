@@ -46,7 +46,7 @@ export class AdminEffects {
                 }),
             ),
             map(removeDataResponse =>
-                AdminActions.RemoveProfileAvatarResponse({
+                AdminActions.removeProfileAvatarSuccess({
                     removeDataResponse,
                 }),
             ),
@@ -62,8 +62,8 @@ export class AdminEffects {
                     message: 'successfully',
                 }),
             ),
-            map(message =>
-                AdminActions.uploadProfileAvatarSuccess({ message }),
+            map(uploadAvatar =>
+                AdminActions.uploadProfileAvatarSuccess({ uploadAvatar }),
             ),
         );
     });

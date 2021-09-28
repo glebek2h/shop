@@ -29,7 +29,7 @@ export const updateProfileInfoSuccess = createAction(
 export const removeProfileAvatar = createAction(
     ActionConstants.REMOVE_PROFILE_AVATAR,
 );
-export const RemoveProfileAvatarResponse = createAction(
+export const removeProfileAvatarSuccess = createAction(
     ActionConstants.REMOVE_PROFILE_AVATAR_SUCCESS,
     props<{ removeDataResponse: AdminModels.RemoveProfileAvatarResponse }>(),
 );
@@ -43,5 +43,5 @@ export const uploadProfileAvatar = createAction(
 
 export const uploadProfileAvatarSuccess = createAction(
     ActionConstants.UPLOAD_PROFILE_AVATAR_SUCCESS,
-    props<{ message: AdminModels.UploadProfileAvatarResponse }>(),
+    props<{ uploadAvatar: SafeUrl }>(),
 );
