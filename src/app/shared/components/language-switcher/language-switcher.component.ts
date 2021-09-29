@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LanguageSwitchService } from 'src/app/services/language-switch.service';
 
-interface Food {
+interface Language {
     value: string;
     viewValue: string;
 }
@@ -14,7 +14,7 @@ interface Food {
 export class LanguageSwitcherComponent implements OnInit {
     constructor(readonly languageSwitchService: LanguageSwitchService) {}
 
-    foods: Food[] = [
+    languages: Language[] = [
         { value: 'en', viewValue: 'en' },
         { value: 'ru', viewValue: 'ru' },
     ];

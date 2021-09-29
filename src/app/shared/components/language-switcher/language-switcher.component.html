@@ -3,10 +3,10 @@
     <mat-select>
         <mat-option
             (click)="changeLanguage($event)"
-            *ngFor="let food of foods"
-            [value]="food.value"
+            *ngFor="let language of languages"
+            [value]="language.value"
         >
-            {{ food.viewValue | translate }}
+            {{ language.viewValue | translate }}
         </mat-option>
     </mat-select>
 </mat-form-field>
