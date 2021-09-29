@@ -7,6 +7,7 @@ import {
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { OrdersServerService } from 'src/app/services/orders-service/orders-server.service';
 import * as OrdersActions from '../../state/actions/orders.actions';
 import { AdminState } from '../../state/admin.state';
 import * as OrdersSelect from '../../state/selectors/orders.selectors';
@@ -23,10 +24,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
         .select(OrdersSelect.selectState)
         .pipe(takeUntil(this.unsubscribe$));
 
-    constructor(readonly store: Store<AdminState>) {}
+    constructor(readonly store: Store<AdminState>, readonly ordersServerService: OrdersServerService) {}
 
     ngOnInit(): void {
         this.store.dispatch(OrdersActions.getOrders());
+        this.ordersServerService.getOrders()
     }
 
     ngOnDestroy(): void {
