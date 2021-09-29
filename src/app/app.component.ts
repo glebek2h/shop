@@ -12,13 +12,11 @@ export class AppComponent implements OnInit {
     constructor(
         readonly translate: TranslateService,
         readonly languageSwitchService: LanguageSwitchService,
-    ) {
-        const language = this.languageSwitchService.getLanguage(
-            environment.langKey,
-        );
-        translate.setDefaultLang(environment.defaultLang);
+    ) {}
+
+    ngOnInit() {
+        const language = this.languageSwitchService.getLanguage();
+        this.translate.setDefaultLang(environment.defaultLang);
         this.languageSwitchService.switchLanguage(language);
     }
-
-    ngOnInit() {}
 }

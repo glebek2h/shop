@@ -12,15 +12,14 @@ interface Language {
     styleUrls: ['./language-switcher.component.scss'],
 })
 export class LanguageSwitcherComponent implements OnInit {
-    constructor(readonly languageSwitchService: LanguageSwitchService) {}
+    constructor(private languageSwitchService: LanguageSwitchService) {}
 
     languages: Language[] = [
-        { value: 'en', viewValue: 'en' },
-        { value: 'ru', viewValue: 'ru' },
+        { value: 'en', viewValue: 'LANGUAGE.ENG' },
+        { value: 'ru', viewValue: 'LANGUAGE.RU' },
     ];
 
-    changeLanguage(event: { target: { innerText: string } }) {
-        const value = event.target.innerText;
+    changeLanguage(value: string): void {
         this.languageSwitchService.switchLanguage(value);
     }
 

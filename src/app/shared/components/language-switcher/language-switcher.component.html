@@ -2,8 +2,8 @@
     <mat-label>{{ 'LANGUAGE.LABEL' | translate }}</mat-label>
     <mat-select>
         <mat-option
-            (click)="changeLanguage($event)"
-            *ngFor="let language of languages"
+        *ngFor="let language of languages"
+        (click)="changeLanguage(language.value)"
             [value]="language.value"
         >
             {{ language.viewValue | translate }}
