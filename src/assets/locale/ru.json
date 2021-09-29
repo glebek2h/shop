@@ -1,5 +1,6 @@
 {
     "LANGUAGE": {
+        "LABEL": "Язык",
         "ENG": "анг",
         "RU": "ру"
     },
@@ -14,10 +15,10 @@
     "PROFILE_CONTENT": {
         "TITLE": "Профиль",
         "NAME_LABEL": "Имя",
-        "EMAIL_LABEL": "E-mail",
+        "EMAIL_LABEL": "Почта",
         "NAME_VALIDATION": "Введите имя",
-        "EMAIL_VALIDATION": "Введите e-mail",
-        "EMAIL_VALIDATION_CHECK": "Введите правильный e-mail",
+        "EMAIL_VALIDATION": "Введите почту",
+        "EMAIL_VALIDATION_CHECK": "Введите правильную почту",
         "UPDATE_PROFILE": "Обновить профиль",
         "PROFILE_PICTURE": "Фото профиля",
         "EDIT": "Редактировать",

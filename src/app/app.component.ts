@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
+import { LanguageSwitchService } from './services/language-switch.service';
 
 @Component({
     selector: 'app-root',
@@ -7,10 +9,14 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-    constructor(translate: TranslateService) {
-        translate.setDefaultLang('en');
-        translate.use('en');
-    }
+    constructor(
+        readonly translate: TranslateService,
+        readonly languageSwitchService: LanguageSwitchService,
+    ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        const language = this.languageSwitchService.getLanguage();
+        this.translate.setDefaultLang(environment.defaultLang);
+        this.languageSwitchService.switchLanguage(language);
+    }
 }
