@@ -1,0 +1,15 @@
+.select-language {
+    width: 120px;
+    position: fixed;
+    right: 25px;
+    top: 25px;
+}
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+    color: var(--primary-color);
+}
+::ng-deep .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+    color: var(--primary-color);
+}
+::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: var(--primary-color);
+}

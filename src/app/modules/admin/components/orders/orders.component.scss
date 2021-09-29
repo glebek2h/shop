@@ -73,7 +73,7 @@
                     color: var(--color-text);
                 }
                 .order-total {
-                    color: var(--btn-primary);
+                    color: var(--primary-color);
                     font-size: 16px;
                 }
             }
@@ -84,7 +84,7 @@
                 cursor: pointer;
                 color: var(--color-text);
                 &:hover {
-                    color: var(--btn-primary-hover);
+                    color: var(--primary-color-hover);
                 }
             }
         }

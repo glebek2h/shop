@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { createTranslateLoader } from './shared/utils/utils';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
     declarations: [AppComponent, ErrorPageComponent],
@@ -23,6 +24,7 @@ import { createTranslateLoader } from './shared/utils/utils';
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
+        SharedModule,
         StoreDevtoolsModule.instrument({
             maxAge: 25,
             logOnly: environment.production,

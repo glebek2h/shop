@@ -15,13 +15,20 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/posts',(req, res, next) => {
-  const posts = [
-    {id: 1, name: 'gleb'},
-    {id: 2, name: 'kiryl'}];
+app.use('/api/orders',(req, res, next) => {
+  const orders = [
+    {
+      id: 1, 
+      name: 'gleb'
+    },
+    {
+      id: 2, 
+      name: 'kiryl'
+    }
+  ];
   res.status(200).json({
     meesage: 'Successful',
-    posts
+    orders
   });
 });
 
