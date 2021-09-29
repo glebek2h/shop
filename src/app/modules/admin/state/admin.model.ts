@@ -18,7 +18,7 @@ export interface Orders {
 }
 
 export interface APIResponse<T> {
-    orders: Array<T>
+    orders: Array<Orders>
   }
 
 export interface OrderItems {

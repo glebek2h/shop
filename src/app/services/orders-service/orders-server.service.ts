@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { APIResponse, Orders } from 'src/app/modules/admin/state/admin.model';
-import { environment } from 'src/environments/environment';
-import { orders } from '../service.constants';
+import * as serviceConstants from '../service.constants';
 
 @Injectable({
     providedIn: 'root',
@@ -13,7 +12,7 @@ export class OrdersServerService {
 
     getOrders(): Observable<APIResponse<Orders>> {
         return this.http.get<APIResponse<Orders>>(
-            `${environment.api_url}${orders}`,
+            `${serviceConstants.api_URL}${serviceConstants.orders}`,
         );
     }
 }

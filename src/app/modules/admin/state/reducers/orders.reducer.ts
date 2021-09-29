@@ -14,7 +14,7 @@ export const reducer = createReducer(
     on(OrdersActions.getOrdersSuccess, (state, action) => {
         return {
             ...state,
-            orders: action.orders.orders,
+            orders: action.orders,
         };
     }),
 );

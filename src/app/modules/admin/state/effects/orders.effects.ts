@@ -14,16 +14,14 @@ export class OrdersEffects {
                 this.ordersServerService
                     .getOrders()
                     .pipe(
-                        map(orders =>
-                            OrdersActions.getOrdersSuccess({ orders }),
-                        ),
+                        map(orders => OrdersActions.getOrdersSuccess(orders)),
                     ),
             ),
         );
     });
 
     constructor(
-        private actions$: Actions,
-        private ordersServerService: OrdersServerService,
+        readonly actions$: Actions,
+        readonly ordersServerService: OrdersServerService,
     ) {}
 }
