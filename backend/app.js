@@ -27,12 +27,12 @@ app.use('/api/orders', (req, res, next) => {
             total: 200,
             orderItems: [
                 {
-                    imgUrl: '../src/assets/img/grogu.jpeg',
+                    imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSabn_DedS8yXPcmns6me0f6dNvXk_hF06XTA&usqp=CAU',
                     description: 't-shirt',
                     price: 100,
                 },
                 {
-                    imgUrl: '../src/assets/img/grogu.jpeg',
+                    imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSabn_DedS8yXPcmns6me0f6dNvXk_hF06XTA&usqp=CAU',
                     description: 'jeans',
                     price: 100,
                 },
@@ -48,12 +48,12 @@ app.use('/api/orders', (req, res, next) => {
             total: 400,
             orderItems: [
                 {
-                    imgUrl: '../src/assets/img/grogu.jpeg',
+                    imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSabn_DedS8yXPcmns6me0f6dNvXk_hF06XTA&usqp=CAU',
                     description: 'sneakers',
                     price: 200,
                 },
                 {
-                    imgUrl: '../src/assets/img/grogu.jpeg',
+                    imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSabn_DedS8yXPcmns6me0f6dNvXk_hF06XTA&usqp=CAU',
                     description: 'lamp',
                     price: 200,
                 },
@@ -61,7 +61,6 @@ app.use('/api/orders', (req, res, next) => {
         },
     ];
     res.status(200).json({
-        message: 'Successful',
         orders,
     });
 });

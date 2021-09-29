@@ -7,5 +7,5 @@ export const selectOrdersFeature =
 
 export const selectState = createSelector(
     selectOrdersFeature,
-    (state: OrdersState) => state.items,
+    (state: OrdersState) => state.orders,
 );
