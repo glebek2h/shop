@@ -9,6 +9,7 @@ import { environment } from '../environments/environment';
 import { reducers, metaReducers } from './store/app.state';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/effects/app.effects';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AppEffects } from './store/effects/app.effects';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([AppEffects])
+    EffectsModule.forRoot([AppEffects]),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
