@@ -24,11 +24,14 @@ export class OrdersComponent implements OnInit, OnDestroy {
         .select(OrdersSelect.selectState)
         .pipe(takeUntil(this.unsubscribe$));
 
-    constructor(readonly store: Store<AdminState>, readonly ordersServerService: OrdersServerService) {}
+    constructor(
+        readonly store: Store<AdminState>,
+        readonly ordersServerService: OrdersServerService,
+    ) {}
 
     ngOnInit(): void {
         this.store.dispatch(OrdersActions.getOrders());
-        this.ordersServerService.getOrders()
+        this.ordersServerService.getOrders();
     }
 
     ngOnDestroy(): void {
