@@ -1,5 +1,4 @@
-import { createAction, props } from '@ngrx/store';
+import { createAction } from '@ngrx/store';
+import * as Constatns from '../store-action.constants'
 
-export const TestApp = createAction(
-  '[App] Test App'
-);
+export const TestApp = createAction(Constatns.TEST_APP);

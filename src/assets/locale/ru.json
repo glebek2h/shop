@@ -1,0 +1,43 @@
+{
+    "LANGUAGE": {
+        "LABEL": "Язык",
+        "ENG": "анг",
+        "RU": "ру"
+    },
+    "NAVIGATION": {
+        "TITLE": "Навигация",
+        "PROFILE": "Профиль",
+        "ORDERS": "Заказы"
+    },
+    "PROFILE_HEADER": {
+        "SUB_TITLE": "Ваш аккаунт"
+    },
+    "PROFILE_CONTENT": {
+        "TITLE": "Профиль",
+        "NAME_LABEL": "Имя",
+        "EMAIL_LABEL": "Почта",
+        "NAME_VALIDATION": "Введите имя",
+        "EMAIL_VALIDATION": "Введите почту",
+        "EMAIL_VALIDATION_CHECK": "Введите правильную почту",
+        "UPDATE_PROFILE": "Обновить профиль",
+        "PROFILE_PICTURE": "Фото профиля",
+        "EDIT": "Редактировать",
+        "UPLOAD": "Загрузить",
+        "REMOVE_IMG": "Удалить фото"
+    },
+    "ORDERS": {
+        "ORDER_NUMBER_SEARCH": "Номер заказа:",
+        "PRODUCT_NAME_SEARCH": "Название продукта:",
+        "ORDER": "Заказ №:",
+        "ORDERING_TIME": "Время заказа:",
+        "SHOP": "Магазин:",
+        "SHOP_LINK": "Перейти в магазин",
+        "SELLER_LINK": "Сообщение продавцу",
+        "TOTAL": "Итого:"
+    },
+    "ERROR_PAGE": {
+        "TITLE": "Ошибка 404.",
+        "TEXT": "Что-то пошло не так. Мы решим эту проблему в кратчайшие сроки.",
+        "BACK_BTN": "Назад"
+    }
+}

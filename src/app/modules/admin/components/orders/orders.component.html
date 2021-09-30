@@ -1,0 +1,82 @@
+<div class="orders-wrap">
+    <div class="orders-wrap__search">
+        <div class="orders-wrap__search-number">
+            <label class="search-number-label" for="search-number">{{
+                'ORDERS.ORDER_NUMBER_SEARCH' | translate
+            }}</label>
+            <input class="search-number-input" type="text" id="search-number" />
+        </div>
+        <div class="orders-wrap__search-word">
+            <label class="search-word-label" for="search-word">{{
+                'ORDERS.PRODUCT_NAME_SEARCH' | translate
+            }}</label>
+            <input class="search-word-input" type="text" id="search-word" />
+        </div>
+    </div>
+    <div class="orders-items-wrap" *ngIf="getOrders$ | async as orders">
+        <div class="orders-wrap__products" *ngFor="let order of orders">
+            <div class="orders-wrap__products-header">
+                <div class="orders-wrap__products-header-order">
+                    <span
+                        >{{ 'ORDERS.ORDER' | translate }}
+                        <b>{{ order.orderNumber }}</b></span
+                    >
+                    <span
+                        >{{ 'ORDERS.ORDERING_TIME' | translate }}
+                        <b>{{ order.orderingTime }}</b></span
+                    >
+                </div>
+                <div class="orders-wrap__products-header-shop">
+                    <span class="shop-label"
+                        >{{ 'ORDERS.SHOP' | translate }}
+                        <b>{{ order.shopName }}</b></span
+                    >
+                    <div class="links-wrap">
+                        <a href="{{ order.shopLink }}">{{
+                            'ORDERS.SHOP_LINK' | translate
+                        }}</a>
+                        <a href="{{ order.sellerLink }}">
+                            <mat-icon>
+                                <span> email </span>
+                            </mat-icon>
+                            {{ 'ORDERS.SELLER_LINK' | translate }}
+                        </a>
+                    </div>
+                </div>
+                <div class="orders-wrap__products-header-total">
+                    <span class="order-title">{{
+                        'ORDERS.TOTAL' | translate
+                    }}</span>
+                    <span class="order-total"
+                        ><b>${{ order.total }}</b></span
+                    >
+                </div>
+                <div class="orders-wrap__products-header-remove">
+                    <mat-icon>delete</mat-icon>
+                </div>
+            </div>
+            <div class="orders-wrap__products-list">
+                <ul
+                    class="orders-wrap__products-list-items"
+                    *ngFor="let item of order.orderItems"
+                >
+                    <li class="item">
+                        <img
+                            src="{{ item.imgUrl }}"
+                            alt="item-img"
+                            class="item-img"
+                        />
+                        <div class="item-info">
+                            <p>
+                                {{ item.description }}
+                            </p>
+                            <span
+                                ><b>${{ item.price }}</b></span
+                            >
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

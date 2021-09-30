@@ -1,0 +1,17 @@
+.profile-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    &__content {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        &-nav {
+            width: 20%;
+        }
+        &-outlet {
+            width: 78%;
+        }
+    }
+}
