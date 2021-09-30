@@ -8,7 +8,7 @@ import * as serviceConstants from '../service.constants';
     providedIn: 'root',
 })
 export class OrdersServerService {
-    constructor(readonly http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
     getOrders(): Observable<APIResponse<Orders>> {
         return this.http.get<APIResponse<Orders>>(

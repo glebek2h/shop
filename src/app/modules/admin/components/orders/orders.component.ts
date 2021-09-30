@@ -25,7 +25,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.unsubscribe$));
 
     constructor(
-        private store: Store<AdminState>,
+        readonly store: Store<AdminState>,
     ) {}
 
     ngOnInit(): void {
