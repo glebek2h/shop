@@ -21,7 +21,7 @@ export class OrdersEffects {
     });
 
     constructor(
-        private actions$: Actions,
-        readonly ordersServerService: OrdersServerService,
+        private readonly actions$: Actions,
+        private readonly ordersServerService: OrdersServerService,
     ) {}
 }
