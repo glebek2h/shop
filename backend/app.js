@@ -1,6 +1,23 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const Post = require('./models/post');
 
 const app = express();
+
+mongoose
+    .connect(
+        'mongodb+srv://gleb:GHc82iLQCD5iDdJM@cluster0.oszda.mongodb.net/shopDB?retryWrites=true&w=majority',
+    )
+    .then(() => {
+        console.log('Connected to database!');
+    })
+    .catch(e => {
+        console.log('Connection failed! ', e);
+    });
+
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -15,53 +32,22 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api/orders', (req, res, next) => {
-    const orders = [
-        {
-            id: 1,
-            orderNumber: 111,
-            orderingTime: '7 february 2020 14:20',
-            shopName: 'Aliexpress',
-            shopLink: 'shop-link',
-            sellerLink: 'seller-link',
-            total: 200,
-            orderItems: [
-                {
-                    imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSabn_DedS8yXPcmns6me0f6dNvXk_hF06XTA&usqp=CAU',
-                    description: 't-shirt',
-                    price: 100,
-                },
-                {
-                    imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSabn_DedS8yXPcmns6me0f6dNvXk_hF06XTA&usqp=CAU',
-                    description: 'jeans',
-                    price: 100,
-                },
-            ],
-        },
-        {
-            id: 2,
-            orderNumber: 112,
-            orderingTime: '12 september 2019 11:01',
-            shopName: 'Aliexpress',
-            shopLink: 'shop-link',
-            sellerLink: 'seller-link',
-            total: 400,
-            orderItems: [
-                {
-                    imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSabn_DedS8yXPcmns6me0f6dNvXk_hF06XTA&usqp=CAU',
-                    description: 'sneakers',
-                    price: 200,
-                },
-                {
-                    imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSabn_DedS8yXPcmns6me0f6dNvXk_hF06XTA&usqp=CAU',
-                    description: 'lamp',
-                    price: 200,
-                },
-            ],
-        },
+app.post('/api/posts', (req, res, next) => {
+    const post = new Post({ title: req.body.title, content: req.body.content });
+    post.save();
+    res.status(200).json({
+        meesage: 'Successful',
+    });
+});
+
+app.get('/api/posts', (req, res, next) => {
+    const posts = [
+        { id: 1, name: 'seva' },
+        { id: 2, name: 'kiryl' },
     ];
     res.status(200).json({
-        orders,
+        meesage: 'Successful',
+        posts,
     });
 });
 
