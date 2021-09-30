@@ -40,7 +40,7 @@ import { SharedModule } from './shared/shared.module';
                 deps: [HttpClient],
             },
             useDefaultLang: false,
-        }),
+        })
     ],
     providers: [],
     bootstrap: [AppComponent],
