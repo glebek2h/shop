@@ -32,19 +32,19 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post('/api/posts', (req, res, next) => {
-    const post = new Post({ title: req.body.title, content: req.body.content });
+app.post('/api/posts', ({body}, res, next) => {
+    const post = new Post( {
+      title: body.title,
+      comments: body.comments,
+    });
     post.save();
     res.status(200).json({
         meesage: 'Successful',
     });
 });
 
-app.get('/api/posts', (req, res, next) => {
-    const posts = [
-        { id: 1, name: 'seva' },
-        { id: 2, name: 'kiryl' },
-    ];
+app.get('/api/posts', async (req, res, next) => {
+    const posts = await Post.find();
     res.status(200).json({
         meesage: 'Successful',
         posts,
