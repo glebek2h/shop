@@ -1,4 +1,4 @@
-import { OrdersState } from "./admin.state";
+import { OrdersState } from './admin.state';
 
 export interface Admin {
     name: string;
@@ -7,6 +7,7 @@ export interface Admin {
 }
 
 export interface Orders {
+    id: number,
     orderNumber: number;
     orderingTime: string;
     shopName: string;
@@ -16,12 +17,15 @@ export interface Orders {
     orderItems: Array<OrderItems>;
 }
 
+export interface APIResponse<T> {
+    orders: Array<Orders>
+  }
+
 export interface OrderItems {
     imgUrl: string;
     description: string;
     price: number;
 }
-
 
 export interface UpdatedProfile {
     name: string;

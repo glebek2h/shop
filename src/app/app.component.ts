@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
-import { LanguageSwitchService } from './services/language-switch.service';
+import { LanguageSwitchService } from './services/language-switch/language-switch.service';
 
 @Component({
     selector: 'app-root',

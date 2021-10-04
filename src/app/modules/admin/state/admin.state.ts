@@ -12,7 +12,7 @@ export interface AdminInfoState {
 }
 
 export interface OrdersState {
-    items: Array<AdminModels.Orders>;
+    orders: Array<AdminModels.Orders>;
 }
 
 export interface AdminState {

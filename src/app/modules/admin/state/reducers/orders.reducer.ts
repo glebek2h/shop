@@ -5,7 +5,7 @@ import { OrdersState } from '../admin.state';
 export const ordersFeatureKey = 'orders-list';
 
 export const initialState: OrdersState = {
-    items: [],
+    orders: [],
 };
 
 export const reducer = createReducer(
@@ -14,7 +14,7 @@ export const reducer = createReducer(
     on(OrdersActions.getOrdersSuccess, (state, action) => {
         return {
             ...state,
-            items: action.orders.items,
+            orders: action.orders,
         };
     }),
 );

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LanguageSwitchService } from 'src/app/services/language-switch.service';
+import { LanguageSwitchService } from 'src/app/services/language-switch/language-switch.service';
 
 interface Language {
     value: string;
