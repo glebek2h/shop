@@ -9,7 +9,7 @@ export const getAdminInfo = createAction(ActionConstants.CHANGE_PROFILE_INFO);
 
 export const getProfileInfoSuccess = createAction(
     ActionConstants.CHANGE_PROFILE_INFO_SUCCESS,
-    props<{ data: AdminModels.Admin }>(),
+    props<{ profile: Array<AdminModels.Admin> }>(),
 );
 
 // update profile info from form

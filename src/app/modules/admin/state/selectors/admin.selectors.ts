@@ -7,10 +7,10 @@ export const selectAdminFeature =
 
 export const selectName = createSelector(
     selectAdminFeature,
-    (state: AdminInfoState) => state.name,
+    (state: AdminInfoState) => state.profile[0].name,
 );
 
 export const selectAvatar = createSelector(
     selectAdminFeature,
-    (state: AdminInfoState) => state.avatar,
+    (state: AdminInfoState) => state.profile[0].avatar,
 );

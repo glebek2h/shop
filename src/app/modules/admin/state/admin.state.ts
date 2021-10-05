@@ -5,14 +5,13 @@ import * as fromAdmin from './reducers/admin.reducer';
 import * as fromOrders from './reducers/orders.reducer';
 
 export interface AdminInfoState {
-    name: string;
-    email: string;
-    avatar: SafeUrl;
+    profile: Array<AdminModels.Admin>,
     isLoad: boolean;
 }
 
 export interface OrdersState {
     orders: Array<AdminModels.Orders>;
+    orderId: string;
 }
 
 export interface AdminState {

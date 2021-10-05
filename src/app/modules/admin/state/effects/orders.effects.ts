@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
 import { OrdersServerService } from 'src/app/services/orders-service/orders-server.service';
 import * as OrdersActions from '../actions/orders.actions';
 
@@ -15,6 +14,19 @@ export class OrdersEffects {
                     .getOrders()
                     .pipe(
                         map(orders => OrdersActions.getOrdersSuccess(orders)),
+                    ),
+            ),
+        );
+    });
+
+    deleteOrder$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(OrdersActions.deleteOrder),
+            mergeMap(({orderId}) =>
+                this.ordersServerService
+                    .deleteOrder(orderId)
+                    .pipe(
+                        map(() => OrdersActions.deleteOrderSuccess(orderId)),
                     ),
             ),
         );

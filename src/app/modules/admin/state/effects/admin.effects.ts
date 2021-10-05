@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { ProfileService } from 'src/app/services/profile/profile.service';
 import { temporaryImgUrl } from 'src/app/shared/utils/utils';
 import * as AdminActions from '../actions/admin.actions';
 
@@ -11,13 +12,12 @@ export class AdminEffects {
         return this.actions$.pipe(
             ofType(AdminActions.getAdminInfo),
             switchMap(() =>
-                of({
-                    name: 'Seva',
-                    email: 'seva@mail.com',
-                    avatar: temporaryImgUrl,
-                }),
+                this.profileService
+                    .getProfileInfo()
+                    .pipe(
+                        map(profile => AdminActions.getProfileInfoSuccess(profile)),
+                    ),
             ),
-            map(data => AdminActions.getProfileInfoSuccess({ data })),
         );
     });
 
@@ -68,5 +68,8 @@ export class AdminEffects {
         );
     });
 
-    constructor(private actions$: Actions) {}
+    constructor(
+        private readonly actions$: Actions,
+        private readonly profileService: ProfileService,
+    ) {}
 }

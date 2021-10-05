@@ -11,3 +11,5 @@ export const UPLOAD_PROFILE_AVATAR_SUCCESS = `${UPLOAD_PROFILE_AVATAR} Success`;
 
 export const GET_ORDERS = '[Orders Component] Get Orders';
 export const GET_ORDERS_SUCCESS = `${GET_ORDERS} Success`;
+export const DELETE_ORDER = '[Orders Component] Delete Order'
+export const DELETE_ORDER_SUCCESS = `[Orders Component] ${DELETE_ORDER} Success`

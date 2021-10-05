@@ -5,9 +5,7 @@ import { AdminInfoState } from '../admin.state';
 export const adminFeatureKey = 'profile-info';
 
 export const initialState: AdminInfoState = {
-    name: null,
-    email: null,
-    avatar: null,
+    profile: [],
     isLoad: null,
 };
 
@@ -16,9 +14,7 @@ export const reducer = createReducer<AdminInfoState>(
     on(AdminActions.getProfileInfoSuccess, (state, action) => {
         return {
             ...state,
-            name: action.data.name,
-            email: action.data.email,
-            avatar: action.data.avatar,
+            profile: action.profile,
             isLoad: false,
         };
     }),
