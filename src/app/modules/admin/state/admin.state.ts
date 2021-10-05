@@ -1,11 +1,10 @@
-import { SafeUrl } from '@angular/platform-browser';
 import { ActionReducerMap, MetaReducer } from '@ngrx/store';
 import * as AdminModels from './admin.model';
 import * as fromAdmin from './reducers/admin.reducer';
 import * as fromOrders from './reducers/orders.reducer';
 
 export interface AdminInfoState {
-    profile: Array<AdminModels.Admin>,
+    profile: AdminModels.Admin,
     isLoad: boolean;
 }
 

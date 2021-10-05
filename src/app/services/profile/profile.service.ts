@@ -19,4 +19,16 @@ export class ProfileService {
             `${environment.api_url}${serverConstants.profile}`,
         );
     }
+
+    updateProfileInfo(data: Admin): Observable<Admin> {
+        return this.http.put<Admin>(
+            `${environment.api_url}${serverConstants.profile}`,
+            {
+                _id: data._id,
+                name: data.name,
+                email: data.email,
+                avatar: data.avatar,
+            },
+        );
+    }
 }

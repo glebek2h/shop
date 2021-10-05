@@ -5,8 +5,6 @@ const mongoose = require('mongoose');
 const Post = require('./models/post');
 const Order = require('./models/orders');
 const Profile = require('./models/profile');
-const Form = require('./models/form');
-// const RemoveAvatar = require('./models/removeAvatar');
 
 const app = express();
 
@@ -31,10 +29,12 @@ app.use((req, res, next) => {
     );
     res.setHeader(
         'Access-Control-Allow-Methods',
-        'GET, POST, PATCH, DELETE, OPTIONS',
+        'GET, POST, PUT, PATCH, DELETE, OPTIONS',
     );
     next();
 });
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb' }));
 
 // ********* posts *********
 
@@ -84,7 +84,7 @@ app.get('/api/orders', async (req, res, next) => {
 });
 
 app.delete('/api/orders/:id', async (req, res, next) => {
-    await Order.deleteOne({ _id: req.params.id });
+    await Order.deleteOne({ _id: req.body.id });
     res.status(200).json({ message: 'Order deleted!' });
 });
 
@@ -103,33 +103,51 @@ app.post('/api/profile', ({ body }, res, next) => {
 });
 
 app.get('/api/profile', async (req, res, next) => {
-    const profile = await Profile.find();
+    const profiles = await Profile.find();
     res.status(200).json({
-        profile,
+        profile: profiles[0],
     });
 });
 
-app.put('api/profile', (req, res, next) => {
-    const post = new Form({
+app.put('/api/profile', (req, res, next) => {
+    const post = new Profile({
         _id: req.body._id,
         name: req.body.name,
         email: req.body.email,
+        avatar: req.body.avatar,
     });
-
-    Form.updateOne({ _id: req.params.id }, post)
-    .then(result => {
-      if (result.n > 0) {
-        res.status(200).json({ message: "Update successful!" });
-      } else {
-        res.status(401).json({ message: "Not authorized!" });
-      }
-    })
-    .catch(error => {
-      res.status(500).json({
-        message: "Couldn't udpate post!"
-      });
-    });
+    
+    Profile.updateOne({ _id: req.body._id }, post)
+        .then(result => {
+            if (result.matchedCount > 0) {
+                res.status(200).json({ message: 'Update successful!' });
+            } else {
+                res.status(401).json({ message: 'Not authorized!' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: "Couldn't udpate post!",
+            });
+        });
 });
 
+// remove whole profile
+// app.delete('/api/profile/:id', (req, res, next) => {
+//     Profile.deleteOne({ _id: req.body.id })
+//       .then(result => {
+//         console.log(result);
+//         if (result.matchedCount > 0) {
+//           res.status(200).json({ message: "Deletion successful!" });
+//         } else {
+//           res.status(401).json({ message: "Not authorized!" });
+//         }
+//       })
+//       .catch(error => {
+//         res.status(500).json({
+//           message: "Deleting posts failed!"
+//         });
+//       });
+//   })
 
 module.exports = app;
