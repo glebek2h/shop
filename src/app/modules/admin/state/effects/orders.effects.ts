@@ -22,12 +22,10 @@ export class OrdersEffects {
     deleteOrder$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(OrdersActions.deleteOrder),
-            mergeMap(({orderId}) =>
+            switchMap(({ orderId }) =>
                 this.ordersServerService
                     .deleteOrder(orderId)
-                    .pipe(
-                        map(() => OrdersActions.deleteOrderSuccess(orderId)),
-                    ),
+                    .pipe(map(() => OrdersActions.deleteOrderSuccess(orderId))),
             ),
         );
     });

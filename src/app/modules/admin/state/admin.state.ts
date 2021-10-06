@@ -10,7 +10,6 @@ export interface AdminInfoState {
 
 export interface OrdersState {
     orders: Array<AdminModels.Orders>;
-    orderId: string;
 }
 
 export interface AdminState {

@@ -25,6 +25,20 @@ export interface APIResponseProfile<T> {
     profile: Admin;
 }
 
+export interface SelectName {
+    name: string
+}
+export interface SelectAvatar {
+    avatar: string
+}
+export interface SelectId {
+    _id: string
+}
+
+export interface SelectOrders {
+    orders: Array<Orders>;
+}
+
 export interface OrderItems {
     imgUrl: string;
     description: string;

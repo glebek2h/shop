@@ -84,7 +84,7 @@ app.get('/api/orders', async (req, res, next) => {
 });
 
 app.delete('/api/orders/:id', async (req, res, next) => {
-    await Order.deleteOne({ _id: req.body.id });
+    await Order.deleteOne({ _id: req.params.id });
     res.status(200).json({ message: 'Order deleted!' });
 });
 
@@ -131,7 +131,7 @@ app.put('/api/profile', (req, res, next) => {
             });
         });
 });
-
+// https://trello.com/c/uRIjTWIA/12-add-remove-upload-profile-image-integration-wit-api
 // remove whole profile
 // app.delete('/api/profile/:id', (req, res, next) => {
 //     Profile.deleteOne({ _id: req.body.id })

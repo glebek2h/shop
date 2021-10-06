@@ -37,6 +37,7 @@ export class AdminEffects {
         );
     });
 
+    // https://trello.com/c/uRIjTWIA/12-add-remove-upload-profile-image-integration-wit-api
     // uploadProfileAvatar$ = createEffect(() => {
     //     return this.actions$.pipe(
     //         ofType(AdminActions.uploadProfileAvatar),
@@ -51,7 +52,7 @@ export class AdminEffects {
     //         ),
     //     );
     // });
-
+    // https://trello.com/c/uRIjTWIA/12-add-remove-upload-profile-image-integration-wit-api
     // removeProfileAvatar$ = createEffect(() => {
     //     return this.actions$.pipe(
     //         ofType(AdminActions.removeProfileAvatar),

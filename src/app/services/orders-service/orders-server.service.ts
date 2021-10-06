@@ -17,8 +17,8 @@ export class OrdersServerService {
         );
     }
 
-    deleteOrder(id: string) {
-        return this.http.delete(
+    deleteOrder(id: string): Observable<APIResponseOrders<Orders>> {
+        return this.http.delete<APIResponseOrders<Orders>>(
             `${environment.api_url}${serviceConstants.orders}/${id}`,
         )
     }

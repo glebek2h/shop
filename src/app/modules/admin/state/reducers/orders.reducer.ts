@@ -6,7 +6,6 @@ export const ordersFeatureKey = 'orders-list';
 
 export const initialState: OrdersState = {
     orders: [],
-    orderId: null,
 };
 
 export const reducer = createReducer(
@@ -17,12 +16,6 @@ export const reducer = createReducer(
             ...state,
             orders: action.orders,
         };
-    }),
-    on(OrdersActions.deleteOrder, (state, action) => {
-        return {
-            ...state,
-            orderId: action.orderId
-        }
     }),
     on(OrdersActions.deleteOrderSuccess, (state, action) => {
         const ordersFiltered = state.orders.filter(order => order._id !== action.orderId)
