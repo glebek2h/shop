@@ -1,0 +1,62 @@
+<div class="login-form">
+    <div class="login-form__close" [routerLink]="['/catalog']"><mat-icon>close</mat-icon></div>
+    <form [formGroup]="form" (ngSubmit)="login()">
+        <h3 class="login-form__title">{{ 'LOGIN.SIGN_IN' | translate }}</h3>
+        <div class="login-form-group">
+            <label for="email" class="login-form-group__label">{{"LOGIN.EMAIL" | translate}}</label>
+            <input
+                type="email"
+                name="email"
+                formControlName="email"
+                #email
+                id="email"
+                class="form-control"
+                required
+            />
+            <div
+                *ngIf="form.get('email').touched && form.get('email').invalid"
+                class="login-form-group__validator"
+            >
+                <small *ngIf="form.get('email').errors.required">
+                    {{ 'PROFILE_CONTENT.EMAIL_VALIDATION' | translate }}
+                </small>
+                <small *ngIf="form.get('email').errors.email">
+                    {{ 'PROFILE_CONTENT.EMAIL_VALIDATION_CHECK' | translate }}
+                </small>
+            </div>
+        </div>
+        <div class="login-form-group">
+            <label for="password" class="login-form-group__label"
+                >{{"LOGIN.PASSWORD" | translate}}</label
+            >
+            <input
+                type="password"
+                name="password"
+                formControlName="password"
+                #password
+                id="password"
+                class="form-control"
+                required
+            />
+            <div
+                *ngIf="
+                    form.get('password').touched && form.get('password').invalid
+                "
+                class="login-form-group__validator"
+            >
+                <small *ngIf="form.get('password').errors.required">
+                    {{ 'PROFILE_CONTENT.PASSWORD_VALIDATION' | translate }}
+                </small>
+                <small *ngIf="form.get('password').errors.password">
+                    {{ 'PROFILE_CONTENT.PASSWORD_VALIDATION' | translate }}
+                </small>
+            </div>
+        </div>
+        <button class="form-btn" type="submit" [disabled]="form.invalid">
+            {{"LOGIN.SIGN_IN" | translate}}
+        </button>
+        <div class="sign-up">
+            <span [routerLink]="['/login']">{{"LOGIN.TITLE" | translate}}</span>
+        </div>
+    </form>
+</div>

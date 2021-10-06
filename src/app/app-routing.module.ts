@@ -5,7 +5,10 @@ import { AdminComponent } from './modules/admin/admin.component';
 import { AdminModule } from './modules/admin/admin.module';
 import { OrdersComponent } from './modules/admin/components/orders/orders.component';
 import { ProfileContentComponent } from './modules/admin/components/profile-content/profile-content.component';
+import { CartComponent } from './modules/cart/cart.component';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SignInComponent } from './pages/sign-in/sign-in.component';
 
 const routes: Routes = [
     {
@@ -31,6 +34,18 @@ const routes: Routes = [
                 pathMatch: 'full',
             },
         ],
+    },
+    {
+        path: constants.LOGIN,
+        component: LoginComponent
+    },
+    {
+        path: `${constants.SIGN_IN}`,
+        component: SignInComponent,
+    },
+    {
+        path: `${constants.CART}`,
+        component: CartComponent,
     },
     {
         path: constants.ERROR_PAGE,

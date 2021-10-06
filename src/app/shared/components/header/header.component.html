@@ -1,0 +1,38 @@
+<header class="header">
+    <div class="header__navigation">
+        <ul>
+            <li
+                routerLinkActive="active"
+                [routerLink]="['/catalog']"
+                class="header-item"
+            >
+                {{ 'NAVIGATION.CATALOG' | translate }}
+            </li>
+        </ul>
+        <app-language-switcher></app-language-switcher>
+    </div>
+    <div class="header__bar">
+        <div class="header__bar-logo">
+            <a href="#"
+                ><img
+                    src="https://gc.onliner.by/images/logo/onliner_logo.v3.png?token=1633002141,%20https://gc.onliner.by/images/logo/onliner_logo.v3@2x.png?token=1633002141%202x"
+                    alt="logo"
+            /></a>
+        </div>
+        <div class="header__bar-search">
+            <input
+                class="input-search"
+                type="text"
+                placeholder="{{inputPlaceholder | translate}}"
+            />
+        </div>
+        <div class="header__bar-btns">
+            <button class="header-btn enter" [routerLink]="['/login']">
+                <span>{{ 'BTNS.ENTER' | translate }}</span>
+            </button>
+            <button class="header-btn cart" [routerLink]="['/cart']">
+                <mat-icon><span>shopping_cart</span></mat-icon>
+            </button>
+        </div>
+    </div>
+</header>

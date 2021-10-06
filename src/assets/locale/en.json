@@ -7,7 +7,8 @@
     "NAVIGATION": {
         "TITLE": "Account Navigation",
         "PROFILE": "Profile",
-        "ORDERS": "Orders"
+        "ORDERS": "Orders",
+        "CATALOG": "Catalog"
     },
     "PROFILE_HEADER": {
         "SUB_TITLE": "Your personal account"
@@ -19,6 +20,7 @@
         "NAME_VALIDATION": "Enter name",
         "EMAIL_VALIDATION": "Enter email",
         "EMAIL_VALIDATION_CHECK": "Enter valid email",
+        "PASSWORD_VALIDATION": "Enter password",
         "UPDATE_PROFILE": "Update profile",
         "PROFILE_PICTURE": "Profile picture",
         "EDIT": "Edit",
@@ -39,5 +41,21 @@
         "TITLE": "Error 404.",
         "TEXT": "Something went wrong. We will fix this problem as soon as possible.",
         "BACK_BTN": "Home Page"
+    },
+    "BTNS": {
+        "ENTER": "Log in"
+    },
+    "LOGIN": {
+        "TITLE": "Log in",
+        "EMAIL": "Email",
+        "PASSWORD": "Password",
+        "SIGN_IN": "Sign in"
+    },
+    "CART": {
+        "TITLE": "Your cart is empty.",
+        "TEXT": "Go to the catalogue and add items."
+    },
+    "HEADER": {
+        "PLACEHOLDER": "Catalog search"
     }
 }

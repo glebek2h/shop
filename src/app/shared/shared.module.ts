@@ -5,12 +5,19 @@ import { MatSelectModule } from '@angular/material/select';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { createTranslateLoader } from './utils/utils';
 import { HttpClient } from '@angular/common/http';
+import { HeaderComponent } from './components/header/header.component';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
-    declarations: [LanguageSwitcherComponent],
+    declarations: [LanguageSwitcherComponent, HeaderComponent],
     imports: [
         CommonModule,
         MatSelectModule,
+        MatIconModule,
+        RouterModule,
+        MatAutocompleteModule,
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
@@ -20,6 +27,6 @@ import { HttpClient } from '@angular/common/http';
             useDefaultLang: false,
         }),
     ],
-    exports: [LanguageSwitcherComponent, MatSelectModule],
+    exports: [LanguageSwitcherComponent, MatSelectModule, HeaderComponent],
 })
 export class SharedModule {}
