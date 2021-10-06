@@ -20,9 +20,15 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { CartModule } from './modules/cart/cart.module';
 import { MatIconModule } from '@angular/material/icon';
+import { CatalogModule } from './modules/catalog/catalog.module';
 
 @NgModule({
-    declarations: [AppComponent, ErrorPageComponent, LoginComponent, SignInComponent],
+    declarations: [
+        AppComponent,
+        ErrorPageComponent,
+        LoginComponent,
+        SignInComponent,
+    ],
     imports: [
         FormsModule,
         BrowserModule,
@@ -32,6 +38,7 @@ import { MatIconModule } from '@angular/material/icon';
         FormsModule,
         MatIconModule,
         CartModule,
+        CatalogModule,
         ReactiveFormsModule,
         StoreDevtoolsModule.instrument({
             maxAge: 25,

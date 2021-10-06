@@ -6,6 +6,7 @@ import { AdminModule } from './modules/admin/admin.module';
 import { OrdersComponent } from './modules/admin/components/orders/orders.component';
 import { ProfileContentComponent } from './modules/admin/components/profile-content/profile-content.component';
 import { CartComponent } from './modules/cart/cart.component';
+import { CatalogComponent } from './modules/catalog/catalog.component';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
@@ -46,6 +47,10 @@ const routes: Routes = [
     {
         path: `${constants.CART}`,
         component: CartComponent,
+    },
+    {
+        path: `${constants.CATALOG}`,
+        component: CatalogComponent,
     },
     {
         path: constants.ERROR_PAGE,

@@ -1,12 +1,10 @@
 <header class="header">
     <div class="header__navigation">
         <ul>
-            <li
-                routerLinkActive="active"
-                [routerLink]="['/catalog']"
-                class="header-item"
-            >
-                {{ 'NAVIGATION.CATALOG' | translate }}
+            <li routerLinkActive="active" class="header-item">
+                <span [routerLink]="['catalog']">{{
+                    'NAVIGATION.CATALOG' | translate
+                }}</span>
             </li>
         </ul>
         <app-language-switcher></app-language-switcher>
@@ -23,8 +21,18 @@
             <input
                 class="input-search"
                 type="text"
-                placeholder="{{inputPlaceholder | translate}}"
+                placeholder="{{ 'HEADER.PLACEHOLDER' | translate }}"
+                [formControl]="control"
+                [matAutocomplete]="auto"
             />
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                    *ngFor="let street of filteredStreets | async"
+                    [value]="street"
+                >
+                    {{ street }}
+                </mat-option>
+            </mat-autocomplete>
         </div>
         <div class="header__bar-btns">
             <button class="header-btn enter" [routerLink]="['/login']">

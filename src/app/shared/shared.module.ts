@@ -9,6 +9,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [LanguageSwitcherComponent, HeaderComponent],
@@ -17,6 +18,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         MatSelectModule,
         MatIconModule,
         RouterModule,
+        FormsModule,
+        ReactiveFormsModule,
         MatAutocompleteModule,
         TranslateModule.forChild({
             loader: {
