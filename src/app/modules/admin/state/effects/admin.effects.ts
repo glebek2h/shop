@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, switchMap } from 'rxjs/operators';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
 import { ProfileService } from 'src/app/services/profile/profile.service';
 import * as AdminActions from '../actions/admin.actions';
+import { Admin } from '../admin.model';
 
 @Injectable()
 export class AdminEffects {
@@ -27,8 +28,11 @@ export class AdminEffects {
             switchMap(({ updatedData }) =>
                 this.profileService.updateProfileInfo(updatedData),
             ),
-            map(updatedData =>
-                AdminActions.updateProfileInfoSuccess(updatedData),
+            mergeMap((updatedData: Admin) =>
+                [
+                    AdminActions.updateProfileInfoSuccess({updatedData}),
+                    AdminActions.getAdminInfo(),
+                ]
             ),
         );
     });
