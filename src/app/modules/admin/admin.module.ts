@@ -33,7 +33,6 @@ import { createTranslateLoader } from 'src/app/shared/utils/utils';
         AdminRoutingModule,
         MatIconModule,
         MatExpansionModule,
-        FormsModule,
         ReactiveFormsModule,
         StoreModule.forFeature(fromAdmin.adminFeatureKey, fromAdmin.reducer),
         StoreModule.forFeature(fromOrders.ordersFeatureKey, fromOrders.reducer),

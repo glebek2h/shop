@@ -6,6 +6,7 @@ import { AdminModule } from './modules/admin/admin.module';
 import { OrdersComponent } from './modules/admin/components/orders/orders.component';
 import { ProfileContentComponent } from './modules/admin/components/profile-content/profile-content.component';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
+import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
     {
@@ -31,6 +32,26 @@ const routes: Routes = [
                 pathMatch: 'full',
             },
         ],
+    },
+    {
+        path: constants.LOGIN,
+        component: LoginComponent,
+    },
+    {
+        path: `${constants.SIGN_IN}`,
+        component: LoginComponent,
+    },
+    {
+        path: `${constants.CART}`,
+        loadChildren: () =>
+            import('./modules/cart/cart.module').then(module => module.CartModule),
+    },
+    {
+        path: `${constants.CATALOG}`,
+        loadChildren: () =>
+            import('./modules/catalog/catalog.module').then(
+                module => module.CatalogModule,
+            ),
     },
     {
         path: constants.ERROR_PAGE,

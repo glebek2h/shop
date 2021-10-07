@@ -1,0 +1,46 @@
+<header class="header">
+    <div class="header__navigation">
+        <ul>
+            <li routerLinkActive="active" class="header-item">
+                <span [routerLink]="['catalog']">{{
+                    'NAVIGATION.CATALOG' | translate
+                }}</span>
+            </li>
+        </ul>
+        <app-language-switcher></app-language-switcher>
+    </div>
+    <div class="header__bar">
+        <div class="header__bar-logo">
+            <a href="#"
+                ><img
+                    src="../../../../assets/img/onliner.png"
+                    alt="logo"
+            /></a>
+        </div>
+        <div class="header__bar-search">
+            <input
+                class="input-search"
+                type="text"
+                placeholder="{{ 'HEADER.PLACEHOLDER' | translate }}"
+                [formControl]="control"
+                [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                    *ngFor="let searchResults of filteredResults$ | async"
+                    [value]="searchResults"
+                >
+                    {{ searchResults }}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+        <div class="header__bar-btns">
+            <button class="header-btn enter" [routerLink]="['/login']">
+                <span>{{ 'BTNS.ENTER' | translate }}</span>
+            </button>
+            <button class="header-btn cart" [routerLink]="['/cart']">
+                <mat-icon><span>shopping_cart</span></mat-icon>
+            </button>
+        </div>
+    </div>
+</header>

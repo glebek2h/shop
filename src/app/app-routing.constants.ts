@@ -5,3 +5,6 @@ export const LOGIN = 'login';
 export const ERROR_PAGE = 'error';
 export const ORDERS = 'orders';
 export const ADMIN = 'admin';
+export const SIGN_IN = 'sign-in';
+export const CART = 'cart';
+export const CATALOG = 'catalog';

@@ -1,0 +1,126 @@
+<div class="login-form" *ngIf="route === '/login'; else signIn">
+    <div class="login-form__close" [routerLink]="['/catalog']"><mat-icon>close</mat-icon></div>
+    <form [formGroup]="form" (ngSubmit)="loginApp()">
+        <h3 class="login-form__title">{{ 'LOGIN.TITLE' | translate }}</h3>
+        <div class="login-form-group">
+            <label for="email" class="login-form-group__label">{{"LOGIN.EMAIL" | translate}}</label>
+            <input
+                type="email"
+                name="email"
+                formControlName="email"
+                #email
+                id="email"
+                class="form-control"
+                required
+            />
+            <div
+                *ngIf="form.get('email').touched && form.get('email').invalid"
+                class="login-form-group__validator"
+            >
+                <small *ngIf="form.get('email').errors.required">
+                    {{ 'PROFILE_CONTENT.EMAIL_VALIDATION' | translate }}
+                </small>
+                <small *ngIf="form.get('email').errors.email">
+                    {{ 'PROFILE_CONTENT.EMAIL_VALIDATION_CHECK' | translate }}
+                </small>
+            </div>
+        </div>
+        <div class="login-form-group">
+            <label for="password" class="login-form-group__label"
+                >{{"LOGIN.PASSWORD" | translate}}</label
+            >
+            <input
+                type="password"
+                name="password"
+                formControlName="password"
+                #password
+                id="password"
+                class="form-control"
+                required
+            />
+            <div
+                *ngIf="
+                    form.get('password').touched && form.get('password').invalid
+                "
+                class="login-form-group__validator"
+            >
+                <small *ngIf="form.get('password').errors.required">
+                    {{ 'PROFILE_CONTENT.PASSWORD_VALIDATION' | translate }}
+                </small>
+                <small *ngIf="form.get('password').errors.password">
+                    {{ 'PROFILE_CONTENT.PASSWORD_VALIDATION' | translate }}
+                </small>
+            </div>
+        </div>
+        <button class="form-btn" type="submit" [disabled]="form.invalid">
+            {{"LOGIN.TITLE" | translate}}
+        </button>
+        <div class="sign-up">
+            <span [routerLink]="['/sign-in']">{{"LOGIN.SIGN_IN" | translate}}</span>
+        </div>
+    </form>
+</div>
+<ng-template #signIn>
+    <div class="login-form">
+        <div class="login-form__close" [routerLink]="['/catalog']"><mat-icon>close</mat-icon></div>
+        <form [formGroup]="form" (ngSubmit)="signInApp()">
+            <h3 class="login-form__title">{{ 'SIGNIN.TITLE' | translate }}</h3>
+            <div class="login-form-group">
+                <label for="email" class="login-form-group__label">{{"SIGNIN.EMAIL" | translate}}</label>
+                <input
+                    type="email"
+                    name="email"
+                    formControlName="email"
+                    #email
+                    id="email"
+                    class="form-control"
+                    required
+                />
+                <div
+                    *ngIf="form.get('email').touched && form.get('email').invalid"
+                    class="login-form-group__validator"
+                >
+                    <small *ngIf="form.get('email').errors.required">
+                        {{ 'PROFILE_CONTENT.EMAIL_VALIDATION' | translate }}
+                    </small>
+                    <small *ngIf="form.get('email').errors.email">
+                        {{ 'PROFILE_CONTENT.EMAIL_VALIDATION_CHECK' | translate }}
+                    </small>
+                </div>
+            </div>
+            <div class="login-form-group">
+                <label for="password" class="login-form-group__label"
+                    >{{"SIGNIN.PASSWORD" | translate}}</label
+                >
+                <input
+                    type="password"
+                    name="password"
+                    formControlName="password"
+                    #password
+                    id="password"
+                    class="form-control"
+                    required
+                />
+                <div
+                    *ngIf="
+                        form.get('password').touched && form.get('password').invalid
+                    "
+                    class="login-form-group__validator"
+                >
+                    <small *ngIf="form.get('password').errors.required">
+                        {{ 'PROFILE_CONTENT.PASSWORD_VALIDATION' | translate }}
+                    </small>
+                    <small *ngIf="form.get('password').errors.password">
+                        {{ 'PROFILE_CONTENT.PASSWORD_VALIDATION' | translate }}
+                    </small>
+                </div>
+            </div>
+            <button class="form-btn" type="submit" [disabled]="form.invalid">
+                {{"SIGNIN.TITLE" | translate}}
+            </button>
+            <div class="sign-up">
+                <span [routerLink]="['/login']">{{"SIGNIN.LOG_IN" | translate}}</span>
+            </div>
+        </form>
+    </div>
+</ng-template>
