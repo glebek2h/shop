@@ -1,39 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { startWith, map, takeUntil } from 'rxjs/operators';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+    private unsubscribe$ = new Subject();
     control = new FormControl();
-    streets: string[] = [
+    searchedResults = [
         'Champs-Élysées',
         'Lombard Street',
         'Abbey Road',
         'Fifth Avenue',
     ];
-    filteredStreets: Observable<string[]>;
+    filteredResults$ = this.control.valueChanges.pipe(
+        startWith(''),
+        map(value => this.filter(value)),
+        takeUntil(this.unsubscribe$),
+    );
 
     constructor() {}
 
-    ngOnInit(): void {
-        this.filteredStreets = this.control.valueChanges.pipe(
-            startWith(''),
-            map(value => this._filter(value)),
+    ngOnInit(): void {}
+
+    private filter(value: string): string[] {
+        const filterValue = this.normalizeValue(value);
+        return this.searchedResults.filter(street =>
+            this.normalizeValue(street).includes(filterValue),
         );
     }
 
-    private _filter(value: string): string[] {
-        const filterValue = this._normalizeValue(value);
-        return this.streets.filter(street =>
-            this._normalizeValue(street).includes(filterValue),
-        );
-    }
-
-    private _normalizeValue(value: string): string {
+    private normalizeValue(value: string): string {
         return value.toLowerCase().replace(/\s/g, '');
+    }
+
+    ngOnDestroy(): void {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
     }
 }

@@ -51,6 +51,12 @@
         "PASSWORD": "Password",
         "SIGN_IN": "Sign in"
     },
+    "SIGNIN": {
+        "TITLE": "Sign in",
+        "EMAIL": "Email",
+        "PASSWORD": "Password",
+        "LOG_IN": "Log in"
+    },
     "CART": {
         "TITLE": "Your cart is empty.",
         "TEXT": "Go to the catalogue and add items."

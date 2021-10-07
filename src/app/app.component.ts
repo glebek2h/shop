@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterEvent } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import * as routingConstants from './app-routing.constants';
@@ -11,28 +11,28 @@ import { LanguageSwitchService } from './services/language-switch/language-switc
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-    showHead = false;
+    showHeader = false;
 
     constructor(
         readonly translate: TranslateService,
         private readonly languageSwitchService: LanguageSwitchService,
         private readonly router: Router,
     ) {
-        this.router.events.forEach(event => {
+        this.router.events.forEach(({url}: RouterEvent) => {
             if (
-                event['url'] == `/${routingConstants.CART}` ||
-                event['url'] == `/${routingConstants.LOGIN}` ||
-                event['url'] == `/${routingConstants.CART}` ||
-                event['url'] == `/${routingConstants.ERROR_PAGE}` 
+                url === `/${routingConstants.CART}` ||
+                url === `/${routingConstants.LOGIN}` ||
+                url === `/${routingConstants.CART}` ||
+                url === `/${routingConstants.ERROR_PAGE}` 
             ) {
-                this.showHead = false;
+                this.showHeader = false;
             } else if (
-                event['url'] == `/${routingConstants.ADMIN}/${routingConstants.PROFILE}` ||
-                event['url'] == `/${routingConstants.ADMIN}/${routingConstants.ORDERS}`||
-                event['url'] == `/${routingConstants.ADMIN}` ||
-                event['url'] == `/${routingConstants.CATALOG}`
+                url === `/${routingConstants.ADMIN}/${routingConstants.PROFILE}` ||
+                url === `/${routingConstants.ADMIN}/${routingConstants.ORDERS}`||
+                url === `/${routingConstants.ADMIN}` ||
+                url === `/${routingConstants.CATALOG}`
             ) {
-                this.showHead = true;
+                this.showHeader = true;
             }
         });
     }

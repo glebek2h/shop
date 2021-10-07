@@ -13,7 +13,7 @@
         <div class="header__bar-logo">
             <a href="#"
                 ><img
-                    src="https://gc.onliner.by/images/logo/onliner_logo.v3.png?token=1633002141,%20https://gc.onliner.by/images/logo/onliner_logo.v3@2x.png?token=1633002141%202x"
+                    src="../../../../assets/img/onliner.png"
                     alt="logo"
             /></a>
         </div>
@@ -27,10 +27,10 @@
             />
             <mat-autocomplete #auto="matAutocomplete">
                 <mat-option
-                    *ngFor="let street of filteredStreets | async"
-                    [value]="street"
+                    *ngFor="let searchResults of filteredResults$ | async"
+                    [value]="searchResults"
                 >
-                    {{ street }}
+                    {{ searchResults }}
                 </mat-option>
             </mat-autocomplete>
         </div>

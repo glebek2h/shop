@@ -1,13 +1,13 @@
-export const mobileIconPath = '../../../assets/img/mobile-phone.png';
-export const laptopIconPath = '../../../assets/img/laptop.png';
-export const washerIconPath = '../../../assets/img/washer.png';
-export const rollerIconPath = '../../../assets/img/paint-roller.png';
-export const homeIconPath = '../../../assets/img/home.png';
-export const carIconPath = '../../../assets/img/car.png';
-export const bicycleIconPath = '../../../assets/img/bicycle.png';
-export const strollerIconPath = '../../../assets/img/stroller.png';
-export const chairIconPath = '../../../assets/img/office-chair.png';
-export const dishIconPath = '../../../assets/img/dish.png';
+export const mobileIconPath = 'assets/img/mobile-phone.png';
+export const laptopIconPath = 'assets/img/laptop.png';
+export const washerIconPath = 'assets/img/washer.png';
+export const rollerIconPath = 'assets/img/paint-roller.png';
+export const homeIconPath = 'assets/img/home.png';
+export const carIconPath = 'assets/img/car.png';
+export const bicycleIconPath = 'assets/img/bicycle.png';
+export const strollerIconPath = 'assets/img/stroller.png';
+export const chairIconPath = 'assets/img/office-chair.png';
+export const dishIconPath = 'assets/img/dish.png';
 
 export const categoryElectronics = 'CATALOG.ELECTRONICS';
 export const categoryLaptops = 'CATALOG.LAPTOPS';

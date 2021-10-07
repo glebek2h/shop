@@ -4,13 +4,14 @@ import { CartComponent } from './cart.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { createTranslateLoader } from 'src/app/shared/utils/utils';
 import { HttpClient } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { CartRoutingModule } from './cart-routing.module';
+
 
 @NgModule({
     declarations: [CartComponent],
     imports: [
         CommonModule,
-        RouterModule,
+        CartRoutingModule,
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
@@ -20,6 +21,5 @@ import { RouterModule } from '@angular/router';
             useDefaultLang: false,
         }),
     ],
-    exports: [CartComponent],
 })
 export class CartModule {}

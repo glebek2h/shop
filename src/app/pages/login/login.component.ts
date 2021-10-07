@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -7,20 +8,18 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
     styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-    form: FormGroup;
-    constructor() {}
+    form = new FormGroup({
+        email: new FormControl(null, [Validators.required, Validators.email]),
+        password: new FormControl(null, [Validators.required]),
+    });
+    route: string;
 
-    ngOnInit(): void {
-        this.form = new FormGroup({
-            email: new FormControl(null, [
-                Validators.required,
-                Validators.email,
-            ]),
-            password: new FormControl(null, [Validators.required]),
-        });
+    constructor(private readonly router: Router) {
+        this.route = this.router.url;
     }
 
-    login() {
-        console.log(this.form.value);
-    }
+    ngOnInit(): void {}
+
+    loginApp() {}
+    signInApp() {}
 }

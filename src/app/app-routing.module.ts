@@ -5,11 +5,8 @@ import { AdminComponent } from './modules/admin/admin.component';
 import { AdminModule } from './modules/admin/admin.module';
 import { OrdersComponent } from './modules/admin/components/orders/orders.component';
 import { ProfileContentComponent } from './modules/admin/components/profile-content/profile-content.component';
-import { CartComponent } from './modules/cart/cart.component';
-import { CatalogComponent } from './modules/catalog/catalog.component';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import { LoginComponent } from './pages/login/login.component';
-import { SignInComponent } from './pages/sign-in/sign-in.component';
 
 const routes: Routes = [
     {
@@ -38,19 +35,23 @@ const routes: Routes = [
     },
     {
         path: constants.LOGIN,
-        component: LoginComponent
+        component: LoginComponent,
     },
     {
         path: `${constants.SIGN_IN}`,
-        component: SignInComponent,
+        component: LoginComponent,
     },
     {
         path: `${constants.CART}`,
-        component: CartComponent,
+        loadChildren: () =>
+            import('./modules/cart/cart.module').then(module => module.CartModule),
     },
     {
         path: `${constants.CATALOG}`,
-        component: CatalogComponent,
+        loadChildren: () =>
+            import('./modules/catalog/catalog.module').then(
+                module => module.CatalogModule,
+            ),
     },
     {
         path: constants.ERROR_PAGE,
