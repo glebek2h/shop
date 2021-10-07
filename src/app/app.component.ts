@@ -11,14 +11,14 @@ import { LanguageSwitchService } from './services/language-switch/language-switc
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-    showHeader = false;
+    showHeader: boolean | Promise<void>;
 
     constructor(
         readonly translate: TranslateService,
         private readonly languageSwitchService: LanguageSwitchService,
         private readonly router: Router,
     ) {
-        this.router.events.forEach(({url}: RouterEvent) => {
+        this.showHeader = this.router.events.forEach(({url}: RouterEvent) => {
             if (
                 url === `/${routingConstants.CART}` ||
                 url === `/${routingConstants.LOGIN}` ||

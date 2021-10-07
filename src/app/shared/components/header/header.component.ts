@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         'Abbey Road',
         'Fifth Avenue',
     ];
-    filteredResults$ = this.control.valueChanges.pipe(
+    readonly filteredResults$ = this.control.valueChanges.pipe(
         startWith(''),
         map(value => this.filter(value)),
         takeUntil(this.unsubscribe$),
