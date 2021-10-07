@@ -30,7 +30,6 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
     fileUrl: SafeUrlImpl;
     dataObj: Admin;
     trustUrl: SafeUrlImpl;
-    profileId: string;
     form: FormGroup;
     readonly selectId$ = this.store
         .select(AdminSelect.selectId)
@@ -50,17 +49,17 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
             ]),
         });
         this.store.dispatch(LoadAdminActions.getAdminInfo());
-        this.selectId$.subscribe(id => {
-            this.profileId = id;
-        });
+        
     }
 
     updateProfile() {
-        this.dataObj = {
-            ...this.form.value,
-            avatar: this.fileUrl,
-            _id: this.profileId,
-        };
+        this.selectId$.subscribe(id => {
+            this.dataObj = {
+                ...this.form.value,
+                avatar: this.fileUrl,
+                _id: id,
+            };
+        });
         this.store.dispatch(
             LoadAdminActions.updateProfileInfo({ updatedData: this.dataObj }),
         );

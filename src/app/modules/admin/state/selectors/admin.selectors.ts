@@ -1,27 +1,27 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { adminFeatureKey } from '../reducers/admin.reducer';
 import { AdminInfoState } from '../admin.state';
-import { SelectName, SelectAvatar, SelectId } from '../admin.model';
+import { Admin } from '../admin.model';
 
-export const selectAdminFeature =
+export const selectProfile =
     createFeatureSelector<AdminInfoState>(adminFeatureKey);
 
-export const selectProfile = createSelector(
-    selectAdminFeature,
+export const selectProfileState = createSelector(
+    selectProfile,
     (state: AdminInfoState) => state.profile,
 );
     
 export const selectName = createSelector(
-    selectProfile,
-    (state: SelectName) => state.name,
+    selectProfileState,
+    (state: Admin) => state.name,
 );
 
 export const selectAvatar = createSelector(
-    selectProfile,
-    (state: SelectAvatar) => state.avatar,
+    selectProfileState,
+    (state: Admin) => state.avatar,
 );
 
 export const selectId = createSelector(
-    selectProfile,
-    (state: SelectId) => state._id,
+    selectProfileState,
+    (state: Admin) => state._id
 );
