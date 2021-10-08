@@ -8,3 +8,13 @@ export const getOrdersSuccess = createAction(
     ActionConstants.GET_ORDERS_SUCCESS,
     props<{ orders: Array<Orders> }>(),
 );
+
+export const deleteOrder = createAction(
+    ActionConstants.DELETE_ORDER,
+    (orderId: string) => ({ orderId }),
+);
+
+export const deleteOrderSuccess = createAction(
+    ActionConstants.DELETE_ORDER_SUCCESS,
+    (orderId: string) => ({ orderId }),
+);

@@ -12,7 +12,7 @@ import * as AdminSelect from '../../state/selectors/admin.selectors';
 import { Admin } from '../../state/admin.model';
 import { AdminState } from '../../state/admin.state';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, take, takeUntil } from 'rxjs/operators';
 
 export interface SafeUrlImpl extends SafeUrl {
     changingThisBreaksApplicationSecurity: string;
@@ -31,6 +31,9 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
     dataObj: Admin;
     trustUrl: SafeUrlImpl;
     form: FormGroup;
+    readonly selectId$ = this.store
+        .select(AdminSelect.selectId)
+        .pipe(takeUntil(this.unsubscribe$));
     readonly getAvatar$ = this.store
         .select(AdminSelect.selectAvatar)
         .pipe(takeUntil(this.unsubscribe$));
@@ -46,13 +49,17 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
             ]),
         });
         this.store.dispatch(LoadAdminActions.getAdminInfo());
+        
     }
 
     updateProfile() {
-        this.dataObj = {
-            ...this.form.value,
-            avatar: this.fileUrl,
-        };
+        this.selectId$.subscribe(id => {
+            this.dataObj = {
+                ...this.form.value,
+                avatar: this.fileUrl,
+                _id: id,
+            };
+        });
         this.store.dispatch(
             LoadAdminActions.updateProfileInfo({ updatedData: this.dataObj }),
         );
@@ -76,9 +83,7 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
         }
     }
 
-    onRemoveFile() {
-        this.store.dispatch(LoadAdminActions.removeProfileAvatar());
-    }
+    onRemoveFile() {}
 
     ngOnDestroy(): void {
         this.unsubscribe$.next();
