@@ -7,7 +7,7 @@ export interface Admin {
 }
 
 export interface Orders {
-    id: number,
+    id: number;
     orderNumber: number;
     orderingTime: string;
     shopName: string;
@@ -18,8 +18,8 @@ export interface Orders {
 }
 
 export interface APIResponse<T> {
-    orders: Array<Orders>
-  }
+    orders: Array<Orders>;
+}
 
 export interface OrderItems {
     imgUrl: string;

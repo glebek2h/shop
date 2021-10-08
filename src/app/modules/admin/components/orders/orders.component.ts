@@ -23,9 +23,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
         .select(OrdersSelect.selectState)
         .pipe(takeUntil(this.unsubscribe$));
 
-    constructor(
-        private readonly store: Store<AdminState>,
-    ) {}
+    constructor(private readonly store: Store<AdminState>) {}
 
     ngOnInit(): void {
         this.store.dispatch(OrdersActions.getOrders());

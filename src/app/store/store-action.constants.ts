@@ -11,3 +11,14 @@ export const UPLOAD_PROFILE_AVATAR_SUCCESS = `${UPLOAD_PROFILE_AVATAR} Success`;
 
 export const GET_ORDERS = '[Orders Component] Get Orders';
 export const GET_ORDERS_SUCCESS = `${GET_ORDERS} Success`;
+
+export const GET_OFFERS = '[Catalog module] Get Offers';
+export const GET_OFFERS_SUCCESS = `${GET_OFFERS} Success`;
+
+export const GET_LINKS = '[Catalog module] Get Links';
+export const GET_LINKS_SUCCESS = `${GET_LINKS} Success`;
+
+export const GET_PROMOTIONS_DATA = '[Catalog module] Get Promotions Data';
+export const GET_PROMOTIONS_DATA_SUCCESS = `${GET_PROMOTIONS_DATA} Success`;
+
+

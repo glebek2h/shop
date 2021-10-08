@@ -1,0 +1,26 @@
+<footer class="footer">
+    <div class="footer-links">
+        <ul class="footer-links_list-about">
+            <li class="about-item" *ngFor="let item of footerLinks">
+                <a href="{{ item.link }}">{{ item.text | translate }}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="footer-socials">
+        <ul class="footer-socials__list">
+            <li class="footer-socials__list-item">
+                <img src="assets/img/vk.png" alt="vk" />
+            </li>
+            <li class="footer-socials__list-item">
+                <img src="assets/img/twitter.png" alt="twitter" />
+            </li>
+            <li class="footer-socials__list-item">
+                <img src="assets/img/facebook.png" alt="facebook" />
+            </li>
+            <li class="footer-socials__list-item">
+                <img src="assets/img/youtube.png" alt="youtube" />
+            </li>
+        </ul>
+        <div class="footer-socials__info">© 2001—2021 Onlíner</div>
+    </div>
+</footer>

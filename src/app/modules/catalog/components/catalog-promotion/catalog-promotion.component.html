@@ -1,0 +1,17 @@
+<div class="catalog__promotion" *ngIf="isReadyToDisplay$ | async">
+    <ul
+        class="catalog__promotion-list"
+        *ngIf="getPromotionsData$ | async as promotions"
+    >
+        <li
+            class="catalog__promotion-list-item"
+            *ngFor="let promotion of promotions"
+        >
+            <img src="{{ promotion.image }}" alt="promotion" />
+            <div class="promotion-block">
+                <h3>{{ promotion.title }}</h3>
+                <p>{{ promotion.subTitle }}</p>
+            </div>
+        </li>
+    </ul>
+</div>

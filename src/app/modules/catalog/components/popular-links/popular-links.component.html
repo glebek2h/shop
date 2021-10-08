@@ -1,0 +1,7 @@
+<div class="popular-links" *ngIf="isReadyToDisplay$ | async">
+    <ul class="popular-links__list" *ngIf="getLinks$ | async as links">
+        <li class="popular-links__list-item" *ngFor="let link of links">
+            <a href="{{ link.link }}">{{ link.text }}</a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,27 @@
+.super-offers {
+    &__list {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        &-item {
+            width: 11.111%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: 0.2s ease;
+            border-bottom: 3px solid var(--border-color);
+            &:hover {
+                border-bottom: 3px solid rgb(87, 87, 87);
+                background-color: var(--border-color);
+            }
+            img {
+                width: 80px;
+                height: auto;
+            }
+        }
+    }
+}
