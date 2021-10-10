@@ -22,3 +22,5 @@ export const GET_PROMOTIONS_DATA = '[Catalog module] Get Promotions Data';
 export const GET_PROMOTIONS_DATA_SUCCESS = `${GET_PROMOTIONS_DATA} Success`;
 
 
+export const DELETE_ORDER = '[Orders Component] Delete Order'
+export const DELETE_ORDER_SUCCESS = `[Orders Component] ${DELETE_ORDER} Success`

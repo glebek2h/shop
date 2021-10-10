@@ -17,7 +17,7 @@ import { AdminState } from '../../state/admin.state';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileHeaderComponent implements OnInit, OnDestroy {
-    private unsubscribe$ = new Subject();
+    private readonly unsubscribe$ = new Subject();
     readonly name$ = this.store
         .select(AdminSelectors.selectName)
         .pipe(takeUntil(this.unsubscribe$));

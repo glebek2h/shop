@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { temporaryImgUrl } from 'src/app/shared/utils/utils';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
+import { ProfileService } from 'src/app/services/profile/profile.service';
 import * as AdminActions from '../actions/admin.actions';
+import { Admin } from '../admin.model';
 
 @Injectable()
 export class AdminEffects {
@@ -11,62 +11,67 @@ export class AdminEffects {
         return this.actions$.pipe(
             ofType(AdminActions.getAdminInfo),
             switchMap(() =>
-                of({
-                    name: 'Seva',
-                    email: 'seva@mail.com',
-                    avatar: temporaryImgUrl,
-                }),
+                this.profileService
+                    .getProfileInfo()
+                    .pipe(
+                        map(profile =>
+                            AdminActions.getProfileInfoSuccess(profile),
+                        ),
+                    ),
             ),
-            map(data => AdminActions.getProfileInfoSuccess({ data })),
         );
     });
 
     updateProfileInfo$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(AdminActions.updateProfileInfo),
-            switchMap(() =>
-                of({
-                    name: 'Mike',
-                    email: 'Tayson@gmail.com',
-                }),
+            switchMap(({ updatedData }) =>
+                this.profileService.updateProfileInfo(updatedData),
             ),
-            map(updatedData =>
-                AdminActions.updateProfileInfoSuccess({ updatedData }),
-            ),
-        );
-    });
-
-    removeProfileAvatar$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(AdminActions.removeProfileAvatar),
-            switchMap(() =>
-                of({
-                    success: true,
-                    message: 'successfully',
-                }),
-            ),
-            map(removeDataResponse =>
-                AdminActions.removeProfileAvatarSuccess({
-                    removeDataResponse,
-                }),
+            mergeMap((updatedData: Admin) =>
+                [
+                    AdminActions.updateProfileInfoSuccess({updatedData}),
+                    AdminActions.getAdminInfo(),
+                ]
             ),
         );
     });
 
-    uploadProfileAvatar$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(AdminActions.uploadProfileAvatar),
-            switchMap(() =>
-                of({
-                    success: true,
-                    message: 'successfully',
-                }),
-            ),
-            map(uploadAvatar =>
-                AdminActions.uploadProfileAvatarSuccess({ uploadAvatar }),
-            ),
-        );
-    });
+    // https://trello.com/c/uRIjTWIA/12-add-remove-upload-profile-image-integration-wit-api
+    // uploadProfileAvatar$ = createEffect(() => {
+    //     return this.actions$.pipe(
+    //         ofType(AdminActions.uploadProfileAvatar),
+    //         switchMap(() =>
+    //             of({
+    //                 success: true,
+    //                 message: 'successfully',
+    //             }),
+    //         ),
+    //         map(uploadAvatar =>
+    //             AdminActions.uploadProfileAvatarSuccess({ uploadAvatar }),
+    //         ),
+    //     );
+    // });
+    // https://trello.com/c/uRIjTWIA/12-add-remove-upload-profile-image-integration-wit-api
+    // removeProfileAvatar$ = createEffect(() => {
+    //     return this.actions$.pipe(
+    //         ofType(AdminActions.removeProfileAvatar),
+    //         switchMap(() =>
+    //             of({
+    //                 success: true,
+    //                 message: 'successfully',
+    //             }),
+    //         ),
+    //         map(removeDataResponse =>
+    //             AdminActions.removeProfileAvatarSuccess({
+    //                 removeDataResponse,
+    //             }),
+    //         ),
+    //     );
+    // });
 
-    constructor(private actions$: Actions) {}
+    constructor(
+        private readonly actions$: Actions,
+        private readonly profileService: ProfileService,
+    ) {}
 }

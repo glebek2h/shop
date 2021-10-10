@@ -19,6 +19,17 @@ export class OrdersEffects {
         );
     });
 
+    deleteOrder$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(OrdersActions.deleteOrder),
+            switchMap(({ orderId }) =>
+                this.ordersServerService
+                    .deleteOrder(orderId)
+                    .pipe(map(() => OrdersActions.deleteOrderSuccess(orderId))),
+            ),
+        );
+    });
+
     constructor(
         private readonly actions$: Actions,
         private readonly ordersServerService: OrdersServerService,

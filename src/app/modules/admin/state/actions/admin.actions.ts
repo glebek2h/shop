@@ -9,19 +9,19 @@ export const getAdminInfo = createAction(ActionConstants.CHANGE_PROFILE_INFO);
 
 export const getProfileInfoSuccess = createAction(
     ActionConstants.CHANGE_PROFILE_INFO_SUCCESS,
-    props<{ data: AdminModels.Admin }>(),
+    props<{ profile: AdminModels.Admin }>(),
 );
 
 // update profile info from form
 
 export const updateProfileInfo = createAction(
     ActionConstants.UPDATE_PROFILE_INFO,
-    props<{ updatedData: AdminModels.UpdatedProfile }>(),
+    props<{ updatedData: AdminModels.Admin }>(),
 );
 
 export const updateProfileInfoSuccess = createAction(
     ActionConstants.UPDATE_PROFILE_INFO_SUCCESS,
-    props<{ updatedData: AdminModels.UpdatedProfile }>(),
+    props<{ updatedData: AdminModels.Admin }>(),
 );
 
 // remove profile avatar

@@ -18,13 +18,13 @@ import { map, takeUntil } from 'rxjs/operators';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CatalogPromotionComponent implements OnInit, OnDestroy {
-    private unsubscribe$ = new Subject();
+    private readonly unsubscribe$ = new Subject();
 
-    readonly getPromotionsData$ = this.store
+    readonly promotions$ = this.store
         .select(promotionsSelect.selectPromotions)
         .pipe(takeUntil(this.unsubscribe$));
 
-    readonly isReadyToDisplay$ = this.getPromotionsData$.pipe(
+    readonly isReadyToDisplay$ = this.promotions$.pipe(
         map(el => !!el),
         takeUntil(this.unsubscribe$),
     );

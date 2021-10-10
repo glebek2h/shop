@@ -1,7 +1,7 @@
-<div class="catalog__promotion" *ngIf="isReadyToDisplay$ | async">
+<div class="catalog__promotion" *ngIf="isReadyToDisplay$ | async; else loading">
     <ul
         class="catalog__promotion-list"
-        *ngIf="getPromotionsData$ | async as promotions"
+        *ngIf="promotions$ | async as promotions"
     >
         <li
             class="catalog__promotion-list-item"
@@ -15,3 +15,7 @@
         </li>
     </ul>
 </div>
+
+<ng-template #loading>
+    <h3>loading...</h3>
+</ng-template>

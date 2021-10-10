@@ -1,7 +1,11 @@
-<div class="super-offers" *ngIf="isReadyToDisplay$ | async">
-    <ul class="super-offers__list" *ngIf="getOffers$ | async as offers">
+<div class="super-offers" *ngIf="isReadyToDisplay$ | async; else loading">
+    <ul class="super-offers__list" *ngIf="offers$ | async as offers">
         <li class="super-offers__list-item" *ngFor="let offer of offers">
             <img src="{{ offer.icon }}" alt="super-offer" />
         </li>
     </ul>
 </div>
+
+<ng-template #loading>
+    <h3>loading...</h3>
+</ng-template>

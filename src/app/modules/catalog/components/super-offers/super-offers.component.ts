@@ -9,7 +9,7 @@ import { CatalogState } from '../../state/catalog.state';
 import * as OffersActions from '../../state/actions/offers.actions';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
-import * as OffersSelect from '../../state/selectors/offers.selectors';
+import * as OffersSelectors from '../../state/selectors/offers.selectors';
 
 @Component({
     selector: 'app-super-offers',
@@ -18,13 +18,13 @@ import * as OffersSelect from '../../state/selectors/offers.selectors';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SuperOffersComponent implements OnInit, OnDestroy {
-    private unsubscribe$ = new Subject();
+    private readonly unsubscribe$ = new Subject();
 
-    readonly getOffers$ = this.store
-        .select(OffersSelect.selectOffers)
+    readonly offers$ = this.store
+        .select(OffersSelectors.selectOffers)
         .pipe(takeUntil(this.unsubscribe$));
 
-    readonly isReadyToDisplay$ = this.getOffers$.pipe(
+    readonly isReadyToDisplay$ = this.offers$.pipe(
         map(el => !!el),
         takeUntil(this.unsubscribe$),
     );
@@ -34,6 +34,7 @@ export class SuperOffersComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.store.dispatch(OffersActions.getOffers());
     }
+
     ngOnDestroy(): void {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();

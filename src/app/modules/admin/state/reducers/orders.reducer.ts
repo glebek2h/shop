@@ -17,4 +17,11 @@ export const reducer = createReducer(
             orders: action.orders,
         };
     }),
+    on(OrdersActions.deleteOrderSuccess, (state, action) => {
+        const ordersFiltered = state.orders.filter(order => order._id !== action.orderId)
+        return {
+            ...state,
+            orders: ordersFiltered
+        }
+    })
 );

@@ -1,14 +1,15 @@
 import { OrdersState } from './admin.state';
 
 export interface Admin {
+    _id: string;
     name: string;
     email: string;
     avatar: string;
 }
 
 export interface Orders {
-    id: number;
-    orderNumber: number;
+    _id: string;
+    orderNumber: string;
     orderingTime: string;
     shopName: string;
     shopLink: string;
@@ -17,7 +18,14 @@ export interface Orders {
     orderItems: Array<OrderItems>;
 }
 
-export interface APIResponse<T> {
+export interface APIResponseOrders<T> {
+    orders: Array<Orders>;
+}
+export interface APIResponseProfile<T> {
+    profile: Admin;
+}
+
+export interface SelectOrders {
     orders: Array<Orders>;
 }
 
@@ -27,16 +35,15 @@ export interface OrderItems {
     price: number;
 }
 
-export interface UpdatedProfile {
-    name: string;
-    email: string;
-}
-
-export interface NoDataResponce {
+export interface NoDataResponse {
     success: boolean;
     message: string;
 }
 
-export interface RemoveProfileAvatarResponse extends NoDataResponce {}
-export interface UploadProfileAvatarResponse extends NoDataResponce {}
+export interface MessageResponse {
+    message: string;
+}
+
+export interface RemoveProfileAvatarResponse extends NoDataResponse {}
+export interface UploadProfileAvatarResponse extends NoDataResponse {}
 export interface OrdersData extends OrdersState {}

@@ -5,9 +5,7 @@ import { AdminInfoState } from '../admin.state';
 export const adminFeatureKey = 'profile-info';
 
 export const initialState: AdminInfoState = {
-    name: null,
-    email: null,
-    avatar: null,
+    profile: null,
     isLoad: null,
 };
 
@@ -16,9 +14,7 @@ export const reducer = createReducer<AdminInfoState>(
     on(AdminActions.getProfileInfoSuccess, (state, action) => {
         return {
             ...state,
-            name: action.data.name,
-            email: action.data.email,
-            avatar: action.data.avatar,
+            profile: action.profile,
             isLoad: false,
         };
     }),
@@ -31,20 +27,24 @@ export const reducer = createReducer<AdminInfoState>(
     on(AdminActions.updateProfileInfoSuccess, (state, action) => {
         return {
             ...state,
-            name: action.updatedData.name,
-            email: action.updatedData.email,
+            profile: action.updatedData
         };
     }),
-    on(AdminActions.removeProfileAvatarSuccess, state => {
-        return {
-            ...state,
-            avatar: null,
-        };
-    }),
-    on(AdminActions.uploadProfileAvatarSuccess, (state, action) => {
-        return {
-            ...state,
-            avatar: action.uploadAvatar,
-        };
-    }),
+    // https://trello.com/c/uRIjTWIA/12-add-remove-upload-profile-image-integration-wit-api
+    // on(AdminActions.removeProfileAvatarSuccess, state => {
+    //     return {
+    //         ...state,
+    //         profile: {
+    //             ...state,
+    //             avatar: null
+    //         }
+    //     }
+    // })
+    // on(AdminActions.uploadProfileAvatarSuccess, (state, action) => {
+    //     return {
+    //         ...state,
+    //         avatar: action.uploadAvatar,
+    //     };
+    // }),
+   
 );

@@ -18,7 +18,7 @@ import { map, takeUntil } from 'rxjs/operators';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PopularLinksComponent implements OnInit, OnDestroy {
-    private unsubscribe$ = new Subject();
+    private readonly unsubscribe$ = new Subject();
 
     readonly getLinks$ = this.store
         .select(LinksSelect.selectLinks)
