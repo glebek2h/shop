@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const Post = require('./models/post');
 const Offer = require('./models/offers');
 const Link = require('./models/links');
 const Promotions = require('./models/promotions');
