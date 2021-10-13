@@ -3,19 +3,24 @@
         animationDuration="0ms"
         #tabGroup
         *ngIf="offers$ | async as offers"
-        [selectedIndex]="active"
-        (click)="onTabChange(tabGroup)"
+        (click)="onTabChange($event)"
+        disableRipple="true"
     >
-        <mat-tab *ngFor="let offer of offers; let index = index">
+        <mat-tab></mat-tab>
+        <mat-tab
+            *ngFor="let offer of offers; let index = index"
+            isActive="false"
+        >
             <ng-template mat-tab-label>
                 <img class="tab-img" src="{{ offer.icon }}" alt="offer-image" />
             </ng-template>
-            {{ index }}
+            <app-tab-content
+                [offersData]="offer.categories"
+                [offersPromos]="offer.promos"
+            ></app-tab-content>
         </mat-tab>
     </mat-tab-group>
 </div>
-
-
 
 <ng-template #loading>
     <h3>loading...</h3>

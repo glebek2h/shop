@@ -1,0 +1,41 @@
+<div class="tab-content">
+    <div class="categories">
+        <ul class="categories-list">
+            <li
+                class="categories-list__item"
+                *ngFor="let category of categories"
+                (mouseenter)="onHover($event)"
+            >
+                {{ category.name }}
+            </li>
+        </ul>
+    </div>
+    <div class="promos-wrap">
+        <ul class="promos-wrap__list">
+            <li
+                class="promos-wrap__list-item"
+                *ngFor="let promo of offersPromos"
+            >
+                <img src="{{ promo.image }}" alt="promotion image" />
+                <div class="promos-block">
+                    <h3>{{ promo.title }}</h3>
+                    <p>{{ promo.subTitle }}</p>
+                </div>
+            </li>
+        </ul>
+        <div class="promos-wrap__overlay" #overlay>
+            <div class="overlay-close" (click)="closeOverlay($event)">
+                <span class="close">&times;</span>
+            </div>
+            <ul class="overlay-list">
+                <li class="item" *ngFor="let item of filteredData">
+                    <img src="{{ item.image }}" alt="product image" />
+                    <div class="item-block">
+                        <h3>{{ item.productName }}</h3>
+                        <p>{{ item.quantity }}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

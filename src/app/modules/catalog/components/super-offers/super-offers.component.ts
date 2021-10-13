@@ -2,7 +2,6 @@ import {
     AfterViewInit,
     ChangeDetectionStrategy,
     Component,
-    ElementRef,
     OnDestroy,
     OnInit,
     Renderer2,
@@ -14,7 +13,6 @@ import * as OffersActions from '../../state/actions/offers.actions';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import * as OffersSelectors from '../../state/selectors/offers.selectors';
-import * as EventEmitter from 'events';
 
 @Component({
     selector: 'app-super-offers',
@@ -23,11 +21,9 @@ import * as EventEmitter from 'events';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SuperOffersComponent implements OnInit, AfterViewInit, OnDestroy {
+    @ViewChild('tabGroup') tabGroup: { _tabBodyWrapper: { nativeElement: string; }; };
     private readonly unsubscribe$ = new Subject();
-    active = 0;
-    el: any
-
-    @ViewChild('tabGroup') tabGroup;
+    private element: { nativeElement: string };
 
     readonly offers$ = this.store
         .select(OffersSelectors.selectOffers)
@@ -38,27 +34,36 @@ export class SuperOffersComponent implements OnInit, AfterViewInit, OnDestroy {
         takeUntil(this.unsubscribe$),
     );
 
-    constructor(private readonly store: Store<CatalogState>, private renderer: Renderer2) {}
+    constructor(
+        private readonly store: Store<CatalogState>,
+        private readonly renderer: Renderer2,
+    ) {}
 
     ngOnInit(): void {
         this.store.dispatch(OffersActions.getOffers());
     }
-    
+
     ngAfterViewInit(): void {
-        this.el = this.tabGroup._tabBodyWrapper;
+        this.element = this.tabGroup._tabBodyWrapper;
     }
 
-    addClass(className: string, element: any){
+    addClass(className: string, element: { nativeElement: string }) {
         this.renderer.addClass(element.nativeElement, className);
     }
 
-    removeClass(className: string, element: any) {
+    removeClass(className: string, element: { nativeElement: string }) {
         this.renderer.removeClass(element.nativeElement, className);
     }
 
-    onTabChange(el: any) {
-        this.addClass('active', this.el)
-          
+    onTabChange(event: { target: { classList: { value: string; }; } }) {
+        const selectedTab =
+            'mat-ripple mat-tab-label mat-focus-indicator ng-star-inserted cdk-focused cdk-mouse-focused mat-tab-label-active';
+        const eventTarget = event.target.classList.value;
+        if (eventTarget === selectedTab) {
+            this.addClass('active', this.element);
+        } else {
+            this.removeClass('active', this.element);
+        }
     }
 
     ngOnDestroy(): void {

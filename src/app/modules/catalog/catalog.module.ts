@@ -23,6 +23,7 @@ import { OfferEffects } from './state/effects/offers.effects';
 import { LinksEffects } from './state/effects/links.effects';
 import { PromotionsEffects } from './state/effects/promotions.effects';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TabContentComponent } from './components/tab-content/tab-content.component';
 @NgModule({
     declarations: [
         CatalogComponent,
@@ -30,6 +31,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         SuperOffersComponent,
         PopularLinksComponent,
         CatalogPromotionComponent,
+        TabContentComponent,
     ],
     imports: [
         CommonModule,

@@ -9,4 +9,3 @@ export const selectOffers = createSelector(
     selectOffersFeature,
     (state: OffersState) => state.offers,
 );
-
