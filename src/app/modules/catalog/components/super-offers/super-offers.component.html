@@ -7,10 +7,7 @@
         disableRipple="true"
     >
         <mat-tab></mat-tab>
-        <mat-tab
-            *ngFor="let offer of offers; let index = index"
-            isActive="false"
-        >
+        <mat-tab *ngFor="let offer of offers; let i = index">
             <ng-template mat-tab-label>
                 <img class="tab-img" src="{{ offer.icon }}" alt="offer-image" />
             </ng-template>

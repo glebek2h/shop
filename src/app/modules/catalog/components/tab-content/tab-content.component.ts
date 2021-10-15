@@ -16,7 +16,7 @@ import * as Models from '../../state/catalog.models';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabContentComponent implements OnInit, AfterViewInit {
-    @Input() offersData: Array<Models.OffersCategories>;
+    @Input() offersData: Models.OffersCategories;
     @Input() offersPromos: Array<Models.PromosData>;
     @ViewChild('overlay') overlay: { nativeElement: string };
 
@@ -29,8 +29,8 @@ export class TabContentComponent implements OnInit, AfterViewInit {
     constructor(private readonly renderer: Renderer2) {}
 
     ngOnInit(): void {
-        this.offersData.forEach(el => (this.categories = el.categoryNames));
-        this.offersData.forEach(el => (this.data = el.data));
+        this.categories = this.offersData.categoryNames;
+        this.data = this.offersData.data;
     }
 
     ngAfterViewInit(): void {

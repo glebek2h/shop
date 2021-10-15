@@ -118,12 +118,10 @@ app.put('/api/profile', (req, res, next) => {
 app.post('/api/offers', ({ body }, res, next) => {
     const offer = new Offer({
         icon: body.icon,
-        categories: {
-            categoryNames: body.categories.categoryNames,
-            data: body.categories.data
-        },
-        promos: body.promos
+        categories: body.categories,
+        promos: body.promos,
     });
+
     offer.save();
     res.status(200).json({
         meesage: 'Successful',

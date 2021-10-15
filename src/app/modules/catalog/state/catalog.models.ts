@@ -12,6 +12,7 @@ export interface OffersCategories {
 
 export interface CategoryName {
     name: string;
+    _id: string;
 }
 
 export interface CategoriesData {

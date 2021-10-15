@@ -13,6 +13,7 @@ import * as OffersActions from '../../state/actions/offers.actions';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import * as OffersSelectors from '../../state/selectors/offers.selectors';
+import { selectedTab, selectedTabChanged } from '../../catalog.constants';
 
 @Component({
     selector: 'app-super-offers',
@@ -21,7 +22,9 @@ import * as OffersSelectors from '../../state/selectors/offers.selectors';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SuperOffersComponent implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild('tabGroup') tabGroup: { _tabBodyWrapper: { nativeElement: string; }; };
+    @ViewChild('tabGroup') tabGroup: {
+        _tabBodyWrapper: { nativeElement: string };
+    };
     private readonly unsubscribe$ = new Subject();
     private element: { nativeElement: string };
 
@@ -55,11 +58,10 @@ export class SuperOffersComponent implements OnInit, AfterViewInit, OnDestroy {
         this.renderer.removeClass(element.nativeElement, className);
     }
 
-    onTabChange(event: { target: { classList: { value: string; }; } }) {
-        const selectedTab =
-            'mat-ripple mat-tab-label mat-focus-indicator ng-star-inserted cdk-focused cdk-mouse-focused mat-tab-label-active';
+    onTabChange(event: { target: { classList: { value: string } } }) {
         const eventTarget = event.target.classList.value;
-        if (eventTarget === selectedTab) {
+
+        if (eventTarget === selectedTab || eventTarget === selectedTabChanged) {
             this.addClass('active', this.element);
         } else {
             this.removeClass('active', this.element);

@@ -19,3 +19,8 @@ export const categorySport = 'CATALOG.SPORT';
 export const categoryChildren = 'CATALOG.CHILDREN';
 export const categoryOffice = 'CATALOG.OFFICE';
 export const categoryFood = 'CATALOG.FOOD';
+
+export const selectedTab =
+    'mat-ripple mat-tab-label mat-focus-indicator ng-star-inserted cdk-focused cdk-mouse-focused mat-tab-label-active';
+export const selectedTabChanged =
+    'mat-ripple mat-tab-label mat-focus-indicator ng-star-inserted mat-tab-label-active cdk-focused cdk-mouse-focused';
