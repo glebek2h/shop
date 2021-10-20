@@ -14,7 +14,7 @@
         <ul class="promos-wrap__list">
             <li
                 class="promos-wrap__list-item"
-                *ngFor="let promo of offersPromos"
+                *ngFor="let promo of dynamicPromos$ | async"
             >
                 <img src="{{ promo.image }}" alt="promotion image" />
                 <div class="promos-block">
@@ -23,7 +23,10 @@
                 </div>
             </li>
         </ul>
-        <div class="promos-wrap__overlay" #overlay>
+        <div
+            class="promos-wrap__overlay"
+            [ngClass]="{ active: hovered, disabled: closed }"
+        >
             <div class="overlay-close" (click)="closeOverlay($event)">
                 <span class="close">&times;</span>
             </div>

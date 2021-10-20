@@ -1,11 +1,10 @@
 <div class="catalog__promotion" *ngIf="isReadyToDisplay$ | async; else loading">
     <ul
         class="catalog__promotion-list"
-        *ngIf="promotions$ | async as promotions"
     >
         <li
             class="catalog__promotion-list-item"
-            *ngFor="let promotion of promotions"
+            *ngFor="let promotion of promotions$ | async"
         >
             <img src="{{ promotion.image }}" alt="promotion" />
             <div class="promotion-block">

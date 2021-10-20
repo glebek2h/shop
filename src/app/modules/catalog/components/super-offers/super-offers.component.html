@@ -1,22 +1,50 @@
 <div class="super-offers" *ngIf="isReadyToDisplay$ | async; else loading">
-    <mat-tab-group
-        animationDuration="0ms"
-        #tabGroup
-        *ngIf="offers$ | async as offers"
-        (click)="onTabChange($event)"
-        disableRipple="true"
-    >
-        <mat-tab></mat-tab>
-        <mat-tab *ngFor="let offer of offers; let i = index">
-            <ng-template mat-tab-label>
-                <img class="tab-img" src="{{ offer.icon }}" alt="offer-image" />
-            </ng-template>
+    <div class="wrap">
+        <div class="catalog-title">
+            <h2>{{ 'CATALOG.TITLE' | translate }}</h2>
+        </div>
+        <div class="catalog-categories">
+            <ul class="catalog-categories__list">
+                <li
+                    class="catalog-categories__list-item"
+                    *ngFor="let category of categories; let i = index"
+                    id="{{ category._id }}"
+                    (click)="selectCategory(i)"
+                >
+                    <img src="{{ category.icon }}" alt="category" />
+                    <span>
+                        {{ category.categoryName | translate }}
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <mat-tab-group animationDuration="0ms" #tabGroup (click)="selectTab()">
+            <mat-tab></mat-tab>
+            <mat-tab *ngFor="let offer of offers$ | async; let i = index">
+                <ng-template mat-tab-label>
+                    <img
+                        class="tab-img"
+                        src="{{ offer.icon }}"
+                        alt="offer-image"
+                    />
+                </ng-template>
+                <app-tab-content
+                    [offersData]="offer.categories"
+                    [offersPromos]="offer.promos"
+                    class="content-tabs"
+                    [class.active]="toggleClassForTab && isOpenTab"
+                ></app-tab-content>
+            </mat-tab>
+        </mat-tab-group>
+        <div class="content-wrap">
             <app-tab-content
-                [offersData]="offer.categories"
-                [offersPromos]="offer.promos"
+                [offersData]="offerObject"
+                [offersPromos]="categories[indexCategory].promos"
+                class="content-tabs-2"
+                [class.active]="toggleClassForCategory && isOpenCategory"
             ></app-tab-content>
-        </mat-tab>
-    </mat-tab-group>
+        </div>
+    </div>
 </div>
 
 <ng-template #loading>

@@ -1,8 +1,9 @@
 export interface Offers {
     icon: string;
-    _id: string;
+    _id: number;
     categories: Array<OffersCategories>;
     promos: Array<PromosData>;
+    categoryName?: string;
 }
 
 export interface OffersCategories {
@@ -27,6 +28,7 @@ export interface PromosData {
     subTitle: string;
     image: string;
     link: string;
+    _id: number;
 }
 
 export interface APIResponseOffers<T> {
