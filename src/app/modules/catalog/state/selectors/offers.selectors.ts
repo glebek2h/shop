@@ -9,3 +9,13 @@ export const selectOffers = createSelector(
     selectOffersFeature,
     (state: OffersState) => state.offers,
 );
+
+export const selectCategories = createSelector(
+    selectOffersFeature,
+    (state: OffersState) => state.categoryOffers.map(el => el.categories),
+);
+
+export const selectCategoryOffers = createSelector(
+    selectOffersFeature,
+    (state: OffersState) => state.categoryOffers,
+);

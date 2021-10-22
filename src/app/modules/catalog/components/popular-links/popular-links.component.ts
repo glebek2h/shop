@@ -7,7 +7,7 @@ import {
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { CatalogState } from '../../state/catalog.state';
-import * as LinksSelect from '../../state/selectors/links.selectors';
+import * as LinksSelectors from '../../state/selectors/links.selectors';
 import * as LinksActions from '../../state/actions/links.actions';
 import { map, takeUntil } from 'rxjs/operators';
 
@@ -20,11 +20,11 @@ import { map, takeUntil } from 'rxjs/operators';
 export class PopularLinksComponent implements OnInit, OnDestroy {
     private readonly unsubscribe$ = new Subject();
 
-    readonly getLinks$ = this.store
-        .select(LinksSelect.selectLinks)
+    readonly links$ = this.store
+        .select(LinksSelectors.selectLinks)
         .pipe(takeUntil(this.unsubscribe$));
 
-    readonly isReadyToDisplay$ = this.getLinks$.pipe(
+    readonly isReadyToDisplay$ = this.links$.pipe(
         map(el => !!el),
         takeUntil(this.unsubscribe$),
     );
@@ -34,6 +34,7 @@ export class PopularLinksComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.store.dispatch(LinksActions.getLinks());
     }
+    
     ngOnDestroy(): void {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();

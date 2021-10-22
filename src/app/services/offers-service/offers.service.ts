@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
+    APIResponseCategoryOffers,
     APIResponseOffers,
     Offers,
 } from 'src/app/modules/catalog/state/catalog.models';
@@ -18,5 +19,11 @@ export class OffersService {
         return this.http.get<APIResponseOffers<Offers>>(
             `${environment.api_url}${serviceConstants.offers}`,
         );
+    }
+
+    getOffersCategory(): Observable<APIResponseCategoryOffers<Offers>> {
+        return this.http.get<APIResponseCategoryOffers<Offers>>(
+            `${environment.api_url}${serviceConstants.offersCategory}`,
+        )
     }
 }

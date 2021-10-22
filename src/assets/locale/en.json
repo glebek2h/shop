@@ -65,17 +65,7 @@
         "PLACEHOLDER": "Catalog search"
     },
     "CATALOG": {
-        "TITLE": "Catalog",
-        "ELECTRONICS": "Electronics",
-        "LAPTOPS": "Laptops and newtworks",
-        "TECHNIQUES": "Household appliances",
-        "EQUIPMENT": "Construction and repair",
-        "HOME": "Home and grden",
-        "CAR": "Car and moto",
-        "SPORT": "Beauty and sports",
-        "CHILDREN": "For kids and moms",
-        "OFFICE": "Work and the office",
-        "FOOD": "Food"
+        "TITLE": "Catalog"
     },
     "FOOTER": {
         "ABOUT": "About company",

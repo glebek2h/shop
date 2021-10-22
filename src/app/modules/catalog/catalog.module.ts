@@ -10,7 +10,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CatalogRoutingModule } from './catalog-routing.module';
-import { CategoriesComponent } from './components/categories/categories.component';
 import { SuperOffersComponent } from './components/super-offers/super-offers.component';
 import { PopularLinksComponent } from './components/popular-links/popular-links.component';
 import { CatalogPromotionComponent } from './components/catalog-promotion/catalog-promotion.component';
@@ -27,7 +26,6 @@ import { TabContentComponent } from './components/tab-content/tab-content.compon
 @NgModule({
     declarations: [
         CatalogComponent,
-        CategoriesComponent,
         SuperOffersComponent,
         PopularLinksComponent,
         CatalogPromotionComponent,

@@ -35,6 +35,10 @@ export interface APIResponseOffers<T> {
     offers: Array<Offers>;
 }
 
+export interface APIResponseCategoryOffers<T> {
+    categoryOffers: Array<Offers>;
+}
+
 export interface Links {
     text: string;
     link: string;

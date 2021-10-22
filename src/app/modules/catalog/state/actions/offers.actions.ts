@@ -8,3 +8,10 @@ export const getOffersSuccess = createAction(
     ActionConstants.GET_OFFERS_SUCCESS,
     props<{ offers: Array<Offers> }>(),
 );
+
+export const getCategoryOffers = createAction(ActionConstants.GET_CATEGORY_OFFERS);
+
+export const getCategoryOffersSuccess = createAction(
+    ActionConstants.GET_CATEGORY_OFFERS_SUCCESS,
+    props<{categoryOffers: Array<Offers>}>(),
+)

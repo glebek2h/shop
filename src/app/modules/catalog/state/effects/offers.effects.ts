@@ -19,6 +19,23 @@ export class OfferEffects {
         );
     });
 
+    getCategoryOffers = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(OffersActions.getCategoryOffers),
+            switchMap(() =>
+                this.offersService
+                    .getOffersCategory()
+                    .pipe(
+                        map(categoryOffers =>
+                            OffersActions.getCategoryOffersSuccess(
+                                categoryOffers,
+                            ),
+                        ),
+                    ),
+            ),
+        );
+    });
+
     constructor(
         private readonly actions$: Actions,
         private readonly offersService: OffersService,

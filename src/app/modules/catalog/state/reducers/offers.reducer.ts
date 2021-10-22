@@ -6,6 +6,7 @@ export const offersFeatureKey = 'offers-list';
 
 export const initialState: OffersState = {
     offers: [],
+    categoryOffers: [],
 };
 
 export const reducer = createReducer(
@@ -17,4 +18,11 @@ export const reducer = createReducer(
             offers: action.offers,
         };
     }),
+    on(OffersActions.getCategoryOffersSuccess, (state, action) => {
+        return {
+            ...state,
+            categoryOffers: action.categoryOffers,
+        };
+    }),
+
 );

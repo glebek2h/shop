@@ -7,7 +7,10 @@
             <ul class="catalog-categories__list">
                 <li
                     class="catalog-categories__list-item"
-                    *ngFor="let category of categories; let i = index"
+                    *ngFor="
+                        let category of categoryOffers$ | async;
+                        let i = index
+                    "
                     id="{{ category._id }}"
                     (click)="selectCategory(i)"
                 >
@@ -32,16 +35,18 @@
                     [offersData]="offer.categories"
                     [offersPromos]="offer.promos"
                     class="content-tabs"
-                    [class.active]="toggleClassForTab && isOpenTab"
+                    [class.active]="toggleClass && isOpen"
                 ></app-tab-content>
             </mat-tab>
         </mat-tab-group>
-        <div class="content-wrap">
+        <div class="content-wrap" *ngIf="categoriesData$ | async as data">
             <app-tab-content
-                [offersData]="offerObject"
-                [offersPromos]="categories[indexCategory].promos"
+                *ngIf="categoryOffers$ | async as promos"
+                [offersData]="data.length !== 0 ? data[indexCategory] : '' "
+                [offersPromos]="
+                    promos.length !== 0 ? promos[indexCategory].promos : '' "
                 class="content-tabs-2"
-                [class.active]="toggleClassForCategory && isOpenCategory"
+                [class.active]="toggleClass && !isOpen"
             ></app-tab-content>
         </div>
     </div>

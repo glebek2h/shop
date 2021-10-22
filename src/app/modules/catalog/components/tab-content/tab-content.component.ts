@@ -5,8 +5,8 @@ import {
     OnDestroy,
     OnInit,
 } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import * as Models from '../../state/catalog.models';
 
 @Component({
@@ -17,53 +17,59 @@ import * as Models from '../../state/catalog.models';
 })
 export class TabContentComponent implements OnInit, OnDestroy {
     private readonly unsubscribe$ = new Subject();
-    private data: Array<Models.CategoriesData>;
     readonly promos: Array<Models.PromosData>;
-    categories: Array<Models.CategoryName>;
-    filteredData: Array<Models.CategoriesData>;
-    hovered = false;
+
+    opened = false;
     closed = false;
 
     private readonly dynamicOffersSource$ =
         new BehaviorSubject<Models.OffersCategories>(null);
+
     @Input() set offersData(categories: Models.OffersCategories) {
         this.dynamicOffersSource$.next(categories);
     }
+
     private readonly dynamicOffers$ = this.dynamicOffersSource$
         .asObservable()
         .pipe(takeUntil(this.unsubscribe$));
 
-    private readonly dynamicPromoSource$ = new BehaviorSubject<
-        Array<Models.PromosData>
-    >(null);
+    private readonly dynamicPromoSource$ = new BehaviorSubject<Array<Models.PromosData>>(null);
+
     @Input() set offersPromos(promos: Array<Models.PromosData>) {
         this.dynamicPromoSource$.next(promos);
     }
+
     readonly dynamicPromos$ = this.dynamicPromoSource$
         .asObservable()
         .pipe(takeUntil(this.unsubscribe$));
 
+    readonly categories$ = this.dynamicOffers$.pipe(
+        map(el => el.categoryNames),
+        takeUntil(this.unsubscribe$),
+    );
+
+    readonly data$ = this.dynamicOffers$.pipe(
+        map(el => el.data),
+        takeUntil(this.unsubscribe$),
+    );
+
+    filteredData$: Observable<Array<Models.CategoriesData>>;
+
     constructor() {}
 
-    ngOnInit(): void {
-        this.dynamicOffers$.subscribe(el => {
-            this.categories = el.categoryNames;
-            this.data = el.data;
-        });
-    }
-    closeOverlay(event: {
-        srcElement: { classList: { contains: (arg0: string) => string } };
-    }): void {
-        if (event.srcElement.classList.contains('overlay-close')) {
-            this.closed = !this.closed;
-            this.hovered = false;
-        }
+    ngOnInit(): void {}
+
+    closeOverlay(): void {
+        this.closed = !this.closed;
+        this.opened = false;
     }
 
-    onHover(event: { target: { innerText: string } }): void {
-        const mouseTarget = event.target.innerText;
-        this.filteredData = this.data.filter(el => mouseTarget === el.category);
-        this.hovered = true;
+    onHover(categoryName: string): void {
+        this.filteredData$ = this.data$.pipe(
+            map(el => el.filter(el => el.category === categoryName)),
+            takeUntil(this.unsubscribe$),
+        );
+        this.opened = true;
         this.closed = false;
     }
 

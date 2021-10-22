@@ -3,8 +3,8 @@
         <ul class="categories-list">
             <li
                 class="categories-list__item"
-                *ngFor="let category of categories"
-                (mouseenter)="onHover($event)"
+                *ngFor="let category of categories$ | async"
+                (mouseenter)="onHover(category.name)"
             >
                 {{ category.name }}
             </li>
@@ -25,13 +25,13 @@
         </ul>
         <div
             class="promos-wrap__overlay"
-            [ngClass]="{ active: hovered, disabled: closed }"
+            [ngClass]="{ active: opened, disabled: closed }"
         >
-            <div class="overlay-close" (click)="closeOverlay($event)">
+            <div class="overlay-close" (click)="closeOverlay()">
                 <span class="close">&times;</span>
             </div>
             <ul class="overlay-list">
-                <li class="item" *ngFor="let item of filteredData">
+                <li class="item" *ngFor="let item of filteredData$ | async">
                     <img src="{{ item.image }}" alt="product image" />
                     <div class="item-block">
                         <h3>{{ item.productName }}</h3>

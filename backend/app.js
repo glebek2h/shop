@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const Offer = require('./models/offers');
+const CategoryOffer = require('./models/category-offers');
 const Link = require('./models/links');
 const Promotions = require('./models/promotions');
 const Order = require('./models/orders');
@@ -134,6 +135,26 @@ app.get('/api/offers', async (req, res, next) => {
         offers,
     });
 });
+
+app.post('/api/category-offers', ({ body }, res, next) => {
+    const offersCategory = new CategoryOffer({
+        icon: body.icon,
+        categories: body.categories,
+        promos: body.promos,
+        categoryName: body.categoryName,
+    });
+    offersCategory.save();
+    res.status(200).json({
+        message: 'Successful'
+    })
+});
+
+app.get('/api/category-offers', async (req, res, next) => {
+    const categoryOffers = await CategoryOffer.find();
+    res.status(200).json({
+        categoryOffers
+    })
+})
 
 // links
 

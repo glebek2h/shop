@@ -8,6 +8,11 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 })
 export class CatalogComponent implements OnInit {
     constructor() {}
+    hidePromos = true;
+
+    onSay(event: boolean) {
+        this.hidePromos = event;
+    }
 
     ngOnInit(): void {}
 }

@@ -6,6 +6,7 @@ import * as fromPromotions from './reducers/promotions.reducer';
 
 export interface OffersState {
     offers: Array<Offers>;
+    categoryOffers: Array<Offers>;
 }
 
 export interface LinksState {
