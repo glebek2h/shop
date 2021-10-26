@@ -10,8 +10,8 @@ export class CatalogComponent implements OnInit {
     constructor() {}
     hidePromos = true;
 
-    onSay(event: boolean) {
-        this.hidePromos = event;
+    onHide(hidePromo: boolean) {
+        this.hidePromos = hidePromo;
     }
 
     ngOnInit(): void {}

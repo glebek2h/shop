@@ -9,7 +9,7 @@ import {
 import { Store } from '@ngrx/store';
 import { CatalogState } from '../../state/catalog.state';
 import * as OffersActions from '../../state/actions/offers.actions';
-import { Subject } from 'rxjs';
+import { combineLatest, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import * as OffersSelectors from '../../state/selectors/offers.selectors';
 
@@ -36,13 +36,17 @@ export class SuperOffersComponent implements OnInit, OnDestroy {
         .select(OffersSelectors.selectCategories)
         .pipe(takeUntil(this.unsubscribe$));
 
-    readonly isReadyToDisplay$ = this.offers$.pipe(
-        map(el => !!el),
+    readonly isReadyToDisplay$ = combineLatest([
+        this.offers$,
+        this.categoryOffers$,
+    ]).pipe(
+        map(el => el.every(el => el.length !== 0)),
         takeUntil(this.unsubscribe$),
     );
 
-    isOpen = false;
-    toggleClass = true;
+    isOpenTabContent = false;
+    toggleTabContentClass = true;
+    
     indexCategory = 0;
 
     constructor(private readonly store: Store<CatalogState>) {}
@@ -55,15 +59,15 @@ export class SuperOffersComponent implements OnInit, OnDestroy {
 
     selectCategory(index: number): void {
         this.indexCategory = index;
-        this.toggleClass = !this.toggleClass;
-        this.isOpen = false;
-        this.hidePromos.emit(!this.toggleClass);
+        this.toggleTabContentClass = !this.toggleTabContentClass;
+        this.isOpenTabContent = !this.isOpenTabContent;
+        this.hidePromos.emit(!this.toggleTabContentClass);
     }
 
     selectTab(): void {
-        this.toggleClass = !this.toggleClass;
-        this.isOpen = !false;
-        this.hidePromos.emit(!this.toggleClass);
+        this.toggleTabContentClass = !this.toggleTabContentClass;
+        this.isOpenTabContent = this.isOpenTabContent;
+        this.hidePromos.emit(!this.toggleTabContentClass);
     }
 
     ngOnDestroy(): void {

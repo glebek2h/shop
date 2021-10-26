@@ -11,7 +11,7 @@
                         let category of categoryOffers$ | async;
                         let i = index
                     "
-                    id="{{ category._id }}"
+                    [class.active]="indexCategory === i && !isOpenTabContent"
                     (click)="selectCategory(i)"
                 >
                     <img src="{{ category.icon }}" alt="category" />
@@ -21,7 +21,7 @@
                 </li>
             </ul>
         </div>
-        <mat-tab-group animationDuration="0ms" #tabGroup (click)="selectTab()">
+        <mat-tab-group animationDuration="0ms" (click)="selectTab()">
             <mat-tab></mat-tab>
             <mat-tab *ngFor="let offer of offers$ | async; let i = index">
                 <ng-template mat-tab-label>
@@ -32,21 +32,20 @@
                     />
                 </ng-template>
                 <app-tab-content
+                    class="content-tabs"
                     [offersData]="offer.categories"
                     [offersPromos]="offer.promos"
-                    class="content-tabs"
-                    [class.active]="toggleClass && isOpen"
+                    [class.active]="toggleTabContentClass && isOpenTabContent"
                 ></app-tab-content>
             </mat-tab>
         </mat-tab-group>
         <div class="content-wrap" *ngIf="categoriesData$ | async as data">
             <app-tab-content
-                *ngIf="categoryOffers$ | async as promos"
-                [offersData]="data.length !== 0 ? data[indexCategory] : '' "
-                [offersPromos]="
-                    promos.length !== 0 ? promos[indexCategory].promos : '' "
                 class="content-tabs-2"
-                [class.active]="toggleClass && !isOpen"
+                *ngIf="categoryOffers$ | async as promo"
+                [offersData]="data[indexCategory]"
+                [offersPromos]="promo[indexCategory].promos"
+                [class.active]="toggleTabContentClass && !isOpenTabContent"
             ></app-tab-content>
         </div>
     </div>

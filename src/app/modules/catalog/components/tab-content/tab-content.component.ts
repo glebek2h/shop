@@ -5,8 +5,8 @@ import {
     OnDestroy,
     OnInit,
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { map, take, takeUntil } from 'rxjs/operators';
 import * as Models from '../../state/catalog.models';
 
 @Component({
@@ -18,9 +18,7 @@ import * as Models from '../../state/catalog.models';
 export class TabContentComponent implements OnInit, OnDestroy {
     private readonly unsubscribe$ = new Subject();
     readonly promos: Array<Models.PromosData>;
-
     opened = false;
-    closed = false;
 
     private readonly dynamicOffersSource$ =
         new BehaviorSubject<Models.OffersCategories>(null);
@@ -49,28 +47,37 @@ export class TabContentComponent implements OnInit, OnDestroy {
     );
 
     readonly data$ = this.dynamicOffers$.pipe(
-        map(el => el.data),
+        map(el => el.data.map(el => el)),
         takeUntil(this.unsubscribe$),
     );
 
-    filteredData$: Observable<Array<Models.CategoriesData>>;
+    readonly filteredData$ = new BehaviorSubject<Array<Models.CategoriesData>>(null);
+
+    readonly isReadyToDisplay$ = combineLatest([
+        this.dynamicOffers$,
+        this.dynamicPromos$,
+    ]).pipe(
+        map(el => el.every(el => !!el)),
+        takeUntil(this.unsubscribe$),
+    );
 
     constructor() {}
 
     ngOnInit(): void {}
 
     closeOverlay(): void {
-        this.closed = !this.closed;
-        this.opened = false;
+        this.opened = !this.opened;
     }
 
     onHover(categoryName: string): void {
-        this.filteredData$ = this.data$.pipe(
-            map(el => el.filter(el => el.category === categoryName)),
-            takeUntil(this.unsubscribe$),
-        );
+        this.data$
+            .pipe(
+                take(1),
+                map(data => data.filter(el => el.category === categoryName)),
+            )
+            .subscribe(filteredData => this.filteredData$.next(filteredData));
+
         this.opened = true;
-        this.closed = false;
     }
 
     ngOnDestroy(): void {

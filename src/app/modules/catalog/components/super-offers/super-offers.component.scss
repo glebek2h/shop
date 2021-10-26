@@ -19,12 +19,14 @@
                 border-bottom: 3px solid rgb(87, 87, 87);
                 background-color: var(--border-color);
             }
+
             img {
                 width: 80px;
                 height: auto;
             }
         }
     }
+
     .content-tabs {
         display: none;
         &.active {
@@ -62,6 +64,10 @@
             width: 10%;
             transition: 0.2s ease;
             cursor: pointer;
+            &.active {
+                background-color: var(--border-color);
+                border-bottom: 2px solid rgb(88, 88, 88);
+            }
             &:hover {
                 background-color: var(--border-color);
                 border-bottom: 2px solid rgb(88, 88, 88);

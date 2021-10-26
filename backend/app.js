@@ -145,16 +145,16 @@ app.post('/api/category-offers', ({ body }, res, next) => {
     });
     offersCategory.save();
     res.status(200).json({
-        message: 'Successful'
-    })
+        message: 'Successful',
+    });
 });
 
 app.get('/api/category-offers', async (req, res, next) => {
     const categoryOffers = await CategoryOffer.find();
     res.status(200).json({
-        categoryOffers
-    })
-})
+        categoryOffers,
+    });
+});
 
 // links
 
