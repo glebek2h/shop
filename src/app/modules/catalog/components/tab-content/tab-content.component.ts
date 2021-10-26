@@ -3,7 +3,6 @@ import {
     Component,
     Input,
     OnDestroy,
-    OnInit,
 } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
@@ -15,7 +14,7 @@ import * as Models from '../../state/catalog.models';
     styleUrls: ['./tab-content.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TabContentComponent implements OnInit, OnDestroy {
+export class TabContentComponent implements OnDestroy {
     private readonly unsubscribe$ = new Subject();
     readonly promos: Array<Models.PromosData>;
     opened = false;
@@ -51,7 +50,11 @@ export class TabContentComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe$),
     );
 
-    readonly filteredData$ = new BehaviorSubject<Array<Models.CategoriesData>>(null);
+    readonly filteredDataSource$ = new BehaviorSubject<Array<Models.CategoriesData>>(null);
+
+    readonly filteredData$ = this.filteredDataSource$
+        .asObservable()
+        .pipe(takeUntil(this.unsubscribe$));
 
     readonly isReadyToDisplay$ = combineLatest([
         this.dynamicOffers$,
@@ -63,8 +66,6 @@ export class TabContentComponent implements OnInit, OnDestroy {
 
     constructor() {}
 
-    ngOnInit(): void {}
-
     closeOverlay(): void {
         this.opened = !this.opened;
     }
@@ -75,7 +76,7 @@ export class TabContentComponent implements OnInit, OnDestroy {
                 take(1),
                 map(data => data.filter(el => el.category === categoryName)),
             )
-            .subscribe(filteredData => this.filteredData$.next(filteredData));
+            .subscribe(filteredData => this.filteredDataSource$.next(filteredData));
 
         this.opened = true;
     }

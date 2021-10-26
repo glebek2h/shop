@@ -7,8 +7,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CatalogComponent implements OnInit {
-    constructor() {}
     hidePromos = true;
+
+    constructor() {}
 
     onHide(hidePromo: boolean) {
         this.hidePromos = hidePromo;
