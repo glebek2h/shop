@@ -18,7 +18,7 @@ import * as OrdersSelect from '../../state/selectors/orders.selectors';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrdersComponent implements OnInit, OnDestroy {
-    private unsubscribe$ = new Subject();
+    private readonly unsubscribe$ = new Subject();
     readonly getOrders$ = this.store
         .select(OrdersSelect.selectState)
         .pipe(takeUntil(this.unsubscribe$));

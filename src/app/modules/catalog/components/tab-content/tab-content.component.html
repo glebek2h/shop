@@ -1,0 +1,45 @@
+<div class="tab-content" *ngIf="isReadyToDisplay$ | async; else loading">
+    <div class="categories">
+        <ul class="categories-list">
+            <li
+                class="categories-list__item"
+                *ngFor="let category of categories$ | async"
+                (mouseenter)="onHover(category.name)"
+            >
+                {{ category.name }}
+            </li>
+        </ul>
+    </div>
+    <div class="promos-wrap">
+        <ul class="promos-wrap__list">
+            <li
+                class="promos-wrap__list-item"
+                *ngFor="let promo of dynamicPromos$ | async"
+            >
+                <img src="{{ promo.image }}" alt="promotion image" />
+                <div class="promos-block">
+                    <h3>{{ promo.title }}</h3>
+                    <p>{{ promo.subTitle }}</p>
+                </div>
+            </li>
+        </ul>
+        <div class="promos-wrap__overlay" [class.active]="opened">
+            <div class="overlay-close" (click)="closeOverlay()">
+                <span class="close">&times;</span>
+            </div>
+            <ul class="overlay-list">
+                <li class="item" *ngFor="let item of filteredData$ | async">
+                    <img src="{{ item.image }}" alt="product image" />
+                    <div class="item-block">
+                        <h3>{{ item.productName }}</h3>
+                        <p>{{ item.quantity }}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<ng-template #loading>
+    <h3>loading...</h3>
+</ng-template>

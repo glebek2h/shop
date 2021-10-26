@@ -6,6 +6,9 @@
     box-sizing: border-box;
     list-style: none;
 }
+body {
+    height: 100%;
+}
 
 :root {
     --color-text: rgb(68, 68, 68);
@@ -16,5 +19,6 @@
     --btn-default: #efefef;
     --header-color: #ffe3bf;
     --disabled-btn: rgba(252, 164, 1, 0.514);
+    --color-link: rgb(111, 111, 255);
 }
 

@@ -10,9 +10,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
-    declarations: [LanguageSwitcherComponent, HeaderComponent],
+    declarations: [LanguageSwitcherComponent, HeaderComponent, FooterComponent],
     imports: [
         CommonModule,
         MatSelectModule,
@@ -30,6 +31,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
             useDefaultLang: false,
         }),
     ],
-    exports: [LanguageSwitcherComponent, MatSelectModule, HeaderComponent],
+    exports: [LanguageSwitcherComponent, MatSelectModule, HeaderComponent, FooterComponent],
 })
 export class SharedModule {}

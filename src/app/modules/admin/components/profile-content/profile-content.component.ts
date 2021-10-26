@@ -25,7 +25,7 @@ export interface SafeUrlImpl extends SafeUrl {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileContentComponent implements OnInit, OnDestroy {
-    private unsubscribe$ = new Subject();
+    private readonly unsubscribe$ = new Subject();
     panelOpenState: boolean;
     fileUrl: SafeUrlImpl;
     dataObj: Admin;
@@ -49,7 +49,6 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
             ]),
         });
         this.store.dispatch(LoadAdminActions.getAdminInfo());
-        
     }
 
     updateProfile() {

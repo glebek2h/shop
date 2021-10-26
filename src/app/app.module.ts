@@ -16,8 +16,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { createTranslateLoader } from './shared/utils/utils';
 import { SharedModule } from './shared/shared.module';
-import { LoginComponent } from './pages/login/login.component';
 import { MatIconModule } from '@angular/material/icon';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
     declarations: [AppComponent, ErrorPageComponent, LoginComponent],

@@ -8,7 +8,7 @@ import { startWith, map, takeUntil } from 'rxjs/operators';
     styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-    private unsubscribe$ = new Subject();
+    private readonly unsubscribe$ = new Subject();
     control = new FormControl();
     searchedResults = [
         'Champs-Élysées',

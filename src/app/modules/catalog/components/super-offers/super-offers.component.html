@@ -1,0 +1,56 @@
+<div class="super-offers" *ngIf="isReadyToDisplay$ | async; else loading">
+    <div class="wrap">
+        <div class="catalog-title">
+            <h2>{{ 'CATALOG.TITLE' | translate }}</h2>
+        </div>
+        <div class="catalog-categories">
+            <ul class="catalog-categories__list">
+                <li
+                    class="catalog-categories__list-item"
+                    *ngFor="
+                        let category of categoryOffers$ | async;
+                        let i = index
+                    "
+                    [class.active]="indexCategory === i && !isOpenTabContent"
+                    (click)="selectCategory(i)"
+                >
+                    <img src="{{ category.icon }}" alt="category" />
+                    <span>
+                        {{ category.categoryName | translate }}
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <mat-tab-group animationDuration="0ms" (click)="selectTab()">
+            <mat-tab></mat-tab>
+            <mat-tab *ngFor="let offer of offers$ | async; let i = index">
+                <ng-template mat-tab-label>
+                    <img
+                        class="tab-img"
+                        src="{{ offer.icon }}"
+                        alt="offer-image"
+                    />
+                </ng-template>
+                <app-tab-content
+                    class="content-tabs"
+                    [offersData]="offer.categories"
+                    [offersPromos]="offer.promos"
+                    [class.active]="toggleTabContentClass && isOpenTabContent"
+                ></app-tab-content>
+            </mat-tab>
+        </mat-tab-group>
+        <div class="content-wrap" *ngIf="categoriesData$ | async as data">
+            <app-tab-content
+                class="content-tabs-2"
+                *ngIf="categoryOffers$ | async as promo"
+                [offersData]="data[indexCategory]"
+                [offersPromos]="promo[indexCategory].promos"
+                [class.active]="toggleTabContentClass && !isOpenTabContent"
+            ></app-tab-content>
+        </div>
+    </div>
+</div>
+
+<ng-template #loading>
+    <h3>loading...</h3>
+</ng-template>

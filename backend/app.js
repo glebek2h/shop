@@ -2,7 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const Post = require('./models/post');
+const Offer = require('./models/offers');
+const CategoryOffer = require('./models/category-offers');
+const Link = require('./models/links');
+const Promotions = require('./models/promotions');
 const Order = require('./models/orders');
 const Profile = require('./models/profile');
 
@@ -35,27 +38,6 @@ app.use((req, res, next) => {
 });
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb' }));
-
-// ********* posts *********
-
-app.post('/api/posts', ({ body }, res, next) => {
-    const post = new Post({
-        title: body.title,
-        comments: body.comments,
-    });
-    post.save();
-    res.status(200).json({
-        meesage: 'Successful',
-    });
-});
-
-app.get('/api/posts', async (req, res, next) => {
-    const posts = await Post.find();
-    res.status(200).json({
-        meesage: 'Successful',
-        posts,
-    });
-});
 
 // ********* orders *********
 
@@ -116,7 +98,7 @@ app.put('/api/profile', (req, res, next) => {
         email: req.body.email,
         avatar: req.body.avatar,
     });
-    
+
     Profile.updateOne({ _id: req.body._id }, post)
         .then(result => {
             if (result.matchedCount > 0) {
@@ -131,6 +113,91 @@ app.put('/api/profile', (req, res, next) => {
             });
         });
 });
+
+// offers
+
+app.post('/api/offers', ({ body }, res, next) => {
+    const offer = new Offer({
+        icon: body.icon,
+        categories: body.categories,
+        promos: body.promos,
+    });
+
+    offer.save();
+    res.status(200).json({
+        meesage: 'Successful',
+    });
+});
+
+app.get('/api/offers', async (req, res, next) => {
+    const offers = await Offer.find();
+    res.status(200).json({
+        offers,
+    });
+});
+
+app.post('/api/category-offers', ({ body }, res, next) => {
+    const offersCategory = new CategoryOffer({
+        icon: body.icon,
+        categories: body.categories,
+        promos: body.promos,
+        categoryName: body.categoryName,
+    });
+    offersCategory.save();
+    res.status(200).json({
+        message: 'Successful',
+    });
+});
+
+app.get('/api/category-offers', async (req, res, next) => {
+    const categoryOffers = await CategoryOffer.find();
+    res.status(200).json({
+        categoryOffers,
+    });
+});
+
+// links
+
+app.post('/api/links', ({ body }, res, next) => {
+    const link = new Link({
+        text: body.text,
+        link: body.link,
+    });
+    link.save();
+    res.status(200).json({
+        meesage: 'Successful',
+    });
+});
+
+app.get('/api/links', async (req, res, next) => {
+    const links = await Link.find();
+    res.status(200).json({
+        links,
+    });
+});
+
+// promotion
+
+app.post('/api/promotions', ({ body }, res, next) => {
+    const promotion = new Promotions({
+        title: body.title,
+        subTitle: body.subTitle,
+        image: body.image,
+        link: body.link,
+    });
+    promotion.save();
+    res.status(200).json({
+        meesage: 'Successful',
+    });
+});
+
+app.get('/api/promotions', async (req, res, next) => {
+    const promotions = await Promotions.find();
+    res.status(200).json({
+        promotions,
+    });
+});
+
 // https://trello.com/c/uRIjTWIA/12-add-remove-upload-profile-image-integration-wit-api
 // remove whole profile
 // app.delete('/api/profile/:id', (req, res, next) => {

@@ -1,0 +1,19 @@
+.popular-links {
+    padding: 15px 0px;
+    &__list {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        &-item {
+            text-align: center;
+            a {
+                color: var(--color-link);
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
