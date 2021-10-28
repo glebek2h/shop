@@ -1,4 +1,3 @@
-import { SafeUrl } from '@angular/platform-browser';
 import { createAction, props } from '@ngrx/store';
 import * as ActionConstants from 'src/app/store/store-action.constants';
 import * as AdminModels from '../admin.model';
@@ -12,7 +11,18 @@ export const getProfileInfoSuccess = createAction(
     props<{ profile: AdminModels.Admin }>(),
 );
 
-// update profile info from form
+// upload profile avatar info from BE
+
+export const getAvatarInfo = createAction(
+    ActionConstants.CHANGE_PROFILE_AVATAR,
+);
+
+export const getProfileAvatarSuccess = createAction(
+    ActionConstants.CHANGE_PROFILE_AVATAR_SUCCESS,
+    props<{ avatar: AdminModels.Avatar }>(),
+);
+
+// update profile info
 
 export const updateProfileInfo = createAction(
     ActionConstants.UPDATE_PROFILE_INFO,
@@ -24,24 +34,38 @@ export const updateProfileInfoSuccess = createAction(
     props<{ updatedData: AdminModels.Admin }>(),
 );
 
+// update profile avatar
+
+export const updateProfileAvatar = createAction(
+    ActionConstants.UPLOAD_PROFILE_AVATAR,
+    props<{ updatedAvatar: AdminModels.Avatar }>(),
+);
+
+export const updateProfileAvatarSuccess = createAction(
+    ActionConstants.UPLOAD_PROFILE_AVATAR_SUCCESS,
+    props<{ updatedAvatar: AdminModels.Avatar }>(),
+);
+
 // remove profile avatar
 
 export const removeProfileAvatar = createAction(
     ActionConstants.REMOVE_PROFILE_AVATAR,
+    props<{ avatarId: string }>(),
 );
+
 export const removeProfileAvatarSuccess = createAction(
     ActionConstants.REMOVE_PROFILE_AVATAR_SUCCESS,
-    props<{ removeDataResponse: AdminModels.RemoveProfileAvatarResponse }>(),
+    props<{ message: string }>(),
 );
 
-// upload profile avatar
+// add profile avatar
 
-export const uploadProfileAvatar = createAction(
-    ActionConstants.UPLOAD_PROFILE_AVATAR,
-    props<{ uploadAvatar: SafeUrl }>(),
+export const addProfileAvatar = createAction(
+    ActionConstants.ADD_PROFILE_AVATAR,
+    props<{ addAvatarData: AdminModels.Avatar }>(),
 );
 
-export const uploadProfileAvatarSuccess = createAction(
-    ActionConstants.UPLOAD_PROFILE_AVATAR_SUCCESS,
-    props<{ uploadAvatar: SafeUrl }>(),
+export const addProfileAvatarSuccess = createAction(
+    ActionConstants.ADD_PROFILE_AVATAR_SUCCESS,
+    props<{ message: string }>(),
 );

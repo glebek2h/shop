@@ -6,6 +6,7 @@ import * as fromOrders from './reducers/orders.reducer';
 export interface AdminInfoState {
     profile: AdminModels.Admin,
     isLoad: boolean;
+    avatar: AdminModels.Avatar
 }
 
 export interface OrdersState {

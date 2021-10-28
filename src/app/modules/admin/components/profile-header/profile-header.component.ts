@@ -5,7 +5,7 @@ import {
     OnInit,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
+import { combineLatest, Subject } from 'rxjs';
 import * as AdminSelectors from '../../state/selectors/admin.selectors';
 import { map, takeUntil } from 'rxjs/operators';
 import { AdminState } from '../../state/admin.state';
@@ -25,7 +25,10 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
         .select(AdminSelectors.selectAvatar)
         .pipe(takeUntil(this.unsubscribe$));
 
-    readonly isReadyToDisplay$ = this.name$.pipe(map(el => !!el));
+    readonly isReadyToDisplay$ = combineLatest([
+        this.name$,
+        this.getAvatar$,
+    ]).pipe(map(el => el.every(el => el !== null)));
 
     constructor(readonly store: Store<AdminState>) {}
 
