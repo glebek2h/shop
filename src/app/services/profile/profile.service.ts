@@ -54,7 +54,7 @@ export class ProfileService {
             `${environment.api_url}${serverConstants.avatar}`,
             {
                 imgUrl: data.imgUrl,
-                _id: data._id
+                _id: data._id,
             },
         );
     }
