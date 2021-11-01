@@ -28,7 +28,9 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
     readonly isReadyToDisplay$ = combineLatest([
         this.name$,
         this.getAvatar$,
-    ]).pipe(map(el => el.every(el => el !== null)));
+    ]).pipe(
+        map(el => el.every(el => el !== null), takeUntil(this.unsubscribe$)),
+    );
 
     constructor(readonly store: Store<AdminState>) {}
 

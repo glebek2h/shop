@@ -7,7 +7,7 @@ export interface Admin {
 }
 
 export interface Avatar {
-    imgUrl: string | ArrayBuffer;
+    imgUrl: string;
     _id: string;
 }
 
@@ -29,7 +29,7 @@ export interface APIResponseProfile<T> {
     profile: Admin;
 }
 export interface APIResponseAvatar<T> {
-    avatar: Avatar
+    avatar: Avatar;
 }
 
 export interface SelectOrders {

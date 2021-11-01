@@ -43,13 +43,19 @@ export const reducer = createReducer<AdminInfoState>(
             avatar: action.updatedAvatar,
         };
     }),
-    on(AdminActions.removeProfileAvatar, state => {
+    on(AdminActions.removeProfileAvatarSuccess, state => {
         return {
             ...state,
             avatar: null,
         };
     }),
     on(AdminActions.addProfileAvatar, (state, action) => {
+        return {
+            ...state,
+            avatar: action.addAvatarData,
+        };
+    }),
+    on(AdminActions.addProfileAvatarSuccess, (state, action) => {
         return {
             ...state,
             avatar: action.addAvatarData,

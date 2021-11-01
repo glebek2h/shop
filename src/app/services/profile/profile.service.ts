@@ -49,8 +49,8 @@ export class ProfileService {
         );
     }
 
-    addAvatar(data: Avatar): Observable<string> {
-        return this.http.post<string>(
+    addAvatar(data: Avatar): Observable<Avatar> {
+        return this.http.post<Avatar>(
             `${environment.api_url}${serverConstants.avatar}`,
             {
                 imgUrl: data.imgUrl,

@@ -67,5 +67,5 @@ export const addProfileAvatar = createAction(
 
 export const addProfileAvatarSuccess = createAction(
     ActionConstants.ADD_PROFILE_AVATAR_SUCCESS,
-    props<{ message: string }>(),
+    props<{ addAvatarData: AdminModels.Avatar }>(),
 );

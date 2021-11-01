@@ -64,8 +64,9 @@ export class AdminEffects {
             switchMap(({ addAvatarData }) =>
                 this.profileService.addAvatar(addAvatarData),
             ),
-            mergeMap(message => [
-                AdminActions.addProfileAvatarSuccess({ message }),
+            mergeMap((addAvatarData: Avatar) => [
+                AdminActions.addProfileAvatarSuccess({ addAvatarData }),
+                AdminActions.getAvatarInfo(),
             ]),
         );
     });
@@ -74,11 +75,14 @@ export class AdminEffects {
         return this.actions$.pipe(
             ofType(AdminActions.removeProfileAvatar),
             switchMap(({ avatarId }) =>
-                this.profileService.deleteAvatar(avatarId),
+                this.profileService.deleteAvatar(avatarId).pipe(
+                    map(message =>
+                        AdminActions.removeProfileAvatarSuccess({
+                            message,
+                        }),
+                    ),
+                ),
             ),
-            mergeMap(message => [
-                AdminActions.removeProfileAvatarSuccess({ message }),
-            ]),
         );
     });
 

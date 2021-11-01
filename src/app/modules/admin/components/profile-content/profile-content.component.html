@@ -103,7 +103,7 @@
                                     id="loadFile"
                                     name="loadFile"
                                     hidden
-                                    (change)="getFile($event)"
+                                    (change)="getFile($event.target.files[0])"
                                 />
                                 <span
                                     class="edit-remove edit-item"

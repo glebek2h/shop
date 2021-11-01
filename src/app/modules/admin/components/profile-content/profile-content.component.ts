@@ -8,10 +8,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as LoadAdminActions from '../../state/actions/admin.actions';
 import * as AdminSelect from '../../state/selectors/admin.selectors';
-import { Admin, Avatar } from '../../state/admin.model';
 import { AdminState } from '../../state/admin.state';
 import { combineLatest, Subject } from 'rxjs';
-import { map, take, takeUntil } from 'rxjs/operators';
+import { map, take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-profile-content',
@@ -21,8 +21,6 @@ import { map, take, takeUntil } from 'rxjs/operators';
 })
 export class ProfileContentComponent implements OnInit, OnDestroy {
     private readonly unsubscribe$ = new Subject();
-    private dataObj: Admin;
-    private updatedDataAvatar: Avatar;
     form: FormGroup;
 
     readonly selectId$ = this.store
@@ -38,9 +36,15 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
         this.selectId$,
         this.avatarId$,
         this.getAvatar$,
-    ]).pipe(map(el => el.every(el => el !== null)));
+    ]).pipe(
+        map(el => el.every(el => el !== null)),
+        takeUntil(this.unsubscribe$),
+    );
 
-    constructor(readonly store: Store<AdminState>) {}
+    constructor(
+        readonly store: Store<AdminState>,
+        private readonly translate: TranslateService,
+    ) {}
 
     ngOnInit(): void {
         this.form = new FormGroup({
@@ -56,55 +60,54 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
 
     updateProfile(): void {
         this.selectId$.pipe(take(1)).subscribe(id => {
-            this.dataObj = {
-                ...this.form.value,
-                _id: id,
-            };
             this.store.dispatch(
                 LoadAdminActions.updateProfileInfo({
-                    updatedData: this.dataObj,
+                    updatedData: { ...this.form.value, _id: id },
                 }),
             );
         });
         this.form.reset();
     }
 
-    getFile(event: { target: { files: Blob[] } }): void {
+    getFile(file: Blob): void {
         try {
             const reader = new FileReader();
-            reader.readAsDataURL(event.target.files[0]);
-            reader.onload = (event: {
-                target: { result: string | ArrayBuffer };
-            }) => {
-                this.getAvatar$.pipe(take(1)).subscribe(avatar => {
-                    this.avatarId$.pipe(take(1)).subscribe(id => {
-                        this.updatedDataAvatar = {
-                            _id: id,
-                            imgUrl: event.target.result,
-                        };
+            reader.readAsDataURL(file);
+            reader.onload = event => {
+                this.getAvatar$
+                    .pipe(take(1), withLatestFrom(this.avatarId$))
+                    .subscribe(el => {
+                        const [avatar, avatarId] = el;
                         avatar
                             ? this.store.dispatch(
                                   LoadAdminActions.updateProfileAvatar({
-                                      updatedAvatar: this.updatedDataAvatar,
+                                      updatedAvatar: {
+                                          _id: avatarId,
+                                          imgUrl: event.target.result as string,
+                                      },
                                   }),
                               )
                             : this.store.dispatch(
                                   LoadAdminActions.addProfileAvatar({
-                                      addAvatarData: this.updatedDataAvatar,
+                                      addAvatarData: {
+                                          imgUrl: event.target.result as string,
+                                          _id: avatarId,
+                                      },
                                   }),
                               );
                     });
-                });
             };
         } catch (error) {
-            window.alert('Please select image');
+            this.translate.get('ALERT.MESSAGE').subscribe(data => {
+                window.alert(data);
+            });
         }
     }
 
     onRemoveFile(): void {
-        this.avatarId$.pipe(take(1)).subscribe(id => {
+        this.avatarId$.pipe(take(1)).subscribe(avatarId => {
             this.store.dispatch(
-                LoadAdminActions.removeProfileAvatar({ avatarId: id }),
+                LoadAdminActions.removeProfileAvatar({ avatarId }),
             );
         });
     }
