@@ -62,12 +62,19 @@ export class AdminEffects {
         return this.actions$.pipe(
             ofType(AdminActions.addProfileAvatar),
             switchMap(({ addAvatarData }) =>
-                this.profileService.addAvatar(addAvatarData),
+                this.profileService.addAvatar(addAvatarData).pipe(
+                    map((addAvatarData: Avatar) =>
+                        AdminActions.addProfileAvatarSuccess({
+                            addAvatarData,
+                        }),
+                    ),
+                ),
             ),
-            mergeMap((addAvatarData: Avatar) => [
-                AdminActions.addProfileAvatarSuccess({ addAvatarData }),
-                AdminActions.getAvatarInfo(),
-            ]),
+            switchMap(() =>
+                this.profileService
+                    .getProfileAvatar()
+                    .pipe(map(() => AdminActions.getAvatarInfo())),
+            ),
         );
     });
 

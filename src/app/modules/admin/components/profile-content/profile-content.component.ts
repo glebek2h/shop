@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 import * as LoadAdminActions from '../../state/actions/admin.actions';
 import * as AdminSelect from '../../state/selectors/admin.selectors';
 import { AdminState } from '../../state/admin.state';
-import { combineLatest, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { map, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -32,12 +32,8 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
     readonly getAvatar$ = this.store
         .select(AdminSelect.selectAvatar)
         .pipe(takeUntil(this.unsubscribe$));
-    readonly isReadyToDisplay$ = combineLatest([
-        this.selectId$,
-        this.avatarId$,
-        this.getAvatar$,
-    ]).pipe(
-        map(el => el.every(el => el !== null)),
+    readonly isReadyToDisplay$ = this.selectId$.pipe(
+        map(el => !!el),
         takeUntil(this.unsubscribe$),
     );
 
@@ -55,7 +51,6 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
             ]),
         });
         this.store.dispatch(LoadAdminActions.getAdminInfo());
-        this.store.dispatch(LoadAdminActions.getAvatarInfo());
     }
 
     updateProfile(): void {
@@ -76,8 +71,7 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
             reader.onload = event => {
                 this.getAvatar$
                     .pipe(take(1), withLatestFrom(this.avatarId$))
-                    .subscribe(el => {
-                        const [avatar, avatarId] = el;
+                    .subscribe(([avatar, avatarId]) => {
                         avatar
                             ? this.store.dispatch(
                                   LoadAdminActions.updateProfileAvatar({
@@ -98,9 +92,7 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
                     });
             };
         } catch (error) {
-            this.translate.get('ALERT.MESSAGE').subscribe(data => {
-                window.alert(data);
-            });
+            window.alert(this.translate.instant('ALERT.MESSAGE'));
         }
     }
 

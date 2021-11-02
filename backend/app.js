@@ -121,7 +121,7 @@ app.post('/api/avatar', (req, res, next) => {
     });
     avatar.save();
     res.status(200).json({
-        meesage: 'Successful',
+        message: 'Successful',
     });
 });
 

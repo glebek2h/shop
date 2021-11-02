@@ -4,9 +4,9 @@ import * as fromAdmin from './reducers/admin.reducer';
 import * as fromOrders from './reducers/orders.reducer';
 
 export interface AdminInfoState {
-    profile: AdminModels.Admin,
+    profile: AdminModels.Admin;
     isLoad: boolean;
-    avatar: AdminModels.Avatar
+    avatar: AdminModels.Avatar;
 }
 
 export interface OrdersState {

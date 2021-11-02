@@ -22,13 +22,13 @@ export interface Orders {
     orderItems: Array<OrderItems>;
 }
 
-export interface APIResponseOrders<T> {
+export interface APIResponseOrders {
     orders: Array<Orders>;
 }
-export interface APIResponseProfile<T> {
+export interface APIResponseProfile {
     profile: Admin;
 }
-export interface APIResponseAvatar<T> {
+export interface APIResponseAvatar {
     avatar: Avatar;
 }
 

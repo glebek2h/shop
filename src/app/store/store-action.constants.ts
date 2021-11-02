@@ -5,7 +5,6 @@ export const CHANGE_PROFILE_INFO_SUCCESS = `${CHANGE_PROFILE_INFO} Success`;
 export const UPDATE_PROFILE_INFO = `[Profile Change Info] Update Profile Info`;
 export const UPDATE_PROFILE_INFO_SUCCESS = `${UPDATE_PROFILE_INFO} Success`;
 
-
 export const CHANGE_PROFILE_AVATAR = '[Profile Change Avatar] Change Profile Avatar';
 export const CHANGE_PROFILE_AVATAR_SUCCESS = `${CHANGE_PROFILE_AVATAR} Success`;
 export const UPLOAD_PROFILE_AVATAR = `[Profile Change Avatar] Upload Profile Avatar`;

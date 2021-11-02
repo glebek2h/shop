@@ -16,14 +16,14 @@ import * as serverConstants from '../service.constants';
 export class ProfileService {
     constructor(private readonly http: HttpClient) {}
 
-    getProfileInfo(): Observable<APIResponseProfile<Admin>> {
-        return this.http.get<APIResponseProfile<Admin>>(
+    getProfileInfo(): Observable<APIResponseProfile> {
+        return this.http.get<APIResponseProfile>(
             `${environment.api_url}${serverConstants.profile}`,
         );
     }
 
-    getProfileAvatar(): Observable<APIResponseAvatar<Avatar>> {
-        return this.http.get<APIResponseAvatar<Avatar>>(
+    getProfileAvatar(): Observable<APIResponseAvatar> {
+        return this.http.get<APIResponseAvatar>(
             `${environment.api_url}${serverConstants.avatar}`,
         );
     }
