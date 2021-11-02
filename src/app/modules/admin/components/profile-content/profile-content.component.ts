@@ -5,18 +5,13 @@ import {
     OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SafeUrl } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import * as LoadAdminActions from '../../state/actions/admin.actions';
 import * as AdminSelect from '../../state/selectors/admin.selectors';
-import { Admin } from '../../state/admin.model';
 import { AdminState } from '../../state/admin.state';
 import { Subject } from 'rxjs';
-import { map, take, takeUntil } from 'rxjs/operators';
-
-export interface SafeUrlImpl extends SafeUrl {
-    changingThisBreaksApplicationSecurity: string;
-}
+import { map, take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-profile-content',
@@ -26,19 +21,26 @@ export interface SafeUrlImpl extends SafeUrl {
 })
 export class ProfileContentComponent implements OnInit, OnDestroy {
     private readonly unsubscribe$ = new Subject();
-    panelOpenState: boolean;
-    fileUrl: SafeUrlImpl;
-    dataObj: Admin;
-    trustUrl: SafeUrlImpl;
     form: FormGroup;
+
     readonly selectId$ = this.store
         .select(AdminSelect.selectId)
+        .pipe(takeUntil(this.unsubscribe$));
+    readonly avatarId$ = this.store
+        .select(AdminSelect.selectAvatarId)
         .pipe(takeUntil(this.unsubscribe$));
     readonly getAvatar$ = this.store
         .select(AdminSelect.selectAvatar)
         .pipe(takeUntil(this.unsubscribe$));
+    readonly isReadyToDisplay$ = this.selectId$.pipe(
+        map(el => !!el),
+        takeUntil(this.unsubscribe$),
+    );
 
-    constructor(readonly store: Store<AdminState>) {}
+    constructor(
+        readonly store: Store<AdminState>,
+        private readonly translate: TranslateService,
+    ) {}
 
     ngOnInit(): void {
         this.form = new FormGroup({
@@ -51,38 +53,56 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
         this.store.dispatch(LoadAdminActions.getAdminInfo());
     }
 
-    updateProfile() {
-        this.selectId$.subscribe(id => {
-            this.dataObj = {
-                ...this.form.value,
-                avatar: this.fileUrl,
-                _id: id,
-            };
+    updateProfile(): void {
+        this.selectId$.pipe(take(1)).subscribe(id => {
+            this.store.dispatch(
+                LoadAdminActions.updateProfileInfo({
+                    updatedData: { ...this.form.value, _id: id },
+                }),
+            );
         });
-        this.store.dispatch(
-            LoadAdminActions.updateProfileInfo({ updatedData: this.dataObj }),
-        );
         this.form.reset();
     }
 
-    getFile(event: { target: { files: Blob[] } }) {
-        if (event.target.files) {
+    getFile(file: Blob): void {
+        try {
             const reader = new FileReader();
-            reader.readAsDataURL(event.target.files[0]);
-            reader.onload = (event: { target: { result } }) => {
-                this.fileUrl = event.target.result;
-                this.trustUrl = this.fileUrl;
-
-                this.store.dispatch(
-                    LoadAdminActions.uploadProfileAvatarSuccess({
-                        uploadAvatar: this.trustUrl,
-                    }),
-                );
+            reader.readAsDataURL(file);
+            reader.onload = event => {
+                this.getAvatar$
+                    .pipe(take(1), withLatestFrom(this.avatarId$))
+                    .subscribe(([avatar, avatarId]) => {
+                        avatar
+                            ? this.store.dispatch(
+                                  LoadAdminActions.updateProfileAvatar({
+                                      updatedAvatar: {
+                                          _id: avatarId,
+                                          imgUrl: event.target.result as string,
+                                      },
+                                  }),
+                              )
+                            : this.store.dispatch(
+                                  LoadAdminActions.addProfileAvatar({
+                                      addAvatarData: {
+                                          imgUrl: event.target.result as string,
+                                          _id: avatarId,
+                                      },
+                                  }),
+                              );
+                    });
             };
+        } catch (error) {
+            window.alert(this.translate.instant('ALERT.MESSAGE'));
         }
     }
 
-    onRemoveFile() {}
+    onRemoveFile(): void {
+        this.avatarId$.pipe(take(1)).subscribe(avatarId => {
+            this.store.dispatch(
+                LoadAdminActions.removeProfileAvatar({ avatarId }),
+            );
+        });
+    }
 
     ngOnDestroy(): void {
         this.unsubscribe$.next();

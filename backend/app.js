@@ -8,6 +8,7 @@ const Link = require('./models/links');
 const Promotions = require('./models/promotions');
 const Order = require('./models/orders');
 const Profile = require('./models/profile');
+const Avatar = require('./models/avatar');
 
 const app = express();
 
@@ -76,7 +77,6 @@ app.post('/api/profile', ({ body }, res, next) => {
     const post = new Profile({
         name: body.name,
         email: body.email,
-        avatar: body.avatar,
     });
     post.save();
     res.status(200).json({
@@ -96,7 +96,6 @@ app.put('/api/profile', (req, res, next) => {
         _id: req.body._id,
         name: req.body.name,
         email: req.body.email,
-        avatar: req.body.avatar,
     });
 
     Profile.updateOne({ _id: req.body._id }, post)
@@ -112,6 +111,51 @@ app.put('/api/profile', (req, res, next) => {
                 message: "Couldn't udpate post!",
             });
         });
+});
+
+// ************ avatar ************
+
+app.post('/api/avatar', (req, res, next) => {
+    const avatar = new Avatar({
+        imgUrl: req.body.imgUrl,
+    });
+    avatar.save();
+    res.status(200).json({
+        message: 'Successful',
+    });
+});
+
+app.get('/api/avatar', async (req, res, next) => {
+    const avatar = await Avatar.find();
+    res.status(200).json({
+        avatar: avatar[0],
+    });
+});
+
+app.put('/api/avatar', (req, res, next) => {
+    const avatar = new Avatar({
+        _id: req.body._id,
+        imgUrl: req.body.imgUrl,
+    });
+
+    Avatar.updateOne({ _id: req.body._id }, avatar)
+        .then(result => {
+            if (result.matchedCount > 0) {
+                res.status(200).json({ message: 'Update successful!' });
+            } else {
+                res.status(401).json({ message: 'Not authorized!' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: "Couldn't udpate post!",
+            });
+        });
+});
+
+app.delete('/api/avatar/:id', async (req, res, next) => {
+    await Avatar.deleteOne({ _id: req.params.id });
+    res.status(200).json({ message: 'Image deleted!' });
 });
 
 // offers
@@ -197,24 +241,5 @@ app.get('/api/promotions', async (req, res, next) => {
         promotions,
     });
 });
-
-// https://trello.com/c/uRIjTWIA/12-add-remove-upload-profile-image-integration-wit-api
-// remove whole profile
-// app.delete('/api/profile/:id', (req, res, next) => {
-//     Profile.deleteOne({ _id: req.body.id })
-//       .then(result => {
-//         console.log(result);
-//         if (result.matchedCount > 0) {
-//           res.status(200).json({ message: "Deletion successful!" });
-//         } else {
-//           res.status(401).json({ message: "Not authorized!" });
-//         }
-//       })
-//       .catch(error => {
-//         res.status(500).json({
-//           message: "Deleting posts failed!"
-//         });
-//       });
-//   })
 
 module.exports = app;

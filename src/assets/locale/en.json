@@ -79,5 +79,8 @@
         "PRIVACY_POLICY": "Privacy policy",
         "USER_SUPPORT": "User support",
         "RETURN_POLICY": "Return policy"
+    },
+    "ALERT": {
+        "MESSAGE": "Please select image"
     }
 }

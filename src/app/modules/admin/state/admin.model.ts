@@ -4,7 +4,11 @@ export interface Admin {
     _id: string;
     name: string;
     email: string;
-    avatar: string;
+}
+
+export interface Avatar {
+    imgUrl: string;
+    _id: string;
 }
 
 export interface Orders {
@@ -18,11 +22,14 @@ export interface Orders {
     orderItems: Array<OrderItems>;
 }
 
-export interface APIResponseOrders<T> {
+export interface APIResponseOrders {
     orders: Array<Orders>;
 }
-export interface APIResponseProfile<T> {
+export interface APIResponseProfile {
     profile: Admin;
+}
+export interface APIResponseAvatar {
+    avatar: Avatar;
 }
 
 export interface SelectOrders {
@@ -36,11 +43,6 @@ export interface OrderItems {
 }
 
 export interface NoDataResponse {
-    success: boolean;
-    message: string;
-}
-
-export interface MessageResponse {
     message: string;
 }
 

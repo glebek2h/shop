@@ -1,8 +1,8 @@
-<header class="profile-header" *ngIf="isReadyToDisplay$ | async">
+<header class="profile-header" *ngIf="isReadyToDisplay$ | async; else loading">
     <div class="profile-header__logo">
         <img
-            class="profile-header__logo-img"
             src="{{ getAvatar$ | async }}"
+            class="profile-header__logo-img"
             alt="profile-img"
             *ngIf="getAvatar$ | async; else defaultAvatar"
         />
@@ -14,6 +14,11 @@
         </span>
     </div>
 </header>
+
+<ng-template #loading>
+    <h3>Loading...</h3>
+</ng-template>
+
 <ng-template #defaultAvatar>
     <img
         src="assets/img/avatar.png"
