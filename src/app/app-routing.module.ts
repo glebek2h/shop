@@ -44,13 +44,22 @@ const routes: Routes = [
     {
         path: `${constants.CART}`,
         loadChildren: () =>
-            import('./modules/cart/cart.module').then(module => module.CartModule),
+            import('./modules/cart/cart.module').then(
+                module => module.CartModule,
+            ),
     },
     {
         path: `${constants.CATALOG}`,
         loadChildren: () =>
             import('./modules/catalog/catalog.module').then(
                 module => module.CatalogModule,
+            ),
+    },
+    {
+        path: `${constants.CATEGORY}`,
+        loadChildren: () =>
+            import('./modules/category/category.module').then(
+                module => module.CategoryModule,
             ),
     },
     {

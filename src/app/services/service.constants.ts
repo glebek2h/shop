@@ -5,3 +5,4 @@ export const links = '/api/links';
 export const promotions = '/api/promotions';
 export const profile = '/api/profile';
 export const avatar = '/api/avatar';
+export const category = '/api/category-products';

@@ -1,0 +1,10 @@
+.category {
+    width: 100%;
+    display: flex;
+    &-products {
+        width: 80%;
+    }
+    &-filter {
+        width: 20%;
+    }
+}

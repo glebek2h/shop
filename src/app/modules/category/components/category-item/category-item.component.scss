@@ -1,0 +1,66 @@
+.category-items {
+    width: 100%;
+    min-height: 100vh;
+    &-title {
+        font-size: 45px;
+        color: var(--color-text);
+        padding: 10px 20px;
+    }
+    &-wrap {
+        width: 100%;
+        display: flex;
+        .items {
+            width: 100%;
+            padding: 10px 20px;
+            border-top: 1px solid var(--border-color);
+            border-left: 1px solid var(--border-color);
+            .selector {
+                display: flex;
+                justify-content: flex-end;
+            }
+            .item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 70px;
+                &-description-block {
+                    width: 55%;
+                    color: var(--color-text);
+                    .title {
+                        font-size: 18px;
+                        font-weight: 500;
+                    }
+                    .text {
+                        font-size: 15px;
+                    }
+                    .reviews {
+                        text-decoration: none;
+                        color: var(--color-text);
+                        &:hover {
+                            text-decoration: underline;
+                            color: var(--color-link);
+                        }
+                    }
+                }
+                &-price {
+                    font-size: 15px;
+                    font-weight: bold;
+                }
+                &-btn {
+                    button {
+                        padding: 10px 20px;
+                        border-radius: 5px;
+                        border: 1px solid var(--border-color);
+                        background-color: var(--primary-color);
+                        color: var(--color-text-light);
+                        cursor: pointer;
+                        transition: 0.5s ease;
+                        &:hover {
+                            background-color: var(--primary-color-hover);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -21,6 +21,8 @@ export interface CategoriesData {
     image: string;
     quantity: string;
     category: string;
+    _id: string;
+    categoryId: number;
 }
 
 export interface PromosData {

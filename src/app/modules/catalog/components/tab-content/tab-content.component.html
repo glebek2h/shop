@@ -28,7 +28,12 @@
                 <span class="close">&times;</span>
             </div>
             <ul class="overlay-list">
-                <li class="item" *ngFor="let item of filteredData$ | async">
+                <li
+                    class="item"
+                    *ngFor="let item of filteredData$ | async"
+                    [routerLink]="['/category']"
+                    [queryParams]="{ id: item.categoryId }"
+                >
                     <img src="{{ item.image }}" alt="product image" />
                     <div class="item-block">
                         <h3>{{ item.productName }}</h3>

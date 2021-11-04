@@ -8,3 +8,4 @@ export const ADMIN = 'admin';
 export const SIGN_IN = 'sign-in';
 export const CART = 'cart';
 export const CATALOG = 'catalog';
+export const CATEGORY = 'category';
