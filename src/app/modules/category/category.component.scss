@@ -1,10 +1,23 @@
 .category {
     width: 100%;
     display: flex;
-    &-products {
-        width: 80%;
+    flex-direction: column;
+    min-height: 80vh;
+    height: auto;
+    margin: 0 auto;
+    flex: 1 0 auto;
+    &-title {
+        font-size: 45px;
+        color: var(--color-text);
+        padding: 10px 20px;
     }
-    &-filter {
-        width: 20%;
+    &-content {
+        display: flex;
+        &-products {
+            width: 80%;
+        }
+        &-filter {
+            width: 20%;
+        }
     }
 }

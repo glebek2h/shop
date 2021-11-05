@@ -28,7 +28,6 @@ export class TabContentComponent implements OnDestroy {
 
     private readonly dynamicOffers$ = this.dynamicOffersSource$
         .asObservable()
-        .pipe(takeUntil(this.unsubscribe$));
 
     private readonly dynamicPromoSource$ = new BehaviorSubject<Array<Models.PromosData>>(null);
 
@@ -38,7 +37,6 @@ export class TabContentComponent implements OnDestroy {
 
     readonly dynamicPromos$ = this.dynamicPromoSource$
         .asObservable()
-        .pipe(takeUntil(this.unsubscribe$));
 
     readonly categories$ = this.dynamicOffers$.pipe(
         map(el => el.categoryNames),
@@ -84,5 +82,7 @@ export class TabContentComponent implements OnDestroy {
     ngOnDestroy(): void {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
+        this.dynamicOffersSource$.complete();
+        this.dynamicPromoSource$.complete();
     }
 }

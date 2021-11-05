@@ -6,8 +6,8 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
-import { map, take, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { filter, map, take, takeUntil } from 'rxjs/operators';
 import * as CategoryConstants from '../../category.constants';
 import * as CategoryActions from '../../state/actions/category.actions';
 import { CategoryProductData } from '../../state/category.models';
@@ -50,14 +50,7 @@ export class CategoryItemComponent implements OnInit, OnDestroy {
     readonly categoryProducts$ = this.store
         .select(CategorySelectors.selectCategoryProducts)
         .pipe(
-            map(data => data),
-            takeUntil(this.unsubscribe$),
-        );
-
-    readonly categoryProductTitle$ = this.store
-        .select(CategorySelectors.selectCategoryTitle)
-        .pipe(
-            map(data => data),
+            filter(el => el !== undefined),
             takeUntil(this.unsubscribe$),
         );
 
@@ -65,15 +58,10 @@ export class CategoryItemComponent implements OnInit, OnDestroy {
         Array<CategoryProductData>
     >(null);
 
-    readonly filteredData$ = this.filteredDataSource$
-        .asObservable()
-        .pipe(takeUntil(this.unsubscribe$));
+    readonly filteredData$ = this.filteredDataSource$.asObservable();
 
-    readonly isReadyToDisplay$ = combineLatest([
-        this.categoryProducts$,
-        this.categoryProductTitle$,
-    ]).pipe(
-        map(el => el.every(el => !!el)),
+    readonly isReadyToDisplay$ = this.categoryProducts$.pipe(
+        map(el => !!el),
         takeUntil(this.unsubscribe$),
     );
 
@@ -83,23 +71,39 @@ export class CategoryItemComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.route.queryParams.subscribe((params: Params) => {
-            this.store.dispatch(
-                CategoryActions.getCategoryProductsById(params.id),
-            );
-        });
+        this.takeQueryParams();
+        this.fillCategoryByProducts();
+    }
+
+    takeQueryParams(): void {
+        this.route.queryParams
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe((params: Params) => {
+                this.store.dispatch(
+                    CategoryActions.getCategoryProductsById(params.id),
+                );
+            });
+    }
+
+    fillCategoryByProducts(): void {
         this.categoryProducts$.subscribe(data => {
             this.filteredDataSource$.next(
-                this.sortFromMinToMax([...data], CategoryConstants.popular),
+                this.sortByValue(
+                    [...data],
+                    CategoryConstants.popular,
+                    this.selected,
+                ),
             );
         });
     }
 
     filterByValue(value: string): void {
+        this.selected = value;
         this.categoryProducts$
             .pipe(
                 take(1),
-                map(data => this.filterData(data, value)),
+                filter(data => data.length !== 0),
+                map(data => this.filterData(data, value, this.selected)),
             )
             .subscribe(filteredData => {
                 this.filteredDataSource$.next(filteredData);
@@ -109,51 +113,48 @@ export class CategoryItemComponent implements OnInit, OnDestroy {
     filterData(
         data: Array<CategoryProductData>,
         value: string,
+        selected: string,
     ): Array<CategoryProductData> {
-        switch (data.length !== 0) {
-            case value === CategoryConstants.cheapValue:
-                return this.sortFromMinToMax(
-                    [...data],
-                    CategoryConstants.price,
-                );
-            case value === CategoryConstants.expensiveValue:
-                return this.sortFromMaxToMin(
-                    [...data],
-                    CategoryConstants.price,
-                );
-            case value === CategoryConstants.releaseDateValue:
-                return this.sortFromMaxToMin(
-                    [...data],
-                    CategoryConstants.releaseDate,
-                );
-            case value === CategoryConstants.popularValue:
-                return this.sortFromMinToMax(
-                    [...data],
-                    CategoryConstants.popular,
-                );
-            case value === CategoryConstants.reviewsValue:
-                return this.sortFromMaxToMin(
-                    [...data],
-                    CategoryConstants.reviews,
-                );
+        let someVar = CategoryConstants.price;
+        switch (value) {
+            case CategoryConstants.cheapValue:
+                someVar = CategoryConstants.price;
+                break;
+            case CategoryConstants.expensiveValue:
+                someVar = CategoryConstants.price;
+                break;
+            case CategoryConstants.releaseDateValue:
+                someVar = CategoryConstants.releaseDate;
+                break;
+            case CategoryConstants.popularValue:
+                someVar = CategoryConstants.popular;
+                break;
+            case CategoryConstants.reviewsValue:
+                someVar = CategoryConstants.reviews;
+                break;
         }
+        return this.sortByValue([...data], someVar, selected);
     }
 
-    sortFromMinToMax(
-        el: Array<CategoryProductData>,
+    sortByValue(
+        arr: Array<CategoryProductData>,
         value: string,
+        selected: string,
     ): Array<CategoryProductData> {
-        return el.sort((a, b) => a[value] - b[value]);
-    }
-    sortFromMaxToMin(
-        el: Array<CategoryProductData>,
-        value: string,
-    ): Array<CategoryProductData> {
-        return el.sort((a, b) => b[value] - a[value]);
+        if (
+            (value === CategoryConstants.price &&
+                selected === CategoryConstants.cheapValue) ||
+            value === CategoryConstants.popular
+        ) {
+            return arr.sort((a, b) => a[value] - b[value]);
+        } else {
+            return arr.sort((a, b) => b[value] - a[value]);
+        }
     }
 
     ngOnDestroy(): void {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
+        this.filteredDataSource$.complete();
     }
 }

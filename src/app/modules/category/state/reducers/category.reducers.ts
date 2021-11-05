@@ -5,12 +5,7 @@ import { CategoryProductsState } from '../category.state';
 export const categoryFeatureKey = 'category-products';
 
 export const initialState: CategoryProductsState = {
-    products: {
-        _id: null,
-        categoryId: null,
-        categoryTitle: null,
-        data: [],
-    },
+    products: null,
 };
 
 export const reducer = createReducer(

@@ -1,4 +1,7 @@
 <div class="category">
-    <app-filter class="category-filter"></app-filter>
-    <app-category-item class="category-products"></app-category-item>
+    <h2 class="category-title">{{categoryProductTitle$ | async}}</h2>
+    <div class="category-content">
+        <app-filter class="category-content-filter"></app-filter>
+        <app-category-item class="category-content-products"></app-category-item>
+    </div>
 </div>

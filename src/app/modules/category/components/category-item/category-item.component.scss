@@ -1,11 +1,6 @@
 .category-items {
     width: 100%;
     min-height: 100vh;
-    &-title {
-        font-size: 45px;
-        color: var(--color-text);
-        padding: 10px 20px;
-    }
     &-wrap {
         width: 100%;
         display: flex;

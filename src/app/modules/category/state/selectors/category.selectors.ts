@@ -7,11 +7,10 @@ export const selectCategoryProductsFeature =
 
 export const selectCategoryProducts = createSelector(
     selectCategoryProductsFeature,
-    (state: CategoryProductsState) => state.products.data
+    (state: CategoryProductsState) => state.products?.data,
 );
 
 export const selectCategoryTitle = createSelector(
     selectCategoryProductsFeature,
-    (state: CategoryProductsState) =>
-        state.products.categoryTitle
+    (state: CategoryProductsState) => state.products?.categoryTitle,
 );
