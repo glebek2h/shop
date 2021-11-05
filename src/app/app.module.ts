@@ -18,6 +18,7 @@ import { createTranslateLoader } from './shared/utils/utils';
 import { SharedModule } from './shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import { LoginComponent } from './pages/login/login.component';
+import { CategoryModule } from './modules/category/category.module';
 
 @NgModule({
     declarations: [AppComponent, ErrorPageComponent, LoginComponent],
@@ -30,6 +31,7 @@ import { LoginComponent } from './pages/login/login.component';
         FormsModule,
         MatIconModule,
         ReactiveFormsModule,
+        CategoryModule,
         StoreDevtoolsModule.instrument({
             maxAge: 25,
             logOnly: environment.production,

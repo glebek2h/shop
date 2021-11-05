@@ -1,0 +1,48 @@
+<div class="category-items" *ngIf="isReadyToDisplay$ | async; else loading">
+    <div class="category-items-wrap">
+        <div class="items">
+            <div class="selector">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{ 'CATEGORY.FILTER' | translate }}</mat-label>
+                    <mat-select [(value)]="selected">
+                        <mat-option
+                            [value]="filtered.value"
+                            *ngFor="let filtered of filterProducts"
+                            (click)="filterByValue(filtered.value)"
+                        >
+                            {{ filtered.viewValue | translate }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="item" *ngFor="let item of filteredData$ | async">
+                <img src="{{ item.image }}" alt="item-img" />
+                <div class="item-description-block">
+                    <h4 class="title">
+                        {{ item.name }}
+                    </h4>
+                    <p class="text">
+                        {{ item.description }}
+                    </p>
+                    <a class="reviews" href="#"
+                        >{{ item.reviews }}
+                        {{ 'CATEGORY.REVIEWS' | translate }}</a
+                    >
+                </div>
+                <div class="item-price">
+                    <span
+                        >{{ 'CATEGORY.PRICE' | translate }} {{ item.price }}
+                        {{ 'CATEGORY.MONETARY_UNIT' | translate }}.</span
+                    >
+                </div>
+                <div class="item-btn">
+                    <button>{{ 'BTNS.OFFERS' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #loading>
+    <h3>Loading...</h3>
+</ng-template>

@@ -43,7 +43,8 @@
         "BACK_BTN": "Home Page"
     },
     "BTNS": {
-        "ENTER": "Log in"
+        "ENTER": "Log in",
+        "OFFERS": "Offers"
     },
     "LOGIN": {
         "TITLE": "Log in",
@@ -82,5 +83,16 @@
     },
     "ALERT": {
         "MESSAGE": "Please select image"
+    },
+    "CATEGORY": {
+        "PRICE": "from",
+        "REVIEWS": "reviews",
+        "FILTER": "Select filter",
+        "POPULAR": "Popular",
+        "CHEAP": "Cheap",
+        "EXPENSIVE": "Expensive",
+        "NEW": "New",
+        "WITH_REVIEWS": "With reviews",
+        "MONETARY_UNIT": "rub"
     }
 }

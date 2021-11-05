@@ -43,7 +43,8 @@
         "BACK_BTN": "Назад"
     },
     "BTNS": {
-        "ENTER": "Вход"
+        "ENTER": "Вход",
+        "OFFERS": "Предложения"
     },
     "LOGIN": {
         "TITLE": "Войти",
@@ -82,5 +83,16 @@
     },
     "ALERT": {
         "MESSAGE": "Пожалуйста выберете фото"
+    },
+    "CATEGORY": {
+        "PRICE": "от",
+        "REVIEWS": "отзыва",
+        "FILTER": "Выберете фильтр",
+        "POPULAR": "Популярные",
+        "CHEAP": "Дешевые",
+        "EXPENSIVE": "Дорогие",
+        "NEW": "Новые",
+        "WITH_REVIEWS": "С отзывами",
+        "MONETARY_UNIT": "руб"
     }
 }

@@ -9,6 +9,9 @@ const Promotions = require('./models/promotions');
 const Order = require('./models/orders');
 const Profile = require('./models/profile');
 const Avatar = require('./models/avatar');
+const CategoryProducts = require('./models/category-products');
+
+const { db } = require('./models/category-products');
 
 const app = express();
 
@@ -239,6 +242,17 @@ app.get('/api/promotions', async (req, res, next) => {
     const promotions = await Promotions.find();
     res.status(200).json({
         promotions,
+    });
+});
+
+// category-products
+
+app.get('/api/category-products/:id', async (req, res, next) => {
+    const categoryProducts = await CategoryProducts.findOne({
+        categoryId: req.params.id,
+    });
+    res.status(200).json({
+        categoryProducts,
     });
 });
 
