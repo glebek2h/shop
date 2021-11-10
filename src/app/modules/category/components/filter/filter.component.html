@@ -1,1 +1,102 @@
-<div class="filter"></div>
+<div class="filter" *ngIf="isReadyToDisplay$ | async; else loading">
+    <div class="filter-wrap">
+        <div
+            class="filter-products"
+            *ngFor="let items of selectFilterData$ | async; let i = index"
+        >
+            <h4 class="filter-products-title">{{ items.filter_title }}</h4>
+            <section class="checkbox-section" *ngIf="items.type === 0">
+                <ul class="filter-products-list">
+                    <li class="item" *ngFor="let item of items.filters">
+                        <mat-checkbox
+                            value="{{ item }}"
+                            (change)="onChecked(item, $event.checked, i)"
+                            >{{ item }}
+                        </mat-checkbox>
+                    </li>
+                </ul>
+            </section>
+            <section class="inputs-section" *ngIf="items.type === 1">
+                <ul class="filter-products-list">
+                    <li class="item">
+                        <div class="inputs-wrap">
+                            <input
+                                class="input"
+                                [(ngModel)]="inputValue1"
+                                (input)="onInput(i)"
+                                type="number"
+                                placeholder="{{ 'CATEGORY.FROM' | translate }}"
+                            />
+                            <input
+                                class="input"
+                                [(ngModel)]="inputValue2"
+                                (input)="onInput(i)"
+                                type="number"
+                                placeholder="{{ 'CATEGORY.TO' | translate }}"
+                            />
+                        </div>
+                    </li>
+                </ul>
+            </section>
+            <section class="checkbox-section" *ngIf="items.type === 2">
+                <ul class="filter-products-list">
+                    <li class="item" *ngFor="let item of items.filters">
+                        <mat-checkbox
+                            (change)="onChecked(item, $event.checked, i)"
+                            value="{{ item }}"
+                            >{{ item }}
+                        </mat-checkbox>
+                    </li>
+                </ul>
+            </section>
+            <section class="checkbox-section" *ngIf="items.type === 3">
+                <ul class="filter-products-list">
+                    <li
+                        class="item"
+                        *ngFor="let item of items.filters; let idx = index"
+                    >
+                        <mat-checkbox
+                            (change)="onChecked(item, $event.checked, idx)"
+                            value="{{ item }}"
+                            >{{ item }}
+                        </mat-checkbox>
+                    </li>
+                    <div class="select-wrap">
+                        <mat-form-field
+                            appearance="fill"
+                            class="select-field_1"
+                        >
+                            <mat-select [(value)]="selectValue1">
+                                <mat-option
+                                    *ngFor="let item of items.selectItems"
+                                    [value]="item"
+                                    (click)="onSelect(i)"
+                                >
+                                    {{ item }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field
+                            appearance="fill"
+                            class="select-field_2"
+                        >
+                            <mat-select [(value)]="selectValue2">
+                                <mat-option
+                                    *ngFor="let item of items.selectItems"
+                                    [value]="item"
+                                    (click)="onSelect(i)"
+                                >
+                                    {{ item }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </ul>
+            </section>
+        </div>
+    </div>
+</div>
+
+<ng-template #loading>
+    <h3>loading...</h3>
+</ng-template>

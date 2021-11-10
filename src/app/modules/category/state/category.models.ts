@@ -3,7 +3,32 @@ export interface CategoryProducts {
     data: Array<CategoryProductData>;
     categoryTitle: string;
     categoryId: number;
+    filter: Array<FilterData>;
 }
+
+export interface FilterData {
+    filter_title: string;
+    filters: Array<string>;
+    selectItems: Array<string>;
+    type: number;
+}
+
+export interface AddToArray {
+    first_filter_key: string
+    second_filter_key?: string
+    id: number
+}
+
+// export interface AddToArray {
+//     name: string
+//     id: number
+// }
+
+// export interface AddFromToArray {
+//     from: string
+//     to: string
+//     id: number
+// }
 
 export interface CategoryProductsResponse {
     categoryProducts: CategoryProducts;

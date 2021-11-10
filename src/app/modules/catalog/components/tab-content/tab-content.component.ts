@@ -26,17 +26,17 @@ export class TabContentComponent implements OnDestroy {
         this.dynamicOffersSource$.next(categories);
     }
 
-    private readonly dynamicOffers$ = this.dynamicOffersSource$
-        .asObservable()
+    private readonly dynamicOffers$ = this.dynamicOffersSource$.asObservable();
 
-    private readonly dynamicPromoSource$ = new BehaviorSubject<Array<Models.PromosData>>(null);
+    private readonly dynamicPromoSource$ = new BehaviorSubject<
+        Array<Models.PromosData>
+    >(null);
 
     @Input() set offersPromos(promos: Array<Models.PromosData>) {
         this.dynamicPromoSource$.next(promos);
     }
 
-    readonly dynamicPromos$ = this.dynamicPromoSource$
-        .asObservable()
+    readonly dynamicPromos$ = this.dynamicPromoSource$.asObservable();
 
     readonly categories$ = this.dynamicOffers$.pipe(
         map(el => el.categoryNames),
@@ -48,11 +48,11 @@ export class TabContentComponent implements OnDestroy {
         takeUntil(this.unsubscribe$),
     );
 
-    readonly filteredDataSource$ = new BehaviorSubject<Array<Models.CategoriesData>>(null);
+    readonly filteredDataSource$ = new BehaviorSubject<
+        Array<Models.CategoriesData>
+    >(null);
 
-    readonly filteredData$ = this.filteredDataSource$
-        .asObservable()
-        .pipe(takeUntil(this.unsubscribe$));
+    readonly filteredData$ = this.filteredDataSource$.asObservable();
 
     readonly isReadyToDisplay$ = combineLatest([
         this.dynamicOffers$,
@@ -74,7 +74,9 @@ export class TabContentComponent implements OnDestroy {
                 take(1),
                 map(data => data.filter(el => el.category === categoryName)),
             )
-            .subscribe(filteredData => this.filteredDataSource$.next(filteredData));
+            .subscribe(filteredData =>
+                this.filteredDataSource$.next(filteredData),
+            );
 
         this.opened = true;
     }
@@ -84,5 +86,6 @@ export class TabContentComponent implements OnDestroy {
         this.unsubscribe$.complete();
         this.dynamicOffersSource$.complete();
         this.dynamicPromoSource$.complete();
+        this.filteredDataSource$.complete();
     }
 }
