@@ -19,17 +19,6 @@ export interface FilterItem {
     id: number
 }
 
-// export interface AddToArray {
-//     name: string
-//     id: number
-// }
-
-// export interface AddFromToArray {
-//     from: string
-//     to: string
-//     id: number
-// }
-
 export interface CategoryProductsResponse {
     categoryProducts: CategoryProducts;
 }
