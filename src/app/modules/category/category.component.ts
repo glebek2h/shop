@@ -7,7 +7,7 @@ import {
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { AddToArray } from './state/category.models';
+import { FilterItem } from './state/category.models';
 import * as CategorySelectors from './state/selectors/category.selectors';
 
 @Component({
@@ -18,7 +18,7 @@ import * as CategorySelectors from './state/selectors/category.selectors';
 })
 export class CategoryComponent implements OnInit, OnDestroy {
     private readonly unsubscribe$ = new Subject();
-    array: AddToArray[];
+    filterItemsArray: FilterItem[];
 
     readonly categoryProductTitle$ = this.store
         .select(CategorySelectors.selectCategoryTitle)
@@ -28,8 +28,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {}
 
-    getArrayItems(array: AddToArray[]): void {
-        this.array = array;
+    getArrayItems(array: FilterItem[]): void {
+        this.filterItemsArray = array;
     }
 
     ngOnDestroy(): void {

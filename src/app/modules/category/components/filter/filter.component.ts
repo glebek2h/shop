@@ -5,10 +5,10 @@ import {
     ChangeDetectionStrategy,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
-import { filter, map, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { filter, map, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { ShareService } from 'src/app/services/share/share.service';
-import { AddToArray } from '../../state/category.models';
+import { FilterItem } from '../../state/category.models';
 import * as CategorySelectors from '../../state/selectors/category.selectors';
 
 @Component({
@@ -20,12 +20,11 @@ import * as CategorySelectors from '../../state/selectors/category.selectors';
 export class FilterComponent implements OnInit, OnDestroy {
     private readonly unsubscribe$ = new Subject();
 
-    array: AddToArray[] = [];
-    private filterItem: AddToArray;
-    inputValue1 = '';
-    inputValue2 = '';
-    selectValue1 = '';
-    selectValue2 = '';
+    private readonly filterItemsArray$ = this.shareService.getData();
+    private filterItemFromTo: FilterItem;
+
+    readonly filteredDataSource$ = new BehaviorSubject<FilterItem[]>(null);
+    readonly filteredData$ = this.filteredDataSource$.asObservable();
 
     readonly selectFilterData$ = this.store
         .select(CategorySelectors.selectFilterData)
@@ -35,76 +34,138 @@ export class FilterComponent implements OnInit, OnDestroy {
             takeUntil(this.unsubscribe$),
         );
 
-    readonly isReadyToDisplay$ = this.selectFilterData$.pipe(
-        map(el => !!el),
-        takeUntil(this.unsubscribe$),
-    );
+    readonly isReadyToDisplay$ = this.selectFilterData$.pipe(map(el => !!el));
 
     constructor(
         private readonly store: Store,
         private readonly shareService: ShareService,
     ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.shareService
+            .getData()
+            .pipe()
+            .subscribe(data => {
+                if (data === null) {
+                    data = [];
+                    this.shareService
+                        .getDeleteItem()
+                        .subscribe((item: FilterItem) => {
+                            const itemIndex = data.indexOf(item);
+                            data.splice(itemIndex, 1);
+                            this.shareService.sendData(data);
+                        });
+                }
+                this.filteredDataSource$.next(data);
+            });
+    }
 
     onChecked(value: string, selected: boolean, id: number): void {
-        this.filterItem = {
+        const filterItem = {
             first_filter_key: value,
             id,
         };
-        if (selected) {
-            this.array.push(this.filterItem);
-        } else {
-            this.array = this.array.filter(
-                el => el.first_filter_key !== this.filterItem.first_filter_key,
-            );
-        }
-        this.shareService.sendData(this.array);
+
+        this.filterItemsArray$
+            .pipe(take(1), withLatestFrom(this.shareService.getData()))
+            .subscribe(([filteredItemsArr, currentData]) => {
+                if (filteredItemsArr === null) {
+                    filteredItemsArr = [];
+                }
+                if (selected) {
+                    filteredItemsArr.push(filterItem);
+                    this.shareService.sendData(filteredItemsArr);
+                } else {
+                    const itemFromFilteredArray = currentData.find(
+                        (item: FilterItem) =>
+                            item.first_filter_key ===
+                            filterItem.first_filter_key,
+                    );
+                    const indexOfItem = currentData.indexOf(itemFromFilteredArray);
+                    currentData.splice(indexOfItem, 1);
+                }
+                this.shareService.sendData(filteredItemsArr);
+            });
     }
 
-    onInput(id: number): void {
-        this.onFilter(id, this.inputValue1, this.inputValue2, null);
-    }
-
-    onSelect(id: number): void {
-        this.onFilter(id, this.selectValue1, this.selectValue2, '');
-    }
-
-    onFilter(id: number, from: string, to: string, value: null | string): void {
-        this.filterItem = {
-            first_filter_key: from,
-            second_filter_key: to,
+    onInputFirst(id: number, value: string): void {
+        this.filterItemFromTo = {
+            first_filter_key: value,
             id,
         };
+        this.onFilterFromTo(this.filterItemFromTo);
+    }
 
-        const res = this.array.find(el => el.id === this.filterItem.id);
+    onInputSecond(id: number, value: string): void {
+        this.filterItemFromTo = {
+            ...this.filterItemFromTo,
+            second_filter_key: value,
+            id,
+        };
+        this.onFilterFromTo(this.filterItemFromTo);
+    }
 
-        if (res) {
-            (res.first_filter_key = this.filterItem.first_filter_key),
-                (res.second_filter_key = this.filterItem.second_filter_key);
-        } else {
-            this.array[this.array.length] = this.filterItem;
-        }
+    onSelectFirst(id: number, value: string): void {
+        this.filterItemFromTo = {
+            ...this.filterItemFromTo,
+            first_filter_key: value,
+            id,
+        };
+        this.onFilterFromTo(this.filterItemFromTo);
+    }
 
-        const filteredFrom = this.array.find(
-            el => el.first_filter_key === value,
-        );
-        const filteredTo = this.array.find(
-            el => el.second_filter_key === value,
-        );
+    onSelectSecond(id: number, value: string): void {
+        this.filterItemFromTo = {
+            ...this.filterItemFromTo,
+            second_filter_key: value,
+            id,
+        };
+        this.onFilterFromTo(this.filterItemFromTo);
+    }
 
-        if (filteredFrom && filteredTo) {
-            this.array = this.array.filter(
-                el =>
-                    el.first_filter_key !== this.filterItem.first_filter_key &&
-                    el.second_filter_key !== this.filterItem.second_filter_key,
+    onFilterFromTo(filterFromTo: FilterItem): void {
+        this.filteredData$.pipe(take(1)).subscribe((data: FilterItem[]) => {
+            const res = data.find(el => el.id === filterFromTo.id);
+            if (res) {
+                (res.first_filter_key = filterFromTo.first_filter_key),
+                    (res.second_filter_key = filterFromTo.second_filter_key);
+            } else {
+                data.push(filterFromTo);
+            }
+            this.removeFromTo();
+            this.shareService.sendData(data);
+        });
+    }
+
+    removeFromTo(): void {
+        this.filterItemsArray$.pipe(take(1)).subscribe((data: FilterItem[]) => {
+            if (data === null) {
+                data = [];
+            }
+            const filteredFrom = data.find(
+                item =>
+                    item.first_filter_key === '' ||
+                    item.first_filter_key === undefined,
             );
-        }
-        this.shareService.sendData(this.array);
+            const filteredTo = data.find(
+                item =>
+                    item.second_filter_key === '' ||
+                    item.second_filter_key === undefined,
+            );
+
+            const filteredIndexFrom = data.indexOf(filteredFrom);
+            const filteredIndexTo = data.indexOf(filteredTo);
+
+            if (filteredIndexFrom > -1 && filteredIndexTo > -1) {
+                data.splice(filteredIndexFrom, 1);
+                data.splice(filteredIndexTo, 1);
+            }
+        });
     }
 
     ngOnDestroy(): void {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
+        this.filteredDataSource$.complete();
     }
 }

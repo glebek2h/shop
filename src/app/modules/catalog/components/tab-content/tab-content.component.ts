@@ -57,10 +57,7 @@ export class TabContentComponent implements OnDestroy {
     readonly isReadyToDisplay$ = combineLatest([
         this.dynamicOffers$,
         this.dynamicPromos$,
-    ]).pipe(
-        map(el => el.every(el => !!el)),
-        takeUntil(this.unsubscribe$),
-    );
+    ]).pipe(map(el => el.every(el => !!el)));
 
     constructor() {}
 

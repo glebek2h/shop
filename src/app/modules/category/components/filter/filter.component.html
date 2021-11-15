@@ -22,15 +22,13 @@
                         <div class="inputs-wrap">
                             <input
                                 class="input"
-                                [(ngModel)]="inputValue1"
-                                (input)="onInput(i)"
+                                (input)="onInputFirst(i, $event.target.value)"
                                 type="number"
                                 placeholder="{{ 'CATEGORY.FROM' | translate }}"
                             />
                             <input
                                 class="input"
-                                [(ngModel)]="inputValue2"
-                                (input)="onInput(i)"
+                                (input)="onInputSecond(i, $event.target.value)"
                                 type="number"
                                 placeholder="{{ 'CATEGORY.TO' | translate }}"
                             />
@@ -66,11 +64,11 @@
                             appearance="fill"
                             class="select-field_1"
                         >
-                            <mat-select [(value)]="selectValue1">
+                            <mat-select>
                                 <mat-option
                                     *ngFor="let item of items.selectItems"
-                                    [value]="item"
-                                    (click)="onSelect(i)"
+                                    value={{item}}
+                                    (click)="onSelectFirst(i, item)"
                                 >
                                     {{ item }}
                                 </mat-option>
@@ -80,11 +78,11 @@
                             appearance="fill"
                             class="select-field_2"
                         >
-                            <mat-select [(value)]="selectValue2">
+                            <mat-select>
                                 <mat-option
                                     *ngFor="let item of items.selectItems"
-                                    [value]="item"
-                                    (click)="onSelect(i)"
+                                    value={{item}}
+                                    (click)="onSelectSecond(i, item)"
                                 >
                                     {{ item }}
                                 </mat-option>

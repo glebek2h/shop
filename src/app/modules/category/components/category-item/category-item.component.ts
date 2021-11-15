@@ -8,10 +8,11 @@ import {
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { filter, map, take, takeUntil } from 'rxjs/operators';
+import { filter, map, take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { ShareService } from 'src/app/services/share/share.service';
 import * as CategoryConstants from '../../category.constants';
 import * as CategoryActions from '../../state/actions/category.actions';
-import { CategoryProductData } from '../../state/category.models';
+import { FilterItem, CategoryProductData } from '../../state/category.models';
 import * as CategorySelectors from '../../state/selectors/category.selectors';
 
 @Component({
@@ -61,10 +62,7 @@ export class CategoryItemComponent implements OnInit, OnDestroy {
 
     readonly filteredData$ = this.filteredDataSource$.asObservable();
 
-    readonly isReadyToDisplay$ = this.categoryProducts$.pipe(
-        map(el => !!el),
-        takeUntil(this.unsubscribe$),
-    );
+    readonly isReadyToDisplay$ = this.categoryProducts$.pipe(map(el => !!el));
 
     constructor(
         private readonly store: Store,

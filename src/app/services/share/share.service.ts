@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ShareService {
-    private subject = new Subject<any>();
+    private subject = new BehaviorSubject(null);
+    private deletedSubject = new BehaviorSubject(null);
     constructor() {}
 
     sendData(data: any) {
@@ -14,5 +15,13 @@ export class ShareService {
 
     getData(): Observable<any> {
         return this.subject.asObservable();
+    }
+
+    sendDeleteItem(item: any) {
+        return this.deletedSubject.next(item);
+    }
+    
+    getDeleteItem(): Observable<any> {
+        return this.deletedSubject.asObservable()
     }
 }

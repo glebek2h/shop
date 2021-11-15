@@ -13,7 +13,7 @@ export interface FilterData {
     type: number;
 }
 
-export interface AddToArray {
+export interface FilterItem {
     first_filter_key: string
     second_filter_key?: string
     id: number
