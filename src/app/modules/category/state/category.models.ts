@@ -8,15 +8,20 @@ export interface CategoryProducts {
 
 export interface FilterData {
     filter_title: string;
-    filters: Array<string>;
-    selectItems: Array<string>;
+    filters: Array<FiltersData>;
+    selectItems: Array<FiltersData>;
     type: number;
 }
 
+export interface FiltersData {
+    name?: string;
+    id?: string;
+}
+
 export interface FilterItem {
-    first_filter_key: string
-    second_filter_key?: string
-    id: number
+    first_filter_key: FiltersData;
+    second_filter_key?: FiltersData;
+    id: number;
 }
 
 export interface CategoryProductsResponse {

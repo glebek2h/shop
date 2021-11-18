@@ -1,18 +1,16 @@
 import {
     ChangeDetectionStrategy,
     Component,
-    Input,
     OnDestroy,
     OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { filter, map, take, takeUntil, withLatestFrom } from 'rxjs/operators';
-import { ShareService } from 'src/app/services/share/share.service';
+import { filter, map, take, takeUntil } from 'rxjs/operators';
 import * as CategoryConstants from '../../category.constants';
 import * as CategoryActions from '../../state/actions/category.actions';
-import { FilterItem, CategoryProductData } from '../../state/category.models';
+import { CategoryProductData } from '../../state/category.models';
 import * as CategorySelectors from '../../state/selectors/category.selectors';
 
 @Component({

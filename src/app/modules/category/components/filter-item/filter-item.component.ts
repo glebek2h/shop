@@ -1,11 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    OnDestroy,
-    OnInit,
-} from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ShareService } from 'src/app/services/share/share.service';
 import { FilterItem } from '../../state/category.models';
 
@@ -15,20 +8,12 @@ import { FilterItem } from '../../state/category.models';
     styleUrls: ['./filter-item.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilterItemComponent implements OnInit, OnDestroy {
-    private readonly unsubscribe$ = new Subject();
-    dataItems$ = this.shareService.getData().pipe(takeUntil(this.unsubscribe$));
+export class FilterItemComponent {
+    dataItems$ = this.shareService.getData();
 
     constructor(private readonly shareService: ShareService) {}
 
-    ngOnInit(): void {}
-
     removeOne(item: FilterItem): void {
-        this.shareService.sendDeleteItem(item)
-    }
-
-    ngOnDestroy(): void {
-        this.unsubscribe$.next();
-        this.unsubscribe$.complete();
+        this.shareService.sendDeleteItem(item);
     }
 }
