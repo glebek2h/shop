@@ -2,7 +2,8 @@
     <div class="category-items-wrap">
         <div class="items">
             <div class="selector">
-                <mat-form-field appearance="fill">
+                <app-filter-item class="filter-items"></app-filter-item>
+                <mat-form-field appearance="fill" class="mat-field">
                     <mat-label>{{ 'CATEGORY.FILTER' | translate }}</mat-label>
                     <mat-select [(value)]="selected">
                         <mat-option
