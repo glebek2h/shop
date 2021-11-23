@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { FilterItem } from 'src/app/modules/category/state/category.models';
 
 @Injectable({
     providedIn: 'root',
@@ -9,19 +10,19 @@ export class ShareService {
     private deletedSubject = new BehaviorSubject(null);
     constructor() {}
 
-    sendData(data: any) {
+    sendData(data: FilterItem[]) {
         this.subject.next(data);
     }
 
-    getData(): Observable<any> {
+    getData(): Observable<FilterItem[]> {
         return this.subject.asObservable();
     }
 
-    sendDeleteItem(item: any) {
+    sendDeleteItem(item: FilterItem) {
         return this.deletedSubject.next(item);
     }
     
-    getDeleteItem(): Observable<any> {
+    getDeleteItem(): Observable<FilterItem> {
         return this.deletedSubject.asObservable()
     }
 }

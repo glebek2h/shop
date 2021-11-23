@@ -3,10 +3,11 @@ import {
     OnDestroy,
     OnInit,
     ChangeDetectionStrategy,
+    ElementRef,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
-import { filter, map, take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { Subject, zip } from 'rxjs';
+import { filter, map, take, takeUntil } from 'rxjs/operators';
 import { ShareService } from 'src/app/services/share/share.service';
 import { FilterItem, FiltersData } from '../../state/category.models';
 import * as CategorySelectors from '../../state/selectors/category.selectors';
@@ -35,164 +36,155 @@ export class FilterComponent implements OnInit, OnDestroy {
     constructor(
         private readonly store: Store,
         private readonly shareService: ShareService,
+        private readonly elRef: ElementRef,
     ) {}
 
     ngOnInit(): void {
-        this.shareService
-            .getData()
-            .pipe()
-            .subscribe(data => {
-                if (data === null) {
-                    data = [];
-                    this.shareService
-                        .getDeleteItem()
-                        .subscribe((item: FilterItem) => {
-                            const itemIndex = data.indexOf(item);
-                            data.splice(itemIndex, 1);
-                            this.shareService.sendData(data);
-                        });
-                }
-            });
+        zip(
+            this.shareService.getData(),
+            this.shareService.getDeleteItem(),
+        ).subscribe(([data, deletedItem]) => {
+            if (data === null) {
+                data = [];
+            }
+            const itemIndex = data.indexOf(deletedItem);
+            data.splice(itemIndex, 1);
+            this.shareService.sendData(data);
+        });
     }
 
-    onChecked(value: string, selected: boolean, id: number): void {
+    onChecked(value: FiltersData, selected: boolean, id: string): void {
         const filterItem = {
             first_filter_key: value,
             id,
         };
 
-        this.selectedItemsArray$
-            .pipe(take(1), withLatestFrom(this.shareService.getData()))
-            .subscribe(([filteredItemsArr, currentData]) => {
-                if (filteredItemsArr === null) {
-                    filteredItemsArr = [];
-                }
-                if (selected) {
-                    filteredItemsArr.push(filterItem);
-                    this.shareService.sendData(filteredItemsArr);
-                } else {
-                    const itemFromFilteredArray = currentData.find(
-                        (item: FilterItem) =>
-                            item.first_filter_key ===
-                            filterItem.first_filter_key,
-                    );
-                    const indexItem = currentData.indexOf(
-                        itemFromFilteredArray,
-                    );
-                    currentData.splice(indexItem, 1);
-                }
-                this.shareService.sendData(currentData);
-            });
+        this.selectedItemsArray$.pipe(take(1)).subscribe(filteredItemsArr => {
+            if (!filteredItemsArr) {
+                filteredItemsArr = [];
+            }
+            if (selected) {
+                filteredItemsArr.push(filterItem);
+                this.shareService.sendData(filteredItemsArr);
+            } else {
+                const itemFromFilteredArray = filteredItemsArr.find(
+                    item => item.id === filterItem.id,
+                );
+                const indexItem = filteredItemsArr.indexOf(
+                    itemFromFilteredArray,
+                );
+                filteredItemsArr.splice(indexItem, 1);
+            }
+            this.shareService.sendData(filteredItemsArr);
+        });
     }
 
-    onInputFirst(id: number, value: FiltersData): void {
-        this.filterItemFromTo = {
-            first_filter_key: value,
+    onInput(id: string): void {
+        const inputsElements =
+            this.elRef.nativeElement.querySelectorAll('.input');
+
+        const filterItem: FilterItem = {
             id,
+            first_filter_key: null,
+            second_filter_key: null,
         };
-        this.onFilterFromTo(this.filterItemFromTo);
+
+        inputsElements.forEach(input => {
+            filterItem[input.getAttribute('key')] = input.value;
+        });
+
+        this.onFilterFromTo(filterItem);
     }
 
-    onInputSecond(id: number, value: FiltersData): void {
+    onSelectFirst(id: string, value: FiltersData): void {
         this.filterItemFromTo = {
-            ...this.filterItemFromTo,
-            second_filter_key: value,
             id,
-        };
-        this.onFilterFromTo(this.filterItemFromTo);
-    }
-
-    onSelectFirst(id: number, value: FiltersData): void {
-        this.filterItemFromTo = {
             ...this.filterItemFromTo,
             first_filter_key: value,
-            id,
         };
         this.onFilterFromTo(this.filterItemFromTo);
     }
 
-    onSelectSecond(id: number, value: FiltersData): void {
+    onSelectSecond(id: string, value: FiltersData): void {
         this.filterItemFromTo = {
+            id,
             ...this.filterItemFromTo,
             second_filter_key: value,
-            id,
         };
         this.onFilterFromTo(this.filterItemFromTo);
     }
 
     onFilterFromTo(filterFromTo: FilterItem): void {
-        this.selectedItemsArray$
-            .pipe(take(1))
-            .subscribe((data: FilterItem[]) => {
-                const res = data.find(el => el.id === filterFromTo.id);
-                if (res) {
-                    (res.first_filter_key = filterFromTo.first_filter_key),
-                        (res.second_filter_key =
-                            filterFromTo.second_filter_key);
-                } else {
-                    data.push(filterFromTo);
-                }
-                this.removeFromTo();
-                this.shareService.sendData(data);
-            });
+        this.selectedItemsArray$.pipe(take(1)).subscribe(data => {
+            const resultItem = data.find(el => el.id === filterFromTo.id);
+            if (resultItem) {
+                (resultItem.first_filter_key = filterFromTo.first_filter_key),
+                    (resultItem.second_filter_key =
+                        filterFromTo.second_filter_key);
+            } else {
+                data.push(filterFromTo);
+            }
+            this.removeFromTo();
+            this.shareService.sendData(data);
+        });
     }
 
     removeFromTo(): void {
-        this.selectedItemsArray$
-            .pipe(take(1))
-            .subscribe((data: FilterItem[]) => {
-                if (data === null) {
-                    data = [];
-                }
-                const filteredFrom = data.find(
-                    item =>
-                        item.first_filter_key === '' ||
-                        item.first_filter_key === undefined,
-                );
-                const filteredTo = data.find(
-                    item =>
-                        item.second_filter_key === '' ||
-                        item.second_filter_key === undefined,
-                );
-
-                const filteredIndexFrom = data.indexOf(filteredFrom);
-                const filteredIndexTo = data.indexOf(filteredTo);
-
-                if (filteredIndexFrom > -1 && filteredIndexTo > -1) {
-                    data.splice(filteredIndexFrom, 1);
-                    data.splice(filteredIndexTo, 1);
+        let filteredArray: FilterItem[];
+        this.selectedItemsArray$.pipe(take(1)).subscribe(data => {
+            if (data === null) {
+                data = [];
+            }
+            const emptyElement = data.find(el => {
+                if (
+                    (el.first_filter_key === '' &&
+                        el.second_filter_key === '') ||
+                    (el.first_filter_key === '' &&
+                        el.second_filter_key === undefined) ||
+                    (el.first_filter_key === undefined &&
+                        el.second_filter_key === '')
+                ) {
+                    return el;
                 }
             });
+
+            const emptyElementIndex = data.findIndex(el =>
+                emptyElement ? el.id === emptyElement.id : '',
+            );
+
+            if (emptyElementIndex > -1) {
+                filteredArray = data.splice(emptyElementIndex, 1);
+                this.shareService.sendData(filteredArray);
+            }
+        });
     }
 
     setFilterValue(id: string, selectedItems: FilterItem[]): boolean {
         return (
-            selectedItems.findIndex(
-                (el: FilterItem) => el.first_filter_key.id === id,
+            selectedItems.findIndex(el =>
+                el.first_filter_key !== undefined
+                    ? el.first_filter_key.id === id
+                    : '',
             ) > -1
         );
     }
 
     resetInputValue(
-        id: number,
+        id: string,
         selectedItems: FilterItem[],
         filterKey: string,
     ): FiltersData {
-        const resultItem = selectedItems.find((el: FilterItem) => el.id === id);
-        return selectedItems.length !== 0 && resultItem
-            ? resultItem[filterKey]
-            : '';
+        const resultItem = selectedItems.find(el => el.id === id);
+        return selectedItems.length && resultItem ? resultItem[filterKey] : '';
     }
 
     resetSelectValue(
-        filterItemName: string,
+        filterKey: string,
         selectedItems: FilterItem[],
-    ): string {
-        const resultItem =
-            selectedItems.findIndex(
-                (el: FilterItem) => el.first_filter_key === filterItemName,
-            ) > -1;
-        return resultItem ? filterItemName : '';
+        name: string,
+    ): FiltersData {
+        const resultItem = selectedItems.find(el => el[filterKey] === name);
+        return selectedItems.length && resultItem ? resultItem[filterKey] : '';
     }
 
     ngOnDestroy(): void {

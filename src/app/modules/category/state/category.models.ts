@@ -21,7 +21,7 @@ export interface FiltersData {
 export interface FilterItem {
     first_filter_key: FiltersData;
     second_filter_key?: FiltersData;
-    id: number;
+    id: string;
 }
 
 export interface CategoryProductsResponse {
